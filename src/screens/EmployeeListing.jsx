@@ -13,6 +13,14 @@ import FilterBar from '../components/FilterBar'
 import Pagination from '../components/Pagination'
 import { Avatar, Pill, StatusPill, PersonChip, TH, TD, BTN_PRIMARY } from '../components/primitives'
 
+/* Vertical stickiness comes from the app's own rule
+     .tableSticky thead th { position: sticky; z-index: 9 }
+   combined with top-0 on every th. The Actions th additionally carries
+   `sticky right-0`, which is what freezes it during HORIZONTAL scroll - both
+   th class strings below are copied from the crawled thead. */
+const TH_ACTIONS =
+  '2xl:py-2.5 2xl-to-xl:py-1.5 py-1.5 2xl:px-6 2xl-to-xl:px-4 px-4 whitespace-nowrap 2xl:text-sm 2xl-to-xl:text-xs text-xs font-medium text-gray-600 bg-gray-50 top-0 text-start w-3 sticky right-0'
+
 const COLUMNS = [
   { label: 'No.',          sortable: false, thExtra: 'w-[1%]' },
   { label: 'Code',         sortable: true,  sort_by: 'employee_code' },
@@ -21,10 +29,10 @@ const COLUMNS = [
   { label: 'Contact',      sortable: false },
   { label: 'Status',       sortable: true,  sort_by: 'status' },
   { label: 'Reporting to', sortable: true,  sort_by: 'reporting_name', thExtra: 'min-w-40' },
-  { label: 'Experience',   sortable: false },
+  { label: 'Experience',   sortable: false, thExtra: 'z-[10]' },
   { label: 'Joining Date', sortable: true,  sort_by: 'joined_date' },
   { label: 'Last Login',   sortable: false },
-  { label: 'Actions',      sortable: false },
+  { label: 'Actions',      sortable: false, thClass: TH_ACTIONS },
 ]
 
 const fmtDate = (d) => {
@@ -165,7 +173,8 @@ export default function EmployeeListing() {
       {/* table */}
       <div className="z-0 relative">
         <div className="flex flex-col">
-          <div className="overflow-x-auto border-x border-gray-200 bg-white">
+          <div className="inline-block w-full align-middle">
+            <div className="sidebar-container border overflow-auto scrollbar-hide z-0 relative border-gray-200">
             <table className="min-w-full divide-y divide-gray-200 tableSticky">
               <thead>
                 <tr>
@@ -173,7 +182,7 @@ export default function EmployeeListing() {
                     <th
                       key={c.label}
                       scope="col"
-                      className={`${TH} ${c.thExtra || ''} ${c.sortable ? 'cursor-pointer' : ''}`}
+                      className={c.thClass || `${TH} ${c.thExtra || ''} ${c.sortable ? 'cursor-pointer' : ''}`}
                       onClick={() => toggleSort(c)}
                     >
                       <div className="">
@@ -239,7 +248,7 @@ export default function EmployeeListing() {
                         <span className="inline-block w-5" />{fmtDateTime(r.last_login_time)}
                       </div>
                     </td>
-                    <td className="whitespace-nowrap 2xl:px-6 2xl-to-xl:px-4 px-4 2xl:py-2.5 2xl-to-xl:py-1.5 py-1.5 2xl:text-sm 2xl-to-xl:text-xs text-xs text-gray-600 text-start w-3 sticky right-0 border-l bg-white group-hover:bg-gray-50">
+                    <td className="whitespace-nowrap 2xl:px-6 2xl-to-xl:px-4 px-4 2xl:py-2.5 2xl-to-xl:py-1.5 py-1.5 2xl:text-sm 2xl-to-xl:text-xs text-xs text-gray-600 text-start w-3 sticky right-0 border-l">
                       <div className="before:absolute before:w-[1px] before:h-full before:bg-gray-200 before:top-0 before:left-[-1px]">
                         <div className="flex items-center 2xl:gap-x-2.5 2xl-to-xl:gap-x-2 gap-x-2 text-gray-600 2xl:text-xl 2xl-to-xl:text-lg text-lg justify-start">
                           <Link to={peoplePath(`/employee-detail/${r.id}/general-info`)}>
@@ -250,11 +259,13 @@ export default function EmployeeListing() {
                           </Link>
                         </div>
                       </div>
+                      <div className="absolute top-px left-0 right-0 bottom-0 -z-10 bg-white group-hover:bg-gray-50" />
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
+            </div>
           </div>
         </div>
       </div>
