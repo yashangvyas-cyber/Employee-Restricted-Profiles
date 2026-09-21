@@ -1,0 +1,288 @@
+/**
+ * Mock API layer.
+ *
+ * Every function mirrors a real CollabCRM endpoint: same path, same method, same
+ * request body keys, same response field names and nesting. Swap `USE_MOCK` off
+ * and point `request()` at the real base URL and the screens keep working.
+ *
+ * Request/response shapes were captured from staging on 2026-09-21.
+ */
+import { ENDPOINTS, API_BASE } from './endpoints'
+import listFixture from '../fixtures/employee-list.json'
+import statusCounts from '../fixtures/status-counts.json'
+import dropdowns from '../fixtures/dropdowns.json'
+import detail1 from '../fixtures/detail-d36d126d-bcdf-4803-909b-ae6fa30ec14c.json'
+import detail2 from '../fixtures/detail-0faef543-e6e5-4a42-9d22-7d87ba87a169.json'
+import detail3 from '../fixtures/detail-8d5b8b08-4d75-4821-8731-8dee6435cd00.json'
+import edit1 from '../fixtures/editdata-d36d126d-bcdf-4803-909b-ae6fa30ec14c.json'
+import edit2 from '../fixtures/editdata-0faef543-e6e5-4a42-9d22-7d87ba87a169.json'
+import edit3 from '../fixtures/editdata-8d5b8b08-4d75-4821-8731-8dee6435cd00.json'
+
+export const USE_MOCK = true
+const LATENCY = 180
+
+const delay = (ms = LATENCY) => new Promise((r) => setTimeout(r, ms))
+
+/**
+ * In-memory store so Add/Edit are clickable. Seeded from the captured list and
+ * mirrored into sessionStorage so a page refresh during a demo does not wipe it.
+ * This is a MOCK-LAYER convenience only - it has no counterpart in CollabCRM.
+ * Call resetStore() (or close the tab) to get back to the captured data.
+ */
+const SEED = {
+  employees: listFixture.data.map((e) => ({ ...e })),
+  details: {
+    [detail1.data.id]: detail1.data,
+    [detail2.data.id]: detail2.data,
+    [detail3.data.id]: detail3.data,
+  },
+  editData: {
+    [edit1.data.id]: edit1.data,
+    [edit2.data.id]: edit2.data,
+    [edit3.data.id]: edit3.data,
+  },
+}
+const STORE_KEY = 'collabcrm-employee-prototype-store'
+
+function loadStore() {
+  try {
+    const raw = sessionStorage.getItem(STORE_KEY)
+    if (raw) return JSON.parse(raw)
+  } catch { /* private mode / storage disabled - fall through to the seed */ }
+  return structuredClone(SEED)
+}
+const store = loadStore()
+function persist() {
+  try { sessionStorage.setItem(STORE_KEY, JSON.stringify(store)) } catch { /* ignore */ }
+}
+/** Drop any added/edited records and go back to the captured data. */
+export function resetStore() {
+  try { sessionStorage.removeItem(STORE_KEY) } catch { /* ignore */ }
+  Object.assign(store, structuredClone(SEED))
+}
+
+const parse = (v) => (typeof v === 'string' ? JSON.parse(v) : v)
+const dd = (k) => { try { return parse(dropdowns[k]) } catch { return { data: [] } } }
+
+/** Mirrors the server's meta envelope exactly. */
+const envelope = (data, meta = {}) => ({ data, meta: { code: 1, message: '', ...meta } })
+
+/* ------------------------------------------------------------------ listing */
+
+/** The one field the "Filter Results..." box and the chips both feed.
+ *  Matching here mirrors what the server returned for the operators we saw. */
+function applyFilters(rows, filters = []) {
+  return filters.reduce((acc, f) => {
+    const { field_name, operator, value } = f
+    if (!field_name || value === '' || value == null) return acc
+    const val = String(value).toLowerCase()
+    const read = (r) => {
+      switch (field_name) {
+        case 'name': return r.name
+        case 'status': return r.status
+        case 'account_status': return r.account_status
+        case 'employee_type': return r.employee_type
+        case 'timesheet_filling': return String(r.timesheet_filling)
+        case 'is_2fa_enabled': return r.is_2fa_enabled ? 'enable' : 'disable'
+        case 'is_external_email': return String(r.is_external_email)
+        default: return r[field_name]
+      }
+    }
+    return acc.filter((r) => {
+      const cell = String(read(r) ?? '').toLowerCase()
+      if (operator === 'Contains') return cell.includes(val)
+      if (operator === 'Is') return cell === val
+      if (operator === 'Is not') return cell !== val
+      return true
+    })
+  }, rows)
+}
+
+function applySort(rows, sort_by, order) {
+  if (!sort_by) return rows
+  const dir = order === 'DESC' ? -1 : 1
+  return [...rows].sort((a, b) => {
+    const x = a[sort_by] ?? '', y = b[sort_by] ?? ''
+    return x < y ? -dir : x > y ? dir : 0
+  })
+}
+
+/**
+ * POST /v1/employee/list
+ * VERIFIED body: {"page":1,"per_page":10}
+ *                 [+ "filters":[{field_name,operator,value}]]
+ *                 [+ "sort_by":"name","order":"DESC"]
+ */
+export async function employeeList({ page = 1, per_page = 10, filters = [], sort_by, order } = {}) {
+  await delay()
+  let rows = applyFilters(store.employees, filters)
+  rows = applySort(rows, sort_by, order)
+  const total = rows.length
+  const start = (page - 1) * per_page
+  return envelope(rows.slice(start, start + per_page), {
+    message: 'Employees listing fetched successfully.',
+    total, page, per_page,
+  })
+}
+
+/**
+ * GET /v1/employee/status-counts
+ * VERIFIED response (2026-09-21) - all eight keys:
+ *   total_employees, total_probation, total_notice_period, total_confirmed,
+ *   total_intern, total_yet_to_join, total_active_pip, total_flagged_pip
+ * Served from the captured fixture so the six KPI cards show the same numbers
+ * the real screen shows; the counts that ARE derivable from the list are
+ * recomputed so a newly added employee moves them.
+ */
+export async function employeeStatusCounts() {
+  await delay(90)
+  const s = store.employees
+  const notRelieved = s.filter((e) => e.status !== 'relieved')
+  return envelope({
+    ...statusCounts.data,
+    total_employees: String(notRelieved.length),
+    total_confirmed: String(s.filter((e) => e.status === 'confirmed').length),
+    total_probation: String(s.filter((e) => e.status === 'probation').length),
+    total_intern: String(s.filter((e) => e.status === 'intern').length),
+    total_notice_period: String(s.filter((e) => e.status === 'notice_period').length),
+  }, { message: 'Employees listing counts.' })
+}
+
+/* ------------------------------------------------------------------- detail */
+
+/** GET /v1/employee/{id} */
+export async function employeeDetail(id) {
+  await delay()
+  const d = store.details[id]
+  if (d) return envelope(d, { message: 'Employee details fetched successfully.' })
+  // Only 3 full detail records were captured; synthesise the rest from the list
+  // row so every row in the prototype is clickable. Marked so it is obvious.
+  const row = store.employees.find((e) => e.id === id)
+  if (!row) return envelope(null, { code: 0, message: 'Employee not found.' })
+  return envelope(fromListRow(row), { message: 'Employee details fetched successfully.', _synthesised: true })
+}
+
+/** GET /v1/employee/employee-details/{id} — the edit-form payload. */
+export async function employeeEditData(id) {
+  await delay()
+  const d = store.editData[id]
+  if (d) return envelope(d, { message: 'Employee details fetched successfully.' })
+  const row = store.employees.find((e) => e.id === id)
+  if (!row) return envelope(null, { code: 0, message: 'Employee not found.' })
+  return envelope(fromListRow(row), { message: 'Employee details fetched successfully.', _synthesised: true })
+}
+
+/** Build a detail-shaped object out of a list row, keeping the real field names. */
+function fromListRow(row) {
+  const [first_name, ...rest] = (row.name || '').split(' ')
+  const tmpl = detail1.data
+  return {
+    ...tmpl,
+    id: row.id,
+    first_name,
+    middle_name: null,
+    last_name: rest.join(' ') || null,
+    email: row.email,
+    employee_code: row.employee_code,
+    status: row.status,
+    account_status: row.account_status,
+    employee_type: row.employee_type,
+    business_unit_id: row.business_unit_id,
+    profile_picture: row.profile_picture,
+    profile_picture_url: null,
+    department: { ...tmpl.department, title: row.department_name },
+    designation: { ...tmpl.designation, title: row.designation_name },
+    businessUnit: row.businessUnit || tmpl.businessUnit,
+    reporting_to: row.reporting_name
+      ? { ...tmpl.reporting_to, first_name: (row.reporting_name || '').split(' ')[0],
+          last_name: (row.reporting_name || '').split(' ').slice(1).join(' ') }
+      : null,
+    employee_contact_info: { ...tmpl.employee_contact_info, personal_mobile: row.personal_mobile,
+      personal_country_code: row.personal_country_code },
+    employee_experiences: { ...tmpl.employee_experiences, joined_date: row.joined_date,
+      confirmed_date: row.confirmed_date, prev_exp_year: row.prev_exp_year, prev_exp_month: row.prev_exp_month },
+  }
+}
+
+/* -------------------------------------------------------------------- write */
+/* *** NOT CAPTURED *** The Add/Edit forms were never submitted against staging,
+ * so the real create/update request and response contracts are unknown. These
+ * keep the prototype clickable and write to the in-memory store only. The field
+ * names used ARE the real ones (they come from the captured GET payloads);
+ * the endpoint paths and the envelope are placeholders. See GAPS.md.          */
+
+export async function employeeCreate(payload) {
+  await delay(320)
+  const id = `new-${Math.random().toString(36).slice(2, 10)}`
+  const row = {
+    ...listFixture.data[0],
+    id,
+    name: [payload.first_name, payload.middle_name, payload.last_name].filter(Boolean).join(' '),
+    employee_code: payload.employee_code,
+    email: payload.company_email,
+    department_name: payload.department_name ?? null,
+    designation_name: payload.designation_name ?? null,
+    status: payload.status ?? 'probation',
+    account_status: 'active',
+    employee_type: payload.employee_type ?? 'technical',
+    personal_mobile: payload.personal_mobile ?? null,
+    reporting_name: payload.reporting_name ?? null,
+    joined_date: payload.joined_date ?? null,
+    confirmed_date: null,
+    last_login_time: null,
+    prev_exp_year: payload.prev_exp_year ?? 0,
+    prev_exp_month: payload.prev_exp_month ?? 0,
+    is_2fa_enabled: false,
+  }
+  store.employees = [row, ...store.employees]
+  store.details[id] = fromListRow(row)
+  store.editData[id] = fromListRow(row)
+  persist()
+  return envelope({ id }, { message: 'Employee created successfully.' })
+}
+
+export async function employeeUpdate(id, payload) {
+  await delay(320)
+  store.employees = store.employees.map((e) => e.id !== id ? e : {
+    ...e,
+    name: [payload.first_name, payload.middle_name, payload.last_name].filter(Boolean).join(' ') || e.name,
+    employee_code: payload.employee_code ?? e.employee_code,
+    email: payload.company_email ?? e.email,
+    status: payload.status ?? e.status,
+    employee_type: payload.employee_type ?? e.employee_type,
+    personal_mobile: payload.personal_mobile ?? e.personal_mobile,
+    department_name: payload.department_name ?? e.department_name,
+    designation_name: payload.designation_name ?? e.designation_name,
+  })
+  const merged = { ...(store.details[id] || {}), ...payload, id }
+  store.details[id] = merged
+  store.editData[id] = merged
+  persist()
+  return envelope({ id }, { message: 'Employee updated successfully.' })
+}
+
+/* --------------------------------------------------------- reference lookups */
+export const getBusinessUnits     = async () => (await delay(60), dd('business_units'))
+export const getDepartments       = async () => (await delay(60), dd('departments'))
+export const getDesignations      = async () => (await delay(60), dd('designations'))
+export const getRoles             = async () => (await delay(60), dd('roles'))
+export const getShifts            = async () => (await delay(60), dd('shifts'))
+export const getSources           = async () => (await delay(60), dd('sources'))
+export const getDocumentTypes     = async () => (await delay(60), dd('document_types'))
+export const getReportingManagers = async () => (await delay(60), dd('reporting_managers'))
+export const getCountries         = async () => (await delay(60), dd('countries'))
+export const getStates            = async () => (await delay(60), dd('states'))
+export const getEmployeeCode      = async () => (await delay(60), dd('employee_code'))
+
+/** Where a developer swaps the mock out. Paths come from ENDPOINTS. */
+export async function request(endpoint, { params, body } = {}) {
+  const path = typeof endpoint.path === 'function' ? endpoint.path(params) : endpoint.path
+  const res = await fetch(`${endpoint.base || API_BASE}${path}`, {
+    method: endpoint.method,
+    headers: { 'Content-Type': 'application/json' },
+    body: endpoint.method === 'GET' ? undefined : JSON.stringify(body ?? {}),
+  })
+  return res.json()
+}
+
+export { ENDPOINTS }

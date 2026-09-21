@@ -1,0 +1,2640 @@
+{
+  "business_units": {
+    "data": [
+      {
+        "id": "d7556737-a732-4971-9968-e35dfd1e9e9e",
+        "name": "Divya Chauhan",
+        "employee_code_prefix": "BL",
+        "intern_code_prefix": "BLINT",
+        "email_domain": "example.com",
+        "country_id": "3620c96b-a7be-466d-8d24-d6fc49c11ccf",
+        "state_id": "d2869212-7cda-4685-85ca-2b1dd2c13df6",
+        "probation_period": 30
+      },
+      {
+        "id": "fb82912c-e652-44c8-a703-9b19a80461c5",
+        "name": "Charu Chopra",
+        "employee_code_prefix": "TM",
+        "intern_code_prefix": "TMINT",
+        "email_domain": "example.com",
+        "country_id": "3620c96b-a7be-466d-8d24-d6fc49c11ccf",
+        "state_id": "d2869212-7cda-4685-85ca-2b1dd2c13df6",
+        "probation_period": 90
+      }
+    ],
+    "meta": {
+      "code": 1,
+      "message": "Business units fetched successfully."
+    }
+  },
+  "departments": {
+    "data": [
+      {
+        "id": "6693a92e-7e4d-4bb2-9e0e-f446e91da5ee",
+        "title": "Administration"
+      },
+      {
+        "id": "d5c27db9-4c22-44df-b0d5-8bad2cb84884",
+        "title": "Business Analysis"
+      },
+      {
+        "id": "888b22c9-d15c-42cc-9ed5-adac01993f35",
+        "title": "Customer Success/Support"
+      },
+      {
+        "id": "8cf03070-2a8d-476d-a41a-2bbeaa126358",
+        "title": "Data Science"
+      },
+      {
+        "id": "78905987-efe3-442f-99c1-46f46af3121c",
+        "title": "Development"
+      },
+      {
+        "id": "be554583-6c53-474f-97d4-305650cc69cc",
+        "title": "DevOps"
+      },
+      {
+        "id": "3be1bd0b-2fbf-47ba-b6c0-8a1a3fb46244",
+        "title": "Finance"
+      },
+      {
+        "id": "1c1954b6-c264-4aea-967a-3f09567af856",
+        "title": "Human Resource"
+      },
+      {
+        "id": "9b30219d-9946-4f5b-945c-7045cde133f2",
+        "title": "IT Support"
+      },
+      {
+        "id": "6e223bb3-d946-49ea-849a-3c8d87ed4429",
+        "title": "Management"
+      },
+      {
+        "id": "4da9a6af-c043-4c0e-ae71-7bbf2dcd5e76",
+        "title": "Marketing"
+      },
+      {
+        "id": "04c5ba19-8cb2-4a96-ba92-7c70b129c651",
+        "title": "Project Management"
+      },
+      {
+        "id": "9ebc3d17-0d22-4938-9134-d2560f963ce9",
+        "title": "Quality Assurance"
+      },
+      {
+        "id": "11712ed2-3a5f-4cb8-90c8-861295b571a9",
+        "title": "Sales"
+      }
+    ],
+    "meta": {
+      "code": 1,
+      "message": "Departments fetched successfully."
+    }
+  },
+  "designations": {
+    "data": [
+      {
+        "id": "1f81488a-d9c7-4dc1-9988-ea806d3da95c",
+        "title": "Accountant",
+        "short_name": null
+      },
+      {
+        "id": "58032629-820c-4bf3-b9a3-6b665101c521",
+        "title": "Admin executive",
+        "short_name": null
+      },
+      {
+        "id": "6134fd27-cfa9-45f1-875d-fd95f88585f1",
+        "title": "Associate software engineer",
+        "short_name": "ASE"
+      },
+      {
+        "id": "130bd1dc-983c-4d35-8339-014a22e103f4",
+        "title": "Backend Developer",
+        "short_name": ""
+      },
+      {
+        "id": "806a5c60-d8c2-43a1-aaf8-6311a6aff3b1",
+        "title": "Business analyst",
+        "short_name": "BA"
+      },
+      {
+        "id": "88bfa977-bcc8-4c24-81d9-901cde56a978",
+        "title": "Business development executive",
+        "short_name": "BDE"
+      },
+      {
+        "id": "2781804c-bf66-48c5-a4a0-eb71fc547179",
+        "title": "Business development manager",
+        "short_name": "BDM"
+      },
+      {
+        "id": "3f3564c6-17e4-4779-b877-22eb7d122efe",
+        "title": "Chief executive officer",
+        "short_name": "CEO"
+      },
+      {
+        "id": "b301822a-5c09-40a7-8228-3d94979eb0c7",
+        "title": "Chief operating officer",
+        "short_name": "COO"
+      },
+      {
+        "id": "73a9428f-a84d-4523-b241-01d3d1004949",
+        "title": "Cloud Engineer",
+        "short_name": ""
+      },
+      {
+        "id": "24a27e53-134d-42fa-a19b-70bca1e409d3",
+        "title": "Content Strategist",
+        "short_name": ""
+      },
+      {
+        "id": "117d0d95-c303-4f51-a3a2-a2a7f37b9fee",
+        "title": "Customer Success Manager",
+        "short_name": "CSM"
+      },
+      {
+        "id": "d0470f7b-60c6-4254-a352-33cf027bdd97",
+        "title": "Customer Support Representative",
+        "short_name": "CSR"
+      },
+      {
+        "id": "9283778a-5555-4a58-9fd0-c03a9f652b4d",
+        "title": "Data Analyst",
+        "short_name": "DA"
+      },
+      {
+        "id": "1dc8d759-a4e9-4784-95a5-f4cab6b98caf",
+        "title": "Data Architect",
+        "short_name": ""
+      },
+      {
+        "id": "59168ce7-39bc-4407-bb87-7a013aeebb27",
+        "title": "Data Scientist",
+        "short_name": "DS"
+      },
+      {
+        "id": "d44cbc64-b9b7-4efd-a09f-fd7a6f889eff",
+        "title": "Desktop Support Engineer",
+        "short_name": ""
+      },
+      {
+        "id": "65cef1ca-9842-48f2-bd7c-650772c89032",
+        "title": "DevOps Architect",
+        "short_name": "DevOps"
+      },
+      {
+        "id": "2080e553-93e7-4907-837f-8e18afa74fb8",
+        "title": "Digital Marketing Specialist",
+        "short_name": ""
+      },
+      {
+        "id": "21707571-433a-4aef-b52b-233ccf50db07",
+        "title": "Executive Assistant",
+        "short_name": ""
+      },
+      {
+        "id": "6c418a5e-77b2-4d22-9118-64bb79a56771",
+        "title": "Facilities Manager",
+        "short_name": ""
+      },
+      {
+        "id": "072064d2-800c-4f40-aa64-048cf3935078",
+        "title": "Financial Analyst",
+        "short_name": ""
+      },
+      {
+        "id": "35537a5c-d76b-463f-b8e6-273fba2a265d",
+        "title": "Financial Controller",
+        "short_name": ""
+      },
+      {
+        "id": "1bd7e638-0fb4-4e81-b7c4-e906f0e17891",
+        "title": "Frontend Developer",
+        "short_name": ""
+      },
+      {
+        "id": "209ecf18-f270-4575-9a6f-e35d2223aa45",
+        "title": "Full Stack Developer",
+        "short_name": ""
+      },
+      {
+        "id": "758eb515-e847-4eb3-8118-eea68e74ea46",
+        "title": "Head of Customer Experience",
+        "short_name": ""
+      },
+      {
+        "id": "d0d872e1-c490-4cee-a729-552d99e475f9",
+        "title": "Help Desk Technician",
+        "short_name": ""
+      },
+      {
+        "id": "8ace8888-4648-4e4f-8cd3-0ec93c332f25",
+        "title": "HR Business Partner",
+        "short_name": "HRBP"
+      },
+      {
+        "id": "c288af06-f84f-417a-bb53-f65db243c1a1",
+        "title": "HR Coordinator",
+        "short_name": ""
+      },
+      {
+        "id": "42fcd6df-06ef-4adc-88ee-fd545e11517c",
+        "title": "Human resources executive",
+        "short_name": "HRE"
+      },
+      {
+        "id": "30964bf2-1642-447d-9437-50400e505dab",
+        "title": "Human resources manager",
+        "short_name": "HRM"
+      },
+      {
+        "id": "c4816245-cefc-41b8-969c-a2737ea85b91",
+        "title": "Implementation Specialist",
+        "short_name": ""
+      },
+      {
+        "id": "d9372fa5-dad5-42d5-b0a6-4d84da4c59ff",
+        "title": "IT support specialist",
+        "short_name": "ITS"
+      },
+      {
+        "id": "d213899a-0e66-4afd-8caa-c460c9433631",
+        "title": "Junior Business Analyst",
+        "short_name": "BA"
+      },
+      {
+        "id": "4c8c4277-6e01-4194-ba75-474b011b5694",
+        "title": "Junior Software Engineer",
+        "short_name": ""
+      },
+      {
+        "id": "e9e48c92-3fc6-499e-b448-183e7c735992",
+        "title": "Machine Learning Engineer",
+        "short_name": "ML"
+      },
+      {
+        "id": "132e8e28-595a-45be-a467-f4bd2356021a",
+        "title": "Marketing executive",
+        "short_name": null
+      },
+      {
+        "id": "406f1f93-c28c-401c-860a-7e05d46b879d",
+        "title": "Network Engineer",
+        "short_name": ""
+      },
+      {
+        "id": "f87526ba-d17b-40ce-a043-99a9cae2a33f",
+        "title": "Office Manager",
+        "short_name": ""
+      },
+      {
+        "id": "73a3942f-cb63-4c41-ac5e-f26c61154c21",
+        "title": "Operations Coordinator",
+        "short_name": ""
+      },
+      {
+        "id": "3b29c5f5-1795-426e-9e60-596bfab25ab9",
+        "title": "Payroll Specialist",
+        "short_name": ""
+      },
+      {
+        "id": "526ed6af-df94-46d6-a245-1c3230499c61",
+        "title": "People Operations Manager",
+        "short_name": ""
+      },
+      {
+        "id": "85f7096c-9ca8-4bba-9b55-f97976675cb5",
+        "title": "Platform Engineer",
+        "short_name": ""
+      },
+      {
+        "id": "2aa6cd5d-d801-42d6-9e5e-0d344092ba0d",
+        "title": "Product Marketing Manager",
+        "short_name": ""
+      },
+      {
+        "id": "0c002419-317b-4934-aa52-453e4e314b01",
+        "title": "Product Owner",
+        "short_name": "PO"
+      },
+      {
+        "id": "d3d1579a-338d-457c-9827-7ecc66c7c591",
+        "title": "Program Manager",
+        "short_name": ""
+      },
+      {
+        "id": "56afb2f6-6741-4907-baa0-30800d1d6fb0",
+        "title": "Project Coordinator",
+        "short_name": ""
+      },
+      {
+        "id": "22af23fa-28f5-4b07-ac75-40346904f95d",
+        "title": "Project manager",
+        "short_name": "PM"
+      },
+      {
+        "id": "86c87261-03c3-49da-9131-56531aaf0e59",
+        "title": "QA Lead",
+        "short_name": ""
+      },
+      {
+        "id": "4f40aafe-9d5f-4ad6-9c29-e94637813967",
+        "title": "QA Tester",
+        "short_name": "QA"
+      },
+      {
+        "id": "755b4309-f3ba-4603-b298-08609c2362e1",
+        "title": "Quality assurance engineer",
+        "short_name": "QA"
+      },
+      {
+        "id": "b91d8679-89c5-4abe-a910-1dcecb9fe72d",
+        "title": "Recruiter",
+        "short_name": "HR"
+      },
+      {
+        "id": "23b3d016-547a-4135-b041-c94b5a18c60a",
+        "title": "Sales Manager",
+        "short_name": ""
+      },
+      {
+        "id": "74b74411-f46b-4b51-901a-a30bc6d27898",
+        "title": "SDET",
+        "short_name": "SDET"
+      },
+      {
+        "id": "c86c55ff-771e-4af2-955f-6e7e01ae6b95",
+        "title": "Senior Business Analyst",
+        "short_name": "Sr. BA"
+      },
+      {
+        "id": "258c9ba5-e6f4-405a-8f9d-dd7e71510860",
+        "title": "Senior software engineer",
+        "short_name": "SSE"
+      },
+      {
+        "id": "e4943088-f057-4d57-9bc0-175d7068f279",
+        "title": "SEO/SEM Specialist",
+        "short_name": "SEO/SEM"
+      },
+      {
+        "id": "d4f2f0c9-ccb3-41be-840d-854f199e9c16",
+        "title": "Site Reliability Engineer",
+        "short_name": "SRE"
+      },
+      {
+        "id": "b01748be-9038-42e0-baea-2754702b4272",
+        "title": "Software Architect",
+        "short_name": ""
+      },
+      {
+        "id": "1e0ba3a7-5844-414b-882b-7c8378ed24dd",
+        "title": "Software engineer",
+        "short_name": "SE"
+      },
+      {
+        "id": "be363c9c-7cfa-406d-875f-2b161cd35f35",
+        "title": "System Administrator",
+        "short_name": "Sys Admin"
+      },
+      {
+        "id": "3ddca96d-d78e-4a84-a1b3-674394793ec6",
+        "title": "Systems Analyst",
+        "short_name": ""
+      },
+      {
+        "id": "63886d8b-873a-4d76-879e-ff88fefeb169",
+        "title": "Team leader",
+        "short_name": "TL"
+      },
+      {
+        "id": "d0ba94a4-8e0c-4359-a789-e12f7620873f",
+        "title": "Technical head",
+        "short_name": "TH"
+      },
+      {
+        "id": "393f94fc-93ef-4ccd-a4f0-efb62f3fdd14",
+        "title": "Technical Lead",
+        "short_name": ""
+      },
+      {
+        "id": "8733014c-cbcd-4f6a-8060-791ed034fd07",
+        "title": "Technical Recruiter",
+        "short_name": ""
+      },
+      {
+        "id": "91a7ee06-cef5-41b4-8623-3162ce272874",
+        "title": "Trainee",
+        "short_name": null
+      }
+    ],
+    "meta": {
+      "code": 1,
+      "message": "Designations fetched successfully."
+    }
+  },
+  "roles": {
+    "data": [
+      {
+        "id": "20196afc-8014-4be8-bf49-e2a115212712",
+        "title": "Administrator",
+        "status": "active"
+      },
+      {
+        "id": "d31b878b-81c3-4e06-b264-31a7b0929d74",
+        "title": "BDE",
+        "status": "active"
+      },
+      {
+        "id": "e3bdfd91-6045-469e-b4ae-ecb997832f82",
+        "title": "BDM",
+        "status": "active"
+      },
+      {
+        "id": "6b6bbffc-16ef-438a-96f4-d8639917536a",
+        "title": "Employee",
+        "status": "active"
+      },
+      {
+        "id": "97faf254-d06c-4331-9bbb-6222c3153432",
+        "title": "Head of Business Development",
+        "status": "active"
+      },
+      {
+        "id": "916b1036-47f7-4ad4-a73f-05105755e2cb",
+        "title": "HR",
+        "status": "active"
+      },
+      {
+        "id": "dbe4b64d-641f-40e5-b85b-73784aa367f6",
+        "title": "IT/Networking",
+        "status": "active"
+      },
+      {
+        "id": "0a1cbc86-488a-4d59-8205-559306d6a25e",
+        "title": "Management",
+        "status": "active"
+      },
+      {
+        "id": "5aa7bbcf-9488-4b2f-9fbf-dc23448981c8",
+        "title": "Project Manager",
+        "status": "active"
+      },
+      {
+        "id": "750abe51-aa2d-4599-ac79-665bb542ebac",
+        "title": "Recruiter",
+        "status": "active"
+      },
+      {
+        "id": "de116491-5c6d-4ae3-b9a8-14eb50c26229",
+        "title": "Team leader",
+        "status": "active"
+      }
+    ],
+    "meta": {
+      "code": 1,
+      "message": "Master roles fetched successfully."
+    }
+  },
+  "shifts": {
+    "data": [
+      {
+        "id": "e4d0fe59-ccff-456d-99e2-f2baa269d767",
+        "name": "General Shift",
+        "code": "GS",
+        "from_hours": "10:00:00",
+        "to_hours": "07:00:00",
+        "color_code": "#3b82f6",
+        "is_default": true
+      },
+      {
+        "id": "ffb93acd-05b1-4fc0-bd4e-871944bae480",
+        "name": "Test",
+        "code": "TXT",
+        "from_hours": "10:00:00",
+        "to_hours": "20:00:00",
+        "color_code": "#cfecbb",
+        "is_default": false
+      },
+      {
+        "id": "6e3caf51-ea4d-41df-b9a9-1b91dfdad6fe",
+        "name": "USA Shift",
+        "code": "USAS",
+        "from_hours": "17:00:00",
+        "to_hours": "22:00:00",
+        "color_code": "#00BFFF",
+        "is_default": false
+      }
+    ],
+    "meta": {
+      "code": 1,
+      "message": "Shifts dropdown fetched successfully."
+    }
+  },
+  "sources": {
+    "data": [
+      {
+        "id": "bfb77477-7e79-4792-9ed8-1bff6dbd1cb9",
+        "title": "Career Portal"
+      },
+      {
+        "id": "6e97c821-681b-4173-998d-11d5f4f6118c",
+        "title": "Employee Referral"
+      },
+      {
+        "id": "6ab21601-5ab4-460b-9823-932f4c682fa5",
+        "title": "Indeed"
+      },
+      {
+        "id": "c3fdf9c2-73de-4e3c-826d-78c2c6e6c02f",
+        "title": "LinkedIn"
+      },
+      {
+        "id": "a11d5705-d285-44ae-8d7b-c820675f3663",
+        "title": "Naukri"
+      },
+      {
+        "id": "31bcb967-5c5b-4546-9b6b-438c5fe3c15b",
+        "title": "Other"
+      },
+      {
+        "id": "539f0b81-0d49-4426-9a21-36ab37094618",
+        "title": "Placement Drive"
+      },
+      {
+        "id": "e5317024-4c2c-4ce5-9f01-f5040baf3e22",
+        "title": "Recruitment Agency"
+      },
+      {
+        "id": "f1887541-bc8c-4d11-a152-5626944cf56c",
+        "title": "Referral"
+      },
+      {
+        "id": "c632a055-7ce2-457f-b4a9-68985f8c2ae3",
+        "title": "TimesJobs"
+      },
+      {
+        "id": "3ef1e485-ef67-4b03-b1fc-ca089b5059b4",
+        "title": "Website"
+      }
+    ],
+    "meta": {
+      "code": 1,
+      "message": "Source fetched successfully."
+    }
+  },
+  "document_types": {
+    "data": [
+      {
+        "id": "4560c299-aa13-47b8-892a-a55eaef5e273",
+        "title": "Aadhaar Card"
+      },
+      {
+        "id": "ae4c64ce-323f-4b9b-8247-e7398c4bbad7",
+        "title": "PAN Card"
+      },
+      {
+        "id": "4f090ea3-9817-4869-a23d-4b97a72a4192",
+        "title": "Employment Offer Letter"
+      },
+      {
+        "id": "03281a19-5a5c-40ed-9e66-28e6c320dd86",
+        "title": "Medical Insurance Card"
+      },
+      {
+        "id": "606d1242-7841-41d9-9b3d-47e49feac061",
+        "title": "Driver\u2019s License"
+      },
+      {
+        "id": "366c6cbd-e858-408b-91aa-121411ce6994",
+        "title": "Passport"
+      },
+      {
+        "id": "ad2b856a-47a9-4117-b4a2-adbc5aea6741",
+        "title": "Voter ID Card"
+      },
+      {
+        "id": "a88f66f2-5c08-4d52-87cb-2d5f3cef53d7",
+        "title": "National ID Card"
+      },
+      {
+        "id": "efacf4bf-f735-48a1-bbc9-68df42315c5f",
+        "title": "Employee ID Card"
+      }
+    ],
+    "meta": {
+      "code": 1,
+      "message": "Document types fetched successfully."
+    }
+  },
+  "reporting_managers": {
+    "data": [
+      {
+        "name": "Samar Bhatt",
+        "reporting_to_name": "Nikhil Iyer",
+        "department_title": "Project Management",
+        "designation_title": "Project manager",
+        "business_unit_name": "Tech Mahindra",
+        "notice_period": 1,
+        "joined_date": "2026-07-01",
+        "reporting_to_emp_code": "BL-041",
+        "reporting_to_id": "8d87d23a-9cf7-44b0-b435-6553bdeca5f4",
+        "id": "d36d126d-bcdf-4803-909b-ae6fa30ec14c",
+        "employee_code": "TM-002",
+        "status": "confirmed",
+        "profile_picture": null,
+        "business_unit_id": "fb82912c-e652-44c8-a703-9b19a80461c5",
+        "email": "qadir.patel@example.com",
+        "department_id": "04c5ba19-8cb2-4a96-ba92-7c70b129c651",
+        "designation_id": "22af23fa-28f5-4b07-ac75-40346904f95d",
+        "account_status": "active"
+      },
+      {
+        "name": "Diya Kulkarni",
+        "reporting_to_name": "Meera Sinha",
+        "department_title": "Management",
+        "designation_title": "Chief executive officer",
+        "business_unit_name": "BlueWhale Technosoft Pvt. Ltd.",
+        "notice_period": 2,
+        "joined_date": "2010-02-01",
+        "reporting_to_emp_code": "BL-001",
+        "reporting_to_id": "8f389b0e-c69e-4c1f-8bc1-21bd786eb65e",
+        "id": "8f389b0e-c69e-4c1f-8bc1-21bd786eb65e",
+        "employee_code": "BL-001",
+        "status": "confirmed",
+        "profile_picture": null,
+        "business_unit_id": "d7556737-a732-4971-9968-e35dfd1e9e9e",
+        "email": "kiara.bhatt@example.com",
+        "department_id": "6e223bb3-d946-49ea-849a-3c8d87ed4429",
+        "designation_id": "3f3564c6-17e4-4779-b877-22eb7d122efe",
+        "account_status": "active"
+      },
+      {
+        "name": "Charu Patel",
+        "reporting_to_name": "Nisha Rao",
+        "department_title": "Quality Assurance",
+        "designation_title": "Quality assurance engineer",
+        "business_unit_name": "BlueWhale Technosoft Pvt. Ltd.",
+        "notice_period": 2,
+        "joined_date": "2023-04-15",
+        "reporting_to_emp_code": "BL-015",
+        "reporting_to_id": "604fa4b7-c7ae-4464-9b7d-6a34018fef4c",
+        "id": "07eff013-1dc0-4f6e-9c66-3533642546ab",
+        "employee_code": "BL-027",
+        "status": "confirmed",
+        "profile_picture": null,
+        "business_unit_id": "d7556737-a732-4971-9968-e35dfd1e9e9e",
+        "email": "kabir.malhotra@example.com",
+        "department_id": "9ebc3d17-0d22-4938-9134-d2560f963ce9",
+        "designation_id": "755b4309-f3ba-4603-b298-08609c2362e1",
+        "account_status": "active"
+      },
+      {
+        "name": "Jay Chauhan",
+        "reporting_to_name": "Nisha Gupta",
+        "department_title": "Data Science",
+        "designation_title": "Data Analyst",
+        "business_unit_name": "BlueWhale Technosoft Pvt. Ltd.",
+        "notice_period": 2,
+        "joined_date": "2021-04-01",
+        "reporting_to_emp_code": "BL-002",
+        "reporting_to_id": "3f416875-3779-4af4-8dcc-a9075fe936fd",
+        "id": "32abc30d-a634-412e-820f-b53f000248f8",
+        "employee_code": "BL-019",
+        "status": "confirmed",
+        "profile_picture": null,
+        "business_unit_id": "d7556737-a732-4971-9968-e35dfd1e9e9e",
+        "email": "samar.verma@example.com",
+        "department_id": "8cf03070-2a8d-476d-a41a-2bbeaa126358",
+        "designation_id": "9283778a-5555-4a58-9fd0-c03a9f652b4d",
+        "account_status": "active"
+      },
+      {
+        "name": "Qadir Reddy",
+        "reporting_to_name": "Diya Saxena",
+        "department_title": "Human Resource",
+        "designation_title": "Recruiter",
+        "business_unit_name": "BlueWhale Technosoft Pvt. Ltd.",
+        "notice_period": 2,
+        "joined_date": "2022-03-01",
+        "reporting_to_emp_code": "BL-011",
+        "reporting_to_id": "cf779ace-ea54-4979-8ee0-d8754d1897c2",
+        "id": "89737948-f0a6-481b-8629-280b38ed965a",
+        "employee_code": "BL-017",
+        "status": "confirmed",
+        "profile_picture": null,
+        "business_unit_id": "d7556737-a732-4971-9968-e35dfd1e9e9e",
+        "email": "kabir.khanna@example.com",
+        "department_id": "1c1954b6-c264-4aea-967a-3f09567af856",
+        "designation_id": "b91d8679-89c5-4abe-a910-1dcecb9fe72d",
+        "account_status": "active"
+      },
+      {
+        "name": "Dhruv Sinha",
+        "reporting_to_name": "Kabir Khanna",
+        "department_title": "Business Analysis",
+        "designation_title": "Business analyst",
+        "business_unit_name": "Tech Mahindra",
+        "notice_period": 1,
+        "joined_date": "2022-07-01",
+        "reporting_to_emp_code": "BL-009",
+        "reporting_to_id": "fb4b660a-7ef7-4fbd-9fd9-7ca65f7ed58c",
+        "id": "0faef543-e6e5-4a42-9d22-7d87ba87a169",
+        "employee_code": "TM-001",
+        "status": "probation",
+        "profile_picture": null,
+        "business_unit_id": "fb82912c-e652-44c8-a703-9b19a80461c5",
+        "email": "vivek.shetty@example.com",
+        "department_id": "d5c27db9-4c22-44df-b0d5-8bad2cb84884",
+        "designation_id": "806a5c60-d8c2-43a1-aaf8-6311a6aff3b1",
+        "account_status": "active"
+      }
+    ],
+    "meta": {
+      "code": 1,
+      "message": "Employees fetched successfully.",
+      "total": 6,
+      "page": 1,
+      "per_page": 20
+    }
+  },
+  "currencies": {
+    "data": [
+      {
+        "id": "64d343b0-2a45-4a7f-a620-520d52988b49",
+        "is_base": true,
+        "name": "Indian Rupee",
+        "code": "INR",
+        "symbol": "\u20b9"
+      },
+      {
+        "id": "3dfec824-2bda-4701-ae4e-f45af48c4620",
+        "is_base": false,
+        "name": "Afghan Afghani",
+        "code": "AFN",
+        "symbol": "\u060b"
+      },
+      {
+        "id": "2e07bfd0-f747-410a-999f-43a5f43d724c",
+        "is_base": false,
+        "name": "United States Dollar",
+        "code": "USD",
+        "symbol": "$"
+      }
+    ],
+    "meta": {
+      "code": 1,
+      "message": "Currency fetched successfully."
+    }
+  },
+  "countries": {
+    "data": [
+      {
+        "id": "2b6d044f-a3f9-4633-af70-d2a558a55b4b",
+        "name": "Afghanistan",
+        "code": "AF"
+      },
+      {
+        "id": "9b81ba6b-2a94-40d5-b662-0a857ccc36b1",
+        "name": "Aland Islands",
+        "code": "AX"
+      },
+      {
+        "id": "f45c9ae2-5775-4245-af80-95cb40e9bf92",
+        "name": "Albania",
+        "code": "AL"
+      },
+      {
+        "id": "e39f734d-7aa0-46c6-809d-abc15358525f",
+        "name": "Algeria",
+        "code": "DZ"
+      },
+      {
+        "id": "a0b66f1b-c40a-4363-8861-d5c001047b64",
+        "name": "American Samoa",
+        "code": "AS"
+      },
+      {
+        "id": "40529ccf-002e-4e3e-ab67-cfd0da0bc737",
+        "name": "Andorra",
+        "code": "AD"
+      },
+      {
+        "id": "0ea878ec-6f59-4132-8735-e481a82e7995",
+        "name": "Angola",
+        "code": "AO"
+      },
+      {
+        "id": "bfbe17c0-692c-497e-9a82-5064e386cd24",
+        "name": "Anguilla",
+        "code": "AI"
+      },
+      {
+        "id": "2bbd8bed-80c2-4826-80ac-810f83d48d8a",
+        "name": "Antarctica",
+        "code": "AQ"
+      },
+      {
+        "id": "a5c15c22-70cf-436d-bd64-65c69b83b3bd",
+        "name": "Antigua And Barbuda",
+        "code": "AG"
+      },
+      {
+        "id": "f5269d0d-65a1-4226-8f7d-f2a884cc3e63",
+        "name": "Argentina",
+        "code": "AR"
+      },
+      {
+        "id": "c7176207-6c3f-4eef-8941-1a6716605b5f",
+        "name": "Armenia",
+        "code": "AM"
+      },
+      {
+        "id": "0ef8dd36-0780-470b-8c2d-653d1910435d",
+        "name": "Aruba",
+        "code": "AW"
+      },
+      {
+        "id": "b1051a7a-f754-4c15-8b39-735a23aad2dd",
+        "name": "Australia",
+        "code": "AU"
+      },
+      {
+        "id": "fbcf4da7-57f6-44d0-a288-2e8361b55e0f",
+        "name": "Austria",
+        "code": "AT"
+      },
+      {
+        "id": "c6a09203-7e19-47ad-bac9-13af317cb9fa",
+        "name": "Azerbaijan",
+        "code": "AZ"
+      },
+      {
+        "id": "11429227-ac8d-4906-b0fb-6abae3b43f67",
+        "name": "Bahrain",
+        "code": "BH"
+      },
+      {
+        "id": "7c696e3c-c16a-47b8-b7ff-5e750405fa9a",
+        "name": "Bangladesh",
+        "code": "BD"
+      },
+      {
+        "id": "ebf3bee0-21a9-48fa-a881-980b91b6d3c2",
+        "name": "Barbados",
+        "code": "BB"
+      },
+      {
+        "id": "305f48fa-26d5-41b2-863f-13cbe46a65d9",
+        "name": "Belarus",
+        "code": "BY"
+      },
+      {
+        "id": "adf15957-a067-4306-aee9-724ba03eb67f",
+        "name": "Belgium",
+        "code": "BE"
+      },
+      {
+        "id": "7161241d-bc64-4a80-9912-377172cef0a4",
+        "name": "Belize",
+        "code": "BZ"
+      },
+      {
+        "id": "fa6ee5e4-7278-4b85-8b17-7240adb8d116",
+        "name": "Benin",
+        "code": "BJ"
+      },
+      {
+        "id": "df8f9f23-1ae0-443b-83a3-c4e5f37db644",
+        "name": "Bermuda",
+        "code": "BM"
+      },
+      {
+        "id": "70568f6d-71eb-4bf1-b74d-98d08211509d",
+        "name": "Bhutan",
+        "code": "BT"
+      },
+      {
+        "id": "a18e1bfd-a2d4-40ef-b2cb-044b85e9468e",
+        "name": "Bolivia",
+        "code": "BO"
+      },
+      {
+        "id": "5499da93-d64d-4126-9c10-74f19b95e849",
+        "name": "Bonaire, Sint Eustatius and Saba",
+        "code": "BQ"
+      },
+      {
+        "id": "c5a935f7-8975-4bb2-932a-4fbb6fe22e45",
+        "name": "Bosnia and Herzegovina",
+        "code": "BA"
+      },
+      {
+        "id": "2479e39b-8015-4345-b496-14eceb29d7cd",
+        "name": "Botswana",
+        "code": "BW"
+      },
+      {
+        "id": "b6c67bfc-1be4-42eb-bbd3-468ae58451ea",
+        "name": "Bouvet Island",
+        "code": "BV"
+      },
+      {
+        "id": "12d23967-76e2-4e5c-ab1e-3de1043c86a0",
+        "name": "Brazil",
+        "code": "BR"
+      },
+      {
+        "id": "ad00ad92-eddd-4cbb-8112-0a02e4237c0a",
+        "name": "British Indian Ocean Territory",
+        "code": "IO"
+      },
+      {
+        "id": "cbcfe2b6-6466-47ef-9caa-7c3c45c99a13",
+        "name": "Brunei",
+        "code": "BN"
+      },
+      {
+        "id": "be548430-b374-4538-af4f-3a5505b54d19",
+        "name": "Bulgaria",
+        "code": "BG"
+      },
+      {
+        "id": "d2fecc87-999d-495b-8eaf-2eb963a25061",
+        "name": "Burkina Faso",
+        "code": "BF"
+      },
+      {
+        "id": "13ec7684-8b7f-4c2c-8b8b-56e8b0e996bf",
+        "name": "Burundi",
+        "code": "BI"
+      },
+      {
+        "id": "4b3f9cf0-4dad-4574-86f0-bc5c3d34ec0c",
+        "name": "Cambodia",
+        "code": "KH"
+      },
+      {
+        "id": "eb682cd7-cca3-4d6e-b9c5-2de404552b87",
+        "name": "Cameroon",
+        "code": "CM"
+      },
+      {
+        "id": "580ac805-deef-4e43-9546-d0d613f19acf",
+        "name": "Canada",
+        "code": "CA"
+      },
+      {
+        "id": "4341f903-f29d-4453-bd4b-2d8880d4da23",
+        "name": "Cape Verde",
+        "code": "CV"
+      },
+      {
+        "id": "b1b78488-3b23-4f38-a7dd-38c3c80b0b38",
+        "name": "Cayman Islands",
+        "code": "KY"
+      },
+      {
+        "id": "34301e84-adeb-4b53-aad1-891cd290223a",
+        "name": "Central African Republic",
+        "code": "CF"
+      },
+      {
+        "id": "fb720b4e-4b67-44d7-9b36-85c325906ab3",
+        "name": "Chad",
+        "code": "TD"
+      },
+      {
+        "id": "df930d6f-9afb-495a-9330-0f620743aecb",
+        "name": "Chile",
+        "code": "CL"
+      },
+      {
+        "id": "6dbd1f4d-ddf0-49e1-b077-143e0ac5394e",
+        "name": "China",
+        "code": "CN"
+      },
+      {
+        "id": "fc063f90-996d-4ba8-b8cb-a7dd02ea8613",
+        "name": "Christmas Island",
+        "code": "CX"
+      },
+      {
+        "id": "76b2b845-ebf7-4e4c-995c-4d63ef7c434a",
+        "name": "Cocos (Keeling) Islands",
+        "code": "CC"
+      },
+      {
+        "id": "bc39e108-f4f1-4cd4-825e-9e9267f1a8b0",
+        "name": "Colombia",
+        "code": "CO"
+      },
+      {
+        "id": "ae4c5577-00a0-4144-adb1-5f19ea232bdd",
+        "name": "Comoros",
+        "code": "KM"
+      },
+      {
+        "id": "56c2a8d9-747e-4246-af2b-cbf086d48b75",
+        "name": "Congo",
+        "code": "CG"
+      },
+      {
+        "id": "965f358c-7f3d-4504-bc27-170c3b0128da",
+        "name": "Cook Islands",
+        "code": "CK"
+      },
+      {
+        "id": "bdf901ac-08a9-4b26-9f39-7250a15aab41",
+        "name": "Costa Rica",
+        "code": "CR"
+      },
+      {
+        "id": "2402c777-f250-4fb3-a7f0-5c50af832f8d",
+        "name": "Cote D'Ivoire (Ivory Coast)",
+        "code": "CI"
+      },
+      {
+        "id": "459e6954-9d8b-415d-bf9e-0a0bea6b1567",
+        "name": "Croatia",
+        "code": "HR"
+      },
+      {
+        "id": "2f030951-0315-4d12-8cf6-132dc5261401",
+        "name": "Cuba",
+        "code": "CU"
+      },
+      {
+        "id": "dc8c40d1-2c91-4af6-80d6-4cb8b0876e08",
+        "name": "Cura\u00e7ao",
+        "code": "CW"
+      },
+      {
+        "id": "282b876d-d406-42ff-acdd-8b69d033400c",
+        "name": "Cyprus",
+        "code": "CY"
+      },
+      {
+        "id": "90529dda-a254-46bb-ba31-d374ab27eb52",
+        "name": "Czech Republic",
+        "code": "CZ"
+      },
+      {
+        "id": "27552345-255b-44c2-a15a-a55b5edd8a5a",
+        "name": "Democratic Republic of the Congo",
+        "code": "CD"
+      },
+      {
+        "id": "9f5be1f6-3534-41ff-a815-6e7db4b44503",
+        "name": "Denmark",
+        "code": "DK"
+      },
+      {
+        "id": "3619faec-ee7a-4e71-8cee-704024402735",
+        "name": "Djibouti",
+        "code": "DJ"
+      },
+      {
+        "id": "777fafbe-2a9f-4264-85b9-0cd512c05a6b",
+        "name": "Dominica",
+        "code": "DM"
+      },
+      {
+        "id": "d51de024-fdfb-48db-a04f-b74ac1dc3280",
+        "name": "Dominican Republic",
+        "code": "DO"
+      },
+      {
+        "id": "1ff06cc2-b0ca-428f-93e9-3dc9b9f3f9e1",
+        "name": "East Timor",
+        "code": "TL"
+      },
+      {
+        "id": "d5e239ac-2064-4f2e-b01e-4a5185754b93",
+        "name": "Ecuador",
+        "code": "EC"
+      },
+      {
+        "id": "1bf45c49-dafd-42d6-914a-9c2fdb64f6fb",
+        "name": "Egypt",
+        "code": "EG"
+      },
+      {
+        "id": "1a2d8f35-f87c-490d-a401-ba8cdde3da66",
+        "name": "El Salvador",
+        "code": "SV"
+      },
+      {
+        "id": "c23df263-d6e1-4e05-8bb5-2210aa9619ef",
+        "name": "Equatorial Guinea",
+        "code": "GQ"
+      },
+      {
+        "id": "3683dc47-48a9-44ea-83d3-267671f1b22c",
+        "name": "Eritrea",
+        "code": "ER"
+      },
+      {
+        "id": "0b8c02e7-7a09-4811-942d-1d2e3f7bdc3e",
+        "name": "Estonia",
+        "code": "EE"
+      },
+      {
+        "id": "bf84d83d-a918-4204-a07e-4dc3e2498bc2",
+        "name": "Ethiopia",
+        "code": "ET"
+      },
+      {
+        "id": "b4e105aa-7ac1-4d38-a0a3-7d9a12a5773a",
+        "name": "Falkland Islands",
+        "code": "FK"
+      },
+      {
+        "id": "898b4cbd-ddc0-4339-9067-d04f4d2fb8cb",
+        "name": "Faroe Islands",
+        "code": "FO"
+      },
+      {
+        "id": "86c9d157-85db-4557-ad7b-9208ec4f7470",
+        "name": "Fiji Islands",
+        "code": "FJ"
+      },
+      {
+        "id": "1f83ac08-b5f4-4eec-b356-7bac1452bed0",
+        "name": "Finland",
+        "code": "FI"
+      },
+      {
+        "id": "be574dbd-5863-4c9f-953e-d8ddddc02383",
+        "name": "France",
+        "code": "FR"
+      },
+      {
+        "id": "a7b0dddc-622c-4a7d-9130-8edc86006b2c",
+        "name": "French Guiana",
+        "code": "GF"
+      },
+      {
+        "id": "5be4af4d-8f77-40b1-8ef3-3cae76087f2d",
+        "name": "French Polynesia",
+        "code": "PF"
+      },
+      {
+        "id": "60adf85d-992b-4613-b46b-c1de09c6f6de",
+        "name": "French Southern Territories",
+        "code": "TF"
+      },
+      {
+        "id": "e5f131ee-93b7-423e-a90c-c0b689de9990",
+        "name": "Gabon",
+        "code": "GA"
+      },
+      {
+        "id": "336458f8-303b-4229-b7de-8e15a857ebf5",
+        "name": "Gambia The",
+        "code": "GM"
+      },
+      {
+        "id": "7a641155-7749-4021-a8b0-73271bce1e10",
+        "name": "Georgia",
+        "code": "GE"
+      },
+      {
+        "id": "52d02e6a-c8de-4465-8158-f952f1895142",
+        "name": "Germany",
+        "code": "DE"
+      },
+      {
+        "id": "599d5f91-6136-470b-8af2-e1884444b8a9",
+        "name": "Ghana",
+        "code": "GH"
+      },
+      {
+        "id": "a552fd9b-1aa8-491e-b836-cf7734d048aa",
+        "name": "Gibraltar",
+        "code": "GI"
+      },
+      {
+        "id": "8e52eead-44e4-4f9f-8622-bfb37d33ae62",
+        "name": "Greece",
+        "code": "GR"
+      },
+      {
+        "id": "08186caa-d2ae-4912-b003-b5049a9a381a",
+        "name": "Greenland",
+        "code": "GL"
+      },
+      {
+        "id": "1313dcf9-1ac0-49d1-a293-e67c37b16b5c",
+        "name": "Grenada",
+        "code": "GD"
+      },
+      {
+        "id": "ed1e849a-c490-4ef2-a15b-b5cb3b2c557d",
+        "name": "Guadeloupe",
+        "code": "GP"
+      },
+      {
+        "id": "5aa85073-e389-4123-8561-00dd42943f4b",
+        "name": "Guam",
+        "code": "GU"
+      },
+      {
+        "id": "98968515-5a10-49ce-acf9-474c060b9269",
+        "name": "Guatemala",
+        "code": "GT"
+      },
+      {
+        "id": "5ce6458b-24ba-4577-b963-4d5c94cafa62",
+        "name": "Guernsey and Alderney",
+        "code": "GG"
+      },
+      {
+        "id": "c49fe928-76a9-411c-801c-18dd06677278",
+        "name": "Guinea",
+        "code": "GN"
+      },
+      {
+        "id": "5561f2c7-706a-405a-8418-9272fde8d296",
+        "name": "Guinea-Bissau",
+        "code": "GW"
+      },
+      {
+        "id": "b6d9f619-57bd-4027-b411-ce93c37e4439",
+        "name": "Guyana",
+        "code": "GY"
+      },
+      {
+        "id": "5e060614-acdf-4989-a946-68b41f11ccf5",
+        "name": "Haiti",
+        "code": "HT"
+      },
+      {
+        "id": "63f05a3e-15fc-4c25-afb0-aec44895964b",
+        "name": "Heard Island and McDonald Islands",
+        "code": "HM"
+      },
+      {
+        "id": "5d93235a-e76d-4740-ae09-2d0cfbbebda0",
+        "name": "Honduras",
+        "code": "HN"
+      },
+      {
+        "id": "3ebae2bd-91c9-4d95-9f96-e8f6a245b26c",
+        "name": "Hong Kong S.A.R.",
+        "code": "HK"
+      },
+      {
+        "id": "1e3fc4d6-3456-46ab-bd0c-f29981d16ceb",
+        "name": "Hungary",
+        "code": "HU"
+      },
+      {
+        "id": "58336787-9d19-45bc-b20e-1551ba181dcf",
+        "name": "Iceland",
+        "code": "IS"
+      },
+      {
+        "id": "3620c96b-a7be-466d-8d24-d6fc49c11ccf",
+        "name": "India",
+        "code": "IN"
+      },
+      {
+        "id": "c2c46575-3eff-4be2-8c40-4e75663cfd9a",
+        "name": "Indonesia",
+        "code": "ID"
+      },
+      {
+        "id": "4d09ee69-5f77-4369-9727-9f28b8a98cf3",
+        "name": "Iran",
+        "code": "IR"
+      },
+      {
+        "id": "2e17c3a3-4252-4e40-bf75-88513ea96bbc",
+        "name": "Iraq",
+        "code": "IQ"
+      },
+      {
+        "id": "9bdea975-5f54-4f49-bc0a-19725bb11a60",
+        "name": "Ireland",
+        "code": "IE"
+      },
+      {
+        "id": "ccd82e88-ecde-49ea-9c00-c723efd12ab2",
+        "name": "Israel",
+        "code": "IL"
+      },
+      {
+        "id": "46130bba-0658-457c-82f8-13e2b0a17631",
+        "name": "Italy",
+        "code": "IT"
+      },
+      {
+        "id": "1ab429bb-34fb-443b-b6ac-0089531b713a",
+        "name": "Jamaica",
+        "code": "JM"
+      },
+      {
+        "id": "2d5e31ef-4402-42a1-97f4-1773a27e8b16",
+        "name": "Japan",
+        "code": "JP"
+      },
+      {
+        "id": "54d54207-8bcb-4d4d-95ef-8ecb1d19787d",
+        "name": "Jersey",
+        "code": "JE"
+      },
+      {
+        "id": "6ee58672-1c5e-48bf-96a5-13a1c5a571a4",
+        "name": "Jordan",
+        "code": "JO"
+      },
+      {
+        "id": "a9d3ff15-774a-4c4a-bb20-842121398fb3",
+        "name": "Kazakhstan",
+        "code": "KZ"
+      },
+      {
+        "id": "54a24bff-5122-4210-af41-4c750f1fa902",
+        "name": "Kenya",
+        "code": "KE"
+      },
+      {
+        "id": "1647f6f4-52e5-4255-bedb-b34ee1a57083",
+        "name": "Kiribati",
+        "code": "KI"
+      },
+      {
+        "id": "c58e3396-fcab-42a9-85c5-27f5649ec30d",
+        "name": "Kosovo",
+        "code": "XK"
+      },
+      {
+        "id": "82d1de78-9110-400a-9274-df0b6b3762db",
+        "name": "Kuwait",
+        "code": "KW"
+      },
+      {
+        "id": "a1e3ea2a-8693-4271-bae4-588105b72480",
+        "name": "Kyrgyzstan",
+        "code": "KG"
+      },
+      {
+        "id": "b4155f94-27c9-4337-99d7-fe858f54bad7",
+        "name": "Laos",
+        "code": "LA"
+      },
+      {
+        "id": "69305583-2ea8-456d-a939-2bce961bc848",
+        "name": "Latvia",
+        "code": "LV"
+      },
+      {
+        "id": "0856119f-fe72-4be6-85b8-5b2ac9a1dde7",
+        "name": "Lebanon",
+        "code": "LB"
+      },
+      {
+        "id": "a2ee2ed0-9a8a-447c-9c97-2f60a052d9ae",
+        "name": "Lesotho",
+        "code": "LS"
+      },
+      {
+        "id": "cab86726-7205-4082-988a-403a3445ff48",
+        "name": "Liberia",
+        "code": "LR"
+      },
+      {
+        "id": "eb24e829-105d-4d2d-ab96-0f6a2ca40146",
+        "name": "Libya",
+        "code": "LY"
+      },
+      {
+        "id": "cf923aeb-5272-4e80-81c0-89a350364d83",
+        "name": "Liechtenstein",
+        "code": "LI"
+      },
+      {
+        "id": "4dafb8aa-6896-42c1-9808-017aacc90e3f",
+        "name": "Lithuania",
+        "code": "LT"
+      },
+      {
+        "id": "7c44f56e-4123-4585-87ea-547bf858302b",
+        "name": "Luxembourg",
+        "code": "LU"
+      },
+      {
+        "id": "ba1159c6-5135-4fbb-b5e1-0382f555b709",
+        "name": "Macau S.A.R.",
+        "code": "MO"
+      },
+      {
+        "id": "7ca12849-9923-454e-aecc-50b7a01cdf76",
+        "name": "Madagascar",
+        "code": "MG"
+      },
+      {
+        "id": "20a8ca75-933a-40cc-bc53-81519df6ebd6",
+        "name": "Malawi",
+        "code": "MW"
+      },
+      {
+        "id": "4fba26b8-049f-4d57-b74a-dce18e1ac756",
+        "name": "Malaysia",
+        "code": "MY"
+      },
+      {
+        "id": "6f1a16c3-4a0c-4709-833a-d73c95789b25",
+        "name": "Maldives",
+        "code": "MV"
+      },
+      {
+        "id": "3d196abd-1645-438d-a8a1-51df80b557e8",
+        "name": "Mali",
+        "code": "ML"
+      },
+      {
+        "id": "6c4a07e5-9f0b-4eef-8781-836d0c652689",
+        "name": "Malta",
+        "code": "MT"
+      },
+      {
+        "id": "23db3625-2f32-4dd1-bb5e-a72c19023df4",
+        "name": "Man (Isle of)",
+        "code": "IM"
+      },
+      {
+        "id": "74a98487-fd0f-4bf7-be2c-369869456ce5",
+        "name": "Marshall Islands",
+        "code": "MH"
+      },
+      {
+        "id": "8e592c01-846b-4c5c-acb6-11478c81c65f",
+        "name": "Martinique",
+        "code": "MQ"
+      },
+      {
+        "id": "6c79d65d-dcad-4b7c-a2df-56f5536eeb5f",
+        "name": "Mauritania",
+        "code": "MR"
+      },
+      {
+        "id": "5580f036-a50a-460e-98e6-d085ebd2e981",
+        "name": "Mauritius",
+        "code": "MU"
+      },
+      {
+        "id": "96c507b5-8edc-4f25-b993-3bcc34d318c0",
+        "name": "Mayotte",
+        "code": "YT"
+      },
+      {
+        "id": "928068af-8662-489d-a5b1-5682ee59c4f4",
+        "name": "Mexico",
+        "code": "MX"
+      },
+      {
+        "id": "9371b89e-45b2-46af-8114-e11ef0c05706",
+        "name": "Micronesia",
+        "code": "FM"
+      },
+      {
+        "id": "909dde39-900d-4bdb-a03e-30c24f2817ad",
+        "name": "Moldova",
+        "code": "MD"
+      },
+      {
+        "id": "530cf288-dbe4-46d3-99fb-e543d622fd93",
+        "name": "Monaco",
+        "code": "MC"
+      },
+      {
+        "id": "c621fc98-0d68-4447-99e7-8a1dcaff0bd8",
+        "name": "Mongolia",
+        "code": "MN"
+      },
+      {
+        "id": "01c559aa-07c8-4905-a918-7506986e287e",
+        "name": "Montenegro",
+        "code": "ME"
+      },
+      {
+        "id": "15c9d23e-03ae-4cd6-93b5-438f44d20bac",
+        "name": "Montserrat",
+        "code": "MS"
+      },
+      {
+        "id": "978179e1-f674-4d06-bfda-2e5e9db76c56",
+        "name": "Morocco",
+        "code": "MA"
+      },
+      {
+        "id": "5daa985a-e371-4184-b6fd-ca06df8f9836",
+        "name": "Mozambique",
+        "code": "MZ"
+      },
+      {
+        "id": "c3082d37-a375-4cbd-9320-bde67120eee8",
+        "name": "Myanmar",
+        "code": "MM"
+      },
+      {
+        "id": "ba0da51c-e3dc-46da-9217-215ba5fd8523",
+        "name": "Namibia",
+        "code": "NA"
+      },
+      {
+        "id": "798385fd-459c-4e04-97e2-d359fa270600",
+        "name": "Nauru",
+        "code": "NR"
+      },
+      {
+        "id": "c1807c7b-cc8b-4720-bf65-5f87d3cc6c8b",
+        "name": "Nepal",
+        "code": "NP"
+      },
+      {
+        "id": "7b0679ca-becb-40c5-ae78-6b5d3683e02b",
+        "name": "Netherlands",
+        "code": "NL"
+      },
+      {
+        "id": "cf2ca04c-c595-4c23-8ab8-25610b590adf",
+        "name": "New Caledonia",
+        "code": "NC"
+      },
+      {
+        "id": "0a499cf8-d705-4291-925c-76aec371ad29",
+        "name": "New Zealand",
+        "code": "NZ"
+      },
+      {
+        "id": "ff561b80-16dd-4fe9-b719-566f01be8863",
+        "name": "Nicaragua",
+        "code": "NI"
+      },
+      {
+        "id": "2603634f-00ff-4fb7-bce2-3dd2bae3160e",
+        "name": "Niger",
+        "code": "NE"
+      },
+      {
+        "id": "e437d9fb-9524-40e6-896f-8c66423851c6",
+        "name": "Nigeria",
+        "code": "NG"
+      },
+      {
+        "id": "99b5fef5-c86e-4f15-a8f7-d75d320ed21d",
+        "name": "Niue",
+        "code": "NU"
+      },
+      {
+        "id": "43656d70-a5e6-4a95-a1a1-7cfdc9e7f014",
+        "name": "Norfolk Island",
+        "code": "NF"
+      },
+      {
+        "id": "c819cad1-f83d-427b-8616-44824b1aa641",
+        "name": "Northern Mariana Islands",
+        "code": "MP"
+      },
+      {
+        "id": "c1a5a86f-9458-4005-92b8-5c7b7569cac6",
+        "name": "North Korea",
+        "code": "KP"
+      },
+      {
+        "id": "9e72e562-6221-4423-8b49-0877f8fb9f00",
+        "name": "North Macedonia",
+        "code": "MK"
+      },
+      {
+        "id": "d0f24f24-ffe3-44b7-9fe1-c2b50296ac3b",
+        "name": "Norway",
+        "code": "NO"
+      },
+      {
+        "id": "fada3e03-1ebc-42ff-8b44-fb702f3d5dc9",
+        "name": "Oman",
+        "code": "OM"
+      },
+      {
+        "id": "1a839fdf-94f2-4c9b-b889-b73f9979d58f",
+        "name": "Pakistan",
+        "code": "PK"
+      },
+      {
+        "id": "9f6338cb-3d5c-4b21-bc59-b185edaeba7f",
+        "name": "Palau",
+        "code": "PW"
+      },
+      {
+        "id": "c80b09bf-2588-4c97-9188-b5a24e950890",
+        "name": "Palestinian Territory Occupied",
+        "code": "PS"
+      },
+      {
+        "id": "c694d5c7-92e1-4229-9f86-c530d825c691",
+        "name": "Panama",
+        "code": "PA"
+      },
+      {
+        "id": "5d7450c3-a4f1-405b-9c9c-522271a77946",
+        "name": "Papua new Guinea",
+        "code": "PG"
+      },
+      {
+        "id": "328d4f1e-d155-4805-8e3b-094c0465a4bb",
+        "name": "Paraguay",
+        "code": "PY"
+      },
+      {
+        "id": "f2c8a00b-d40d-4ede-aa09-2e02fb1c4097",
+        "name": "Peru",
+        "code": "PE"
+      },
+      {
+        "id": "f99f6fb6-4175-4cd9-a245-419b93d94a72",
+        "name": "Philippines",
+        "code": "PH"
+      },
+      {
+        "id": "33042740-dc08-4c95-a9c2-f737c02e8ac4",
+        "name": "Pitcairn Island",
+        "code": "PN"
+      },
+      {
+        "id": "6cf3fa8a-08a7-4dbf-81e4-17bb7baef145",
+        "name": "Poland",
+        "code": "PL"
+      },
+      {
+        "id": "c3802f2e-aed7-4544-b631-89278cb90f8e",
+        "name": "Portugal",
+        "code": "PT"
+      },
+      {
+        "id": "1a334f58-ec4d-4ae2-bf83-f749fa6337c1",
+        "name": "Puerto Rico",
+        "code": "PR"
+      },
+      {
+        "id": "97da8094-49b4-445d-8fc4-add801db1e42",
+        "name": "Qatar",
+        "code": "QA"
+      },
+      {
+        "id": "25a0375d-33b1-4d3b-9f57-00a391dc4e54",
+        "name": "Reunion",
+        "code": "RE"
+      },
+      {
+        "id": "67788d02-9749-4f49-b967-e410331fd51f",
+        "name": "Romania",
+        "code": "RO"
+      },
+      {
+        "id": "dcd910f5-40f7-498a-a65d-7d07bf5adb62",
+        "name": "Russia",
+        "code": "RU"
+      },
+      {
+        "id": "15c15cb2-c6f7-48ac-a580-dcd74a252775",
+        "name": "Rwanda",
+        "code": "RW"
+      },
+      {
+        "id": "a1f45d3a-649d-4942-91bd-f5547af8eb9d",
+        "name": "Saint-Barthelemy",
+        "code": "BL"
+      },
+      {
+        "id": "8e2deff0-7dc1-427a-8f5a-72393b148113",
+        "name": "Saint Helena",
+        "code": "SH"
+      },
+      {
+        "id": "da69a540-ada2-44b1-be7d-0a9971b19806",
+        "name": "Saint Kitts And Nevis",
+        "code": "KN"
+      },
+      {
+        "id": "6dd10c99-45ac-4eff-8142-6ee655819056",
+        "name": "Saint Lucia",
+        "code": "LC"
+      },
+      {
+        "id": "a396e4ab-99a2-4fef-b8f9-e1e049f9a8b9",
+        "name": "Saint-Martin (French part)",
+        "code": "MF"
+      },
+      {
+        "id": "59b1b23f-472d-4226-acb1-608b33ff1f12",
+        "name": "Saint Pierre and Miquelon",
+        "code": "PM"
+      },
+      {
+        "id": "94e80cd5-71f0-4c6f-8686-dc9781df8d65",
+        "name": "Saint Vincent And The Grenadines",
+        "code": "VC"
+      },
+      {
+        "id": "6ef22efd-e95d-48cc-b325-5595e84b835d",
+        "name": "Samoa",
+        "code": "WS"
+      },
+      {
+        "id": "b80199c2-4292-440a-bb10-f3d6b7fb241d",
+        "name": "San Marino",
+        "code": "SM"
+      },
+      {
+        "id": "28e72f6b-9913-4f9a-b796-3ca3df6910a5",
+        "name": "Sao Tome and Principe",
+        "code": "ST"
+      },
+      {
+        "id": "5f2622f2-3dc0-496b-9253-41bfa94999b5",
+        "name": "Saudi Arabia",
+        "code": "SA"
+      },
+      {
+        "id": "8f80288a-99d8-4df8-92c4-b16aa03e3268",
+        "name": "Senegal",
+        "code": "SN"
+      },
+      {
+        "id": "4a322673-0b9e-4517-99ad-a3cfb38ac9da",
+        "name": "Serbia",
+        "code": "RS"
+      },
+      {
+        "id": "b1f65407-63c0-4528-af06-33270805edc5",
+        "name": "Seychelles",
+        "code": "SC"
+      },
+      {
+        "id": "258ceb92-3c7d-4f6e-8103-5ee24c627787",
+        "name": "Sierra Leone",
+        "code": "SL"
+      },
+      {
+        "id": "f9baf0c2-355a-44e4-b54f-21e0fd5c0349",
+        "name": "Singapore",
+        "code": "SG"
+      },
+      {
+        "id": "9509be18-2aa0-4efe-8070-bff70edff8a6",
+        "name": "Sint Maarten (Dutch part)",
+        "code": "SX"
+      },
+      {
+        "id": "58434a45-bb4b-402b-ac34-3b89cabf6c09",
+        "name": "Slovakia",
+        "code": "SK"
+      },
+      {
+        "id": "ce4ab0b7-3aa2-427a-bd58-eb7f737650c4",
+        "name": "Slovenia",
+        "code": "SI"
+      },
+      {
+        "id": "3bf1c323-787d-442d-afaf-05602066e602",
+        "name": "Solomon Islands",
+        "code": "SB"
+      },
+      {
+        "id": "f473a550-3282-4b3e-8b29-5926bfb34f9f",
+        "name": "Somalia",
+        "code": "SO"
+      },
+      {
+        "id": "12469f0c-11ca-4c73-b644-f8603d7aa1f1",
+        "name": "South Africa",
+        "code": "ZA"
+      },
+      {
+        "id": "ae3f3aa2-6f12-4ae6-b1e5-bd1091c97b45",
+        "name": "South Georgia",
+        "code": "GS"
+      },
+      {
+        "id": "65ce1501-6cc2-4f67-a139-bbed5bdf6c42",
+        "name": "South Korea",
+        "code": "KR"
+      },
+      {
+        "id": "bee70b45-2c6b-4359-862c-1f0650e28fcf",
+        "name": "South Sudan",
+        "code": "SS"
+      },
+      {
+        "id": "d031b1b4-8a55-46ae-8567-f715810e768a",
+        "name": "Spain",
+        "code": "ES"
+      },
+      {
+        "id": "52e4b9ff-7d80-4288-b41e-3af37a9eb850",
+        "name": "Sri Lanka",
+        "code": "LK"
+      },
+      {
+        "id": "64e569d2-f5bb-471b-9f19-b1012cbd684a",
+        "name": "Sudan",
+        "code": "SD"
+      },
+      {
+        "id": "38804180-b18d-427d-a842-0833f6b9e093",
+        "name": "Suriname",
+        "code": "SR"
+      },
+      {
+        "id": "91170304-d6c1-424a-a371-6af0d13eab97",
+        "name": "Svalbard And Jan Mayen Islands",
+        "code": "SJ"
+      },
+      {
+        "id": "6ab825a8-a1bb-4296-9299-c809ca96bbd4",
+        "name": "Swaziland",
+        "code": "SZ"
+      },
+      {
+        "id": "0667f18d-194a-4c67-8ec2-b0df6d52cb5e",
+        "name": "Sweden",
+        "code": "SE"
+      },
+      {
+        "id": "0d9e4b51-52cc-40df-979b-6f9a9f1959f9",
+        "name": "Switzerland",
+        "code": "CH"
+      },
+      {
+        "id": "3ff087ae-23be-411e-8eb2-6916d966e59e",
+        "name": "Syria",
+        "code": "SY"
+      },
+      {
+        "id": "7fab5f70-0326-4184-b64f-be290182d4b7",
+        "name": "Taiwan",
+        "code": "TW"
+      },
+      {
+        "id": "e025ee9c-b73d-472a-b6e7-fe768fa4c1ca",
+        "name": "Tajikistan",
+        "code": "TJ"
+      },
+      {
+        "id": "1768e059-03a4-4301-872f-4b3ab33ba22c",
+        "name": "Tanzania",
+        "code": "TZ"
+      },
+      {
+        "id": "fb0a6e9e-c93e-4437-9af2-148d600be0d4",
+        "name": "Thailand",
+        "code": "TH"
+      },
+      {
+        "id": "b45ca410-ba5d-459f-9592-a43d39301c6c",
+        "name": "The Bahamas",
+        "code": "BS"
+      },
+      {
+        "id": "95eaec82-31d0-4c9c-9c88-f12c08fa0676",
+        "name": "Togo",
+        "code": "TG"
+      },
+      {
+        "id": "6d9d10a8-8a14-4b74-a1c2-0b5cedfc9456",
+        "name": "Tokelau",
+        "code": "TK"
+      },
+      {
+        "id": "a2049bfb-1db5-4f60-8bc7-cc2f64e8bc23",
+        "name": "Tonga",
+        "code": "TO"
+      },
+      {
+        "id": "a3329672-cb5e-4452-ab6b-fe32aeb1c4cf",
+        "name": "Trinidad And Tobago",
+        "code": "TT"
+      },
+      {
+        "id": "98369dc7-985a-424d-bbd3-ac0b8d86880c",
+        "name": "Tunisia",
+        "code": "TN"
+      },
+      {
+        "id": "92618810-acf0-44fc-a6bc-64218d233a72",
+        "name": "Turkey",
+        "code": "TR"
+      },
+      {
+        "id": "cb19cc13-9351-4843-bcc5-051eafb6c2b5",
+        "name": "Turkmenistan",
+        "code": "TM"
+      },
+      {
+        "id": "e7f6e1c3-1f3b-4238-8919-f2d4b608496d",
+        "name": "Turks And Caicos Islands",
+        "code": "TC"
+      },
+      {
+        "id": "f6954fff-7524-4078-a6e1-184fbf19446e",
+        "name": "Tuvalu",
+        "code": "TV"
+      },
+      {
+        "id": "502efa25-0538-4f24-b5d1-e3ae4c8c66f8",
+        "name": "Uganda",
+        "code": "UG"
+      },
+      {
+        "id": "aaef2a86-bab1-4c69-8b49-303ca8b50f85",
+        "name": "Ukraine",
+        "code": "UA"
+      },
+      {
+        "id": "8adbd99d-ee88-40a2-a41d-0d9e8fc9da81",
+        "name": "United Arab Emirates",
+        "code": "AE"
+      },
+      {
+        "id": "a99e902b-41e9-43e7-9bd7-0160eb48cb46",
+        "name": "United Kingdom",
+        "code": "GB"
+      },
+      {
+        "id": "547f5194-b158-4b0d-8a6a-f1d66ebc7681",
+        "name": "United States",
+        "code": "US"
+      },
+      {
+        "id": "6aec30d2-16cb-48cd-9cfa-7f034f4a5756",
+        "name": "United States Minor Outlying Islands",
+        "code": "UM"
+      },
+      {
+        "id": "4e0c9416-d4a6-43d6-8bf4-b6a39c020c22",
+        "name": "Uruguay",
+        "code": "UY"
+      },
+      {
+        "id": "f48418f7-e993-45ec-854b-3d0f81587bb3",
+        "name": "Uzbekistan",
+        "code": "UZ"
+      },
+      {
+        "id": "78b8b376-03bb-4d6a-9e55-74347a5710ef",
+        "name": "Vanuatu",
+        "code": "VU"
+      },
+      {
+        "id": "194f91aa-8fdd-4c51-8101-8dc44d96b7b8",
+        "name": "Vatican City State (Holy See)",
+        "code": "VA"
+      },
+      {
+        "id": "5fecbad2-952f-4fa0-8621-61dfb850c1a0",
+        "name": "Venezuela",
+        "code": "VE"
+      },
+      {
+        "id": "e2e88a6d-9446-4832-8c27-6832e45b43e5",
+        "name": "Vietnam",
+        "code": "VN"
+      },
+      {
+        "id": "8b04e624-4b50-450e-8130-ba0833bb301a",
+        "name": "Virgin Islands (British)",
+        "code": "VG"
+      },
+      {
+        "id": "d8badef2-dd8b-4ccb-8246-c819b256f2eb",
+        "name": "Virgin Islands (US)",
+        "code": "VI"
+      },
+      {
+        "id": "ad1d962c-264a-4ff1-aaf7-4494dd0a8e4a",
+        "name": "Wallis And Futuna Islands",
+        "code": "WF"
+      },
+      {
+        "id": "d90d608f-fc37-4bd6-a6a9-b2804f9732c2",
+        "name": "Western Sahara",
+        "code": "EH"
+      },
+      {
+        "id": "e5ab0a4f-f854-4a0d-b2ed-9ed7cd2c17c6",
+        "name": "Yemen",
+        "code": "YE"
+      },
+      {
+        "id": "4363f63c-9389-47ec-9dde-f7651d511ff0",
+        "name": "Zambia",
+        "code": "ZM"
+      },
+      {
+        "id": "44efc6fc-e2c6-4cb3-9262-e1141cc5ba55",
+        "name": "Zimbabwe",
+        "code": "ZW"
+      }
+    ],
+    "meta": {
+      "code": 1,
+      "message": "Countries fetched successfully."
+    }
+  },
+  "states": {
+    "data": [
+      {
+        "id": "dcdf161e-740d-470d-b5c5-833b82a1cd7a",
+        "name": "Andaman and Nicobar Islands",
+        "code": "AN",
+        "country_id": "3620c96b-a7be-466d-8d24-d6fc49c11ccf"
+      },
+      {
+        "id": "0659b266-6302-428e-9b45-27f16257f0d5",
+        "name": "Andhra Pradesh",
+        "code": "AP",
+        "country_id": "3620c96b-a7be-466d-8d24-d6fc49c11ccf"
+      },
+      {
+        "id": "29eaf9b1-c6d7-42b2-9e12-26b109aad10e",
+        "name": "Arunachal Pradesh",
+        "code": "AR",
+        "country_id": "3620c96b-a7be-466d-8d24-d6fc49c11ccf"
+      },
+      {
+        "id": "570ff361-5f5d-4100-9823-b61729227533",
+        "name": "Assam",
+        "code": "AS",
+        "country_id": "3620c96b-a7be-466d-8d24-d6fc49c11ccf"
+      },
+      {
+        "id": "2054779f-bc23-4d81-8fb8-c6d10d85c74c",
+        "name": "Bihar",
+        "code": "BR",
+        "country_id": "3620c96b-a7be-466d-8d24-d6fc49c11ccf"
+      },
+      {
+        "id": "de7ea24c-4179-4de8-a3bc-cf5691f0e04a",
+        "name": "Chandigarh",
+        "code": "CH",
+        "country_id": "3620c96b-a7be-466d-8d24-d6fc49c11ccf"
+      },
+      {
+        "id": "79419bf4-40d2-42b8-9fef-d7d5b96c800e",
+        "name": "Chhattisgarh",
+        "code": "CT",
+        "country_id": "3620c96b-a7be-466d-8d24-d6fc49c11ccf"
+      },
+      {
+        "id": "d192445f-4f85-43f8-94ba-cc77436e68c0",
+        "name": "Dadra and Nagar Haveli and Daman and Diu",
+        "code": "DH",
+        "country_id": "3620c96b-a7be-466d-8d24-d6fc49c11ccf"
+      },
+      {
+        "id": "bde00c41-ea09-4da5-b133-bbb1a01e7d13",
+        "name": "Delhi",
+        "code": "DL",
+        "country_id": "3620c96b-a7be-466d-8d24-d6fc49c11ccf"
+      },
+      {
+        "id": "80459760-16d8-41cd-bfb1-467781da86da",
+        "name": "Goa",
+        "code": "GA",
+        "country_id": "3620c96b-a7be-466d-8d24-d6fc49c11ccf"
+      },
+      {
+        "id": "d2869212-7cda-4685-85ca-2b1dd2c13df6",
+        "name": "Gujarat",
+        "code": "GJ",
+        "country_id": "3620c96b-a7be-466d-8d24-d6fc49c11ccf"
+      },
+      {
+        "id": "1bd8adda-aa6f-47eb-8e24-8079149a48d3",
+        "name": "Haryana",
+        "code": "HR",
+        "country_id": "3620c96b-a7be-466d-8d24-d6fc49c11ccf"
+      },
+      {
+        "id": "c66c5c44-b45c-4e04-830c-636bf4cd6532",
+        "name": "Himachal Pradesh",
+        "code": "HP",
+        "country_id": "3620c96b-a7be-466d-8d24-d6fc49c11ccf"
+      },
+      {
+        "id": "828893b9-77ec-4f54-8a07-91ac5ae75a22",
+        "name": "Jammu and Kashmir",
+        "code": "JK",
+        "country_id": "3620c96b-a7be-466d-8d24-d6fc49c11ccf"
+      },
+      {
+        "id": "6413418d-6527-4fe6-8c77-5144014d46ab",
+        "name": "Jharkhand",
+        "code": "JH",
+        "country_id": "3620c96b-a7be-466d-8d24-d6fc49c11ccf"
+      },
+      {
+        "id": "87d3ae19-692d-46a3-93f7-4d2ae36298bf",
+        "name": "Karnataka",
+        "code": "KA",
+        "country_id": "3620c96b-a7be-466d-8d24-d6fc49c11ccf"
+      },
+      {
+        "id": "8ff96b28-1cf7-4ef9-80b7-4ae45f672c70",
+        "name": "Kerala",
+        "code": "KL",
+        "country_id": "3620c96b-a7be-466d-8d24-d6fc49c11ccf"
+      },
+      {
+        "id": "5c6decef-2dee-4f87-8ffe-e92f09f79733",
+        "name": "Ladakh",
+        "code": "LA",
+        "country_id": "3620c96b-a7be-466d-8d24-d6fc49c11ccf"
+      },
+      {
+        "id": "063f9de7-bcea-4cc6-94d7-92b47f4288cf",
+        "name": "Lakshadweep",
+        "code": "LD",
+        "country_id": "3620c96b-a7be-466d-8d24-d6fc49c11ccf"
+      },
+      {
+        "id": "7ec55497-0445-42b2-88da-bd13e155c8cc",
+        "name": "Madhya Pradesh",
+        "code": "MP",
+        "country_id": "3620c96b-a7be-466d-8d24-d6fc49c11ccf"
+      },
+      {
+        "id": "5e71686a-9f1a-4136-a1f0-787aaa06a5a6",
+        "name": "Maharashtra",
+        "code": "MH",
+        "country_id": "3620c96b-a7be-466d-8d24-d6fc49c11ccf"
+      },
+      {
+        "id": "029f62b4-b220-481d-b50a-bdd01bc75297",
+        "name": "Manipur",
+        "code": "MN",
+        "country_id": "3620c96b-a7be-466d-8d24-d6fc49c11ccf"
+      },
+      {
+        "id": "be2c63c9-e0e2-42d0-bbdc-8b038a0e76aa",
+        "name": "Meghalaya",
+        "code": "ML",
+        "country_id": "3620c96b-a7be-466d-8d24-d6fc49c11ccf"
+      },
+      {
+        "id": "77162984-29ed-4b28-926b-39f0b1ad078e",
+        "name": "Mizoram",
+        "code": "MZ",
+        "country_id": "3620c96b-a7be-466d-8d24-d6fc49c11ccf"
+      },
+      {
+        "id": "6e351977-2071-49c0-b4b3-711061fce949",
+        "name": "Nagaland",
+        "code": "NL",
+        "country_id": "3620c96b-a7be-466d-8d24-d6fc49c11ccf"
+      },
+      {
+        "id": "8839a088-802b-4e90-9aac-cc4b6919e501",
+        "name": "Odisha",
+        "code": "OR",
+        "country_id": "3620c96b-a7be-466d-8d24-d6fc49c11ccf"
+      },
+      {
+        "id": "3da494b9-4af9-48c0-9fbb-151d838fd1d8",
+        "name": "Puducherry",
+        "code": "PY",
+        "country_id": "3620c96b-a7be-466d-8d24-d6fc49c11ccf"
+      },
+      {
+        "id": "cf9d4660-a5bb-48de-9474-69c577cdcc78",
+        "name": "Punjab",
+        "code": "PB",
+        "country_id": "3620c96b-a7be-466d-8d24-d6fc49c11ccf"
+      },
+      {
+        "id": "6473a714-afba-4aab-8ce6-aaab0605f68a",
+        "name": "Rajasthan",
+        "code": "RJ",
+        "country_id": "3620c96b-a7be-466d-8d24-d6fc49c11ccf"
+      },
+      {
+        "id": "c1dfc20d-6a80-4751-8fa7-00eced4865cd",
+        "name": "Sikkim",
+        "code": "SK",
+        "country_id": "3620c96b-a7be-466d-8d24-d6fc49c11ccf"
+      },
+      {
+        "id": "5df2a9ec-8007-4971-80ed-f3c5256c430d",
+        "name": "Tamil Nadu",
+        "code": "TN",
+        "country_id": "3620c96b-a7be-466d-8d24-d6fc49c11ccf"
+      },
+      {
+        "id": "9dc760e1-4584-4d8c-ae0a-a1af04ae8868",
+        "name": "Telangana",
+        "code": "TG",
+        "country_id": "3620c96b-a7be-466d-8d24-d6fc49c11ccf"
+      },
+      {
+        "id": "51c2c4d8-ce8e-4136-9a20-c5eef5937f9c",
+        "name": "Tripura",
+        "code": "TR",
+        "country_id": "3620c96b-a7be-466d-8d24-d6fc49c11ccf"
+      },
+      {
+        "id": "5abd571f-2d54-4ad9-9f6a-aaf66a2ff854",
+        "name": "Uttarakhand",
+        "code": "UT",
+        "country_id": "3620c96b-a7be-466d-8d24-d6fc49c11ccf"
+      },
+      {
+        "id": "0a41ea85-2e40-4fd9-9a76-bb6ce7f9422d",
+        "name": "Uttar Pradesh",
+        "code": "UP",
+        "country_id": "3620c96b-a7be-466d-8d24-d6fc49c11ccf"
+      },
+      {
+        "id": "77e05384-9b8f-42e0-a7fc-9d582053df41",
+        "name": "West Bengal",
+        "code": "WB",
+        "country_id": "3620c96b-a7be-466d-8d24-d6fc49c11ccf"
+      }
+    ],
+    "meta": {
+      "code": 1,
+      "message": "States fetched successfully."
+    }
+  },
+  "import_columns": {
+    "data": [
+      {
+        "key": "employee_code",
+        "header": "Employee Code",
+        "required": true
+      },
+      {
+        "key": "business_unit",
+        "header": "Business Unit"
+      },
+      {
+        "key": "first_name",
+        "header": "First Name",
+        "required": true
+      },
+      {
+        "key": "middle_name",
+        "header": "Middle Name"
+      },
+      {
+        "key": "last_name",
+        "header": "Last Name",
+        "required": true
+      },
+      {
+        "key": "email",
+        "header": "Work Email"
+      },
+      {
+        "key": "department_title",
+        "header": "Department"
+      },
+      {
+        "key": "designation_title",
+        "header": "Designation"
+      },
+      {
+        "key": "reporting_name",
+        "header": "Reporting to"
+      },
+      {
+        "key": "reporting_code",
+        "header": "Reporting Manager Code"
+      },
+      {
+        "key": "status",
+        "header": "Status"
+      },
+      {
+        "key": "joined_date",
+        "header": "Joining Date"
+      },
+      {
+        "key": "confirmed_date",
+        "header": "Confirmation Date"
+      },
+      {
+        "key": "personal_email",
+        "header": "Personal Email"
+      },
+      {
+        "key": "gender",
+        "header": "Gender"
+      },
+      {
+        "key": "blood_group",
+        "header": "Blood Group"
+      },
+      {
+        "key": "birth_date",
+        "header": "Date of Birth"
+      },
+      {
+        "key": "seating_location",
+        "header": "Seating Location"
+      },
+      {
+        "key": "extension_number",
+        "header": "Extension Number"
+      },
+      {
+        "key": "profile_picture",
+        "header": "Profile Picture"
+      },
+      {
+        "key": "role",
+        "header": "Role"
+      },
+      {
+        "key": "role_expiry",
+        "header": "Role Expiry"
+      },
+      {
+        "key": "role_remarks",
+        "header": "Role Remarks"
+      },
+      {
+        "key": "work_mobile_code",
+        "header": "Work Mobile Number Country Code"
+      },
+      {
+        "key": "work_mobile",
+        "header": "Work Mobile Number"
+      },
+      {
+        "key": "personal_mobile_code",
+        "header": "Personal Mobile Number Country Code"
+      },
+      {
+        "key": "personal_mobile",
+        "header": "Personal Mobile Number"
+      },
+      {
+        "key": "alternate_mobile_code",
+        "header": "Alternate Mobile Number Country Code"
+      },
+      {
+        "key": "alternate_mobile",
+        "header": "Alternate Mobile Number"
+      },
+      {
+        "key": "present_address",
+        "header": "Present Address"
+      },
+      {
+        "key": "present_city",
+        "header": "Present City"
+      },
+      {
+        "key": "present_state",
+        "header": "Present State"
+      },
+      {
+        "key": "present_country",
+        "header": "Present Country"
+      },
+      {
+        "key": "present_pin_code",
+        "header": "Present Pin Code"
+      },
+      {
+        "key": "permanent_address",
+        "header": "Permanent Address"
+      },
+      {
+        "key": "permanent_city",
+        "header": "Permanent City"
+      },
+      {
+        "key": "permanent_state",
+        "header": "Permanent State"
+      },
+      {
+        "key": "permanent_country",
+        "header": "Permanent Country"
+      },
+      {
+        "key": "permanent_pin_code",
+        "header": "Permanent Pin Code"
+      },
+      {
+        "key": "prev_experience",
+        "header": "Prev Experience"
+      },
+      {
+        "key": "current_experience",
+        "header": "Current Org Experience"
+      },
+      {
+        "key": "total_experience",
+        "header": "Total Experience"
+      },
+      {
+        "key": "total_exp_days",
+        "header": "Total Exp in Days"
+      },
+      {
+        "key": "marital_status",
+        "header": "Marital Status"
+      },
+      {
+        "key": "spouse_name",
+        "header": "Spouse Name"
+      },
+      {
+        "key": "spouse_dob",
+        "header": "Spouse Date of Birth"
+      },
+      {
+        "key": "marriage_date",
+        "header": "Marriage Date"
+      },
+      {
+        "key": "father_name",
+        "header": "Father Name"
+      },
+      {
+        "key": "mother_name",
+        "header": "Mother Name"
+      },
+      {
+        "key": "child_name",
+        "header": "Child Name"
+      },
+      {
+        "key": "child_gender",
+        "header": "Child Gender"
+      },
+      {
+        "key": "child_dob",
+        "header": "Child DOB"
+      },
+      {
+        "key": "emergency_contact",
+        "header": "Emergency Contact"
+      },
+      {
+        "key": "emergency_contact_relation",
+        "header": "Emergency Contact Relation"
+      },
+      {
+        "key": "emergency_contact_code",
+        "header": "Emergency Contact Mobile Number Country Code"
+      },
+      {
+        "key": "emergency_contact_number",
+        "header": "Emergency Contact Mobile Number"
+      },
+      {
+        "key": "social_handle",
+        "header": "Social Handle"
+      },
+      {
+        "key": "social_handle_link",
+        "header": "Social Handle Link"
+      },
+      {
+        "key": "prev_organization",
+        "header": "Previous Organization"
+      },
+      {
+        "key": "prev_org_designation",
+        "header": "Previous Organization Designation"
+      },
+      {
+        "key": "prev_org_remarks",
+        "header": "Previous Organization Remarks"
+      },
+      {
+        "key": "hi_company",
+        "header": "Health Insurance Company"
+      },
+      {
+        "key": "hi_company_code",
+        "header": "HI Company Code"
+      },
+      {
+        "key": "hi_policy_number",
+        "header": "HI Policy Number"
+      },
+      {
+        "key": "phs_id",
+        "header": "PHS ID"
+      },
+      {
+        "key": "hi_valid_from",
+        "header": "HI Valid From"
+      },
+      {
+        "key": "hi_valid_to",
+        "header": "HI Valid To"
+      },
+      {
+        "key": "hi_sum_assured",
+        "header": "HI Sum Assured"
+      },
+      {
+        "key": "timesheet_filling",
+        "header": "Timesheet"
+      },
+      {
+        "key": "employee_type",
+        "header": "Employee Type"
+      },
+      {
+        "key": "about",
+        "header": "About Employee"
+      },
+      {
+        "key": "hire_source",
+        "header": "Source of Hire"
+      },
+      {
+        "key": "employer_remarks",
+        "header": "Employer Remark"
+      },
+      {
+        "key": "account_status",
+        "header": "Account Status"
+      },
+      {
+        "key": "last_login_time",
+        "header": "Last Login"
+      },
+      {
+        "key": "separation_type",
+        "header": "Exit Type"
+      },
+      {
+        "key": "separation_action_date",
+        "header": "Separation Action Date"
+      },
+      {
+        "key": "last_working_date",
+        "header": "Last Working Date"
+      },
+      {
+        "key": "separation_reason",
+        "header": "Separation Reason"
+      },
+      {
+        "key": "separation_details",
+        "header": "Separation Details"
+      },
+      {
+        "key": "separation_confirm_by",
+        "header": "Separation Confirmation by"
+      },
+      {
+        "key": "separation_confirm_on",
+        "header": "Separation Confirmation on"
+      },
+      {
+        "key": "separation_confirm_remarks",
+        "header": "Separation Confirmation Remarks"
+      },
+      {
+        "key": "biometric_id",
+        "header": "Biometric ID"
+      },
+      {
+        "key": "custom_field_pan_number",
+        "header": "PAN Number",
+        "is_custom_field": true
+      },
+      {
+        "key": "custom_field_pf_number",
+        "header": "PF Number",
+        "is_custom_field": true
+      },
+      {
+        "key": "custom_field_aadhaar_card_number",
+        "header": "Aadhaar Card Number",
+        "is_custom_field": true
+      },
+      {
+        "key": "custom_field_uan_number",
+        "header": "UAN Number",
+        "is_custom_field": true
+      }
+    ],
+    "meta": {
+      "code": 1,
+      "message": "Columns fetched successfully."
+    }
+  }
+}

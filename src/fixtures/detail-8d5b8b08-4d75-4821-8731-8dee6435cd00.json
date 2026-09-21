@@ -1,0 +1,279 @@
+{
+  "data": {
+    "id": "8d5b8b08-4d75-4821-8731-8dee6435cd00",
+    "business_unit_id": "d7556737-a732-4971-9968-e35dfd1e9e9e",
+    "first_name": "Qadir",
+    "middle_name": "",
+    "last_name": "Banerjee",
+    "gender": "female",
+    "birth_date": "1992-03-31",
+    "blood_group": "A+",
+    "profile_picture": null,
+    "profile_picture_size": "0",
+    "about": "",
+    "email": "shreya.shetty@example.com",
+    "is_external_email": true,
+    "department_id": "d5c27db9-4c22-44df-b0d5-8bad2cb84884",
+    "designation_id": "806a5c60-d8c2-43a1-aaf8-6311a6aff3b1",
+    "reporting_manager_id": "83450fc5-f123-411f-affc-33429dd1bd96",
+    "employee_code": "BL-052",
+    "employee_type": "non-technical",
+    "status": "relieved",
+    "timesheet_filling": false,
+    "employer_remarks": "",
+    "account_status": "active",
+    "biometric_id": "BL-052",
+    "created_at": "2026-04-15T10:37:21.074Z",
+    "updated_at": "2026-07-23T09:09:28.781Z",
+    "employee_wfh_applications": [],
+    "employee_leave_applications": [],
+    "updated_by_details": {
+      "first_name": "Qadir",
+      "last_name": "Banerjee"
+    },
+    "created_by_details": {
+      "first_name": "Qadir",
+      "last_name": "Banerjee"
+    },
+    "reporting_to": {
+      "first_name": "Vivek",
+      "last_name": "Trivedi",
+      "profile_picture": null,
+      "business_unit_id": "d7556737-a732-4971-9968-e35dfd1e9e9e",
+      "employee_code": "BL-014",
+      "employee_roles": [
+        {
+          "role_id": "5aa7bbcf-9488-4b2f-9fbf-dc23448981c8",
+          "role": {
+            "slug": "project-manager"
+          }
+        }
+      ]
+    },
+    "businessUnit": {
+      "name": "Qadir Banerjee",
+      "logo": "logo_type-1771305590JT8.webp",
+      "logo_url": null
+    },
+    "designation": {
+      "title": "Business analyst"
+    },
+    "department": {
+      "title": "Business Analysis"
+    },
+    "hiring_source": {
+      "id": "34130f63-d4e4-4598-b8ba-1800f8712f8f",
+      "employee_id": "8d5b8b08-4d75-4821-8731-8dee6435cd00",
+      "source_id": null,
+      "remarks": "",
+      "sourceId": null,
+      "sources": null
+    },
+    "employee_roles": [
+      {
+        "id": "eec4c3a1-82eb-4bff-bf51-be7b4105282c",
+        "role_id": "6b6bbffc-16ef-438a-96f4-d8639917536a",
+        "employee_id": "8d5b8b08-4d75-4821-8731-8dee6435cd00",
+        "expire_date": null,
+        "remarks": "",
+        "role": {
+          "title": "Employee",
+          "slug": "employee"
+        }
+      }
+    ],
+    "employee_contact_info": {
+      "id": "d0d271a8-f399-4306-b7a8-67b8e29ab9fc",
+      "employee_id": "8d5b8b08-4d75-4821-8731-8dee6435cd00",
+      "company_country_code": "",
+      "company_mobile": "",
+      "seating_location": "",
+      "extension_number": "",
+      "personal_email": "",
+      "personal_country_code": "91",
+      "personal_mobile": "7182135276",
+      "alternate_country_code": "",
+      "alternate_mobile": ""
+    },
+    "employee_experiences": {
+      "id": "395338b0-54f2-46a5-b29a-1c5d5e618f9c",
+      "employee_id": "8d5b8b08-4d75-4821-8731-8dee6435cd00",
+      "joined_date": "2020-04-01",
+      "confirmed_date": "2020-05-01",
+      "prev_exp_year": 0,
+      "prev_exp_month": 0,
+      "previous_organizations": []
+    },
+    "employee_documents": [],
+    "employee_addresses": [
+      {
+        "id": "bf9214e1-0f4c-4625-bd04-edb12dd0318d",
+        "employee_id": "8d5b8b08-4d75-4821-8731-8dee6435cd00",
+        "address": "12 Palm Grove, Chennai",
+        "country_id": "3620c96b-a7be-466d-8d24-d6fc49c11ccf",
+        "state_id": "dcdf161e-740d-470d-b5c5-833b82a1cd7a",
+        "city": "Chennai",
+        "zipcode": "371375",
+        "type": "permanent",
+        "country_name": "India",
+        "state_name": "Andaman and Nicobar Islands"
+      },
+      {
+        "id": "2d1402df-1296-48e6-b3bc-7761e56c84f6",
+        "employee_id": "8d5b8b08-4d75-4821-8731-8dee6435cd00",
+        "address": "221 Hill View, Indore",
+        "country_id": "3620c96b-a7be-466d-8d24-d6fc49c11ccf",
+        "state_id": "dcdf161e-740d-470d-b5c5-833b82a1cd7a",
+        "city": "Indore",
+        "zipcode": "084201",
+        "type": "present",
+        "country_name": "India",
+        "state_name": "Andaman and Nicobar Islands"
+      }
+    ],
+    "employee_family_details": {
+      "id": "4ca1f26c-a125-4d33-9561-caff05fc4cff",
+      "employee_id": "8d5b8b08-4d75-4821-8731-8dee6435cd00",
+      "father_name": "",
+      "mother_name": "",
+      "marital_status": "single",
+      "spouse_name": null,
+      "spouse_birth_date": null,
+      "children_details": "[]",
+      "marriage_date": null
+    },
+    "employee_insurances": null,
+    "employee_emergency_contacts": [
+      {
+        "id": "cd9518e8-daf4-4d88-8c33-4e17907ea4a7",
+        "employee_id": "8d5b8b08-4d75-4821-8731-8dee6435cd00",
+        "name": "Omkar Kapoor",
+        "country_code": "91",
+        "contact_number": "4545830400",
+        "relation": "mother"
+      }
+    ],
+    "employee_social_links": [],
+    "employee_separation": null,
+    "attendance_events": [],
+    "shift_assignments": null,
+    "profile_picture_url": null,
+    "is_projects": 0,
+    "skill_matrixes": [],
+    "is_job_interview": 0,
+    "is_client_interview_resource": 0,
+    "is_client_interviews": 0,
+    "present_status": null,
+    "current_shift": {
+      "assignment_id": "cee1484e-df1a-4853-9c26-93899b6f8567",
+      "is_auto_default_shift": false,
+      "effective_from": "2026-05-26",
+      "effective_to": null,
+      "id": "e4d0fe59-ccff-456d-99e2-f2baa269d767",
+      "name": "Meera Chauhan",
+      "code": "GS",
+      "color_code": "#3b82f6",
+      "is_default": true,
+      "fullday_gross_hours": "09:00:00",
+      "fullday_break_hours": "01:00:00",
+      "fullday_total_hours": "08:00:00",
+      "halfday_gross_hours": "04:30:00",
+      "halfday_break_hours": "00:30:00",
+      "halfday_total_hours": "04:00:00",
+      "from_hours": "10:00:00",
+      "to_hours": "07:00:00",
+      "check_in_allowed_from": "09:00:00",
+      "grace_period": "00:15:00"
+    },
+    "yet_to_check_in": true,
+    "pip_status": null,
+    "pip_id": null,
+    "custom_field_sections": [
+      {
+        "id": "924183e5-8888-478d-b761-d97d844c8c89",
+        "section_name": "Compliance Details",
+        "section_description": "Add Compliance related details like PAN, Aadhaar, etc. for payroll processing.",
+        "section_position": 1,
+        "is_visible": true,
+        "rows": [
+          {
+            "id": "36bca195-3ea6-4bb1-b5e3-3b40ee1d6a4d",
+            "row_position": 1,
+            "row_layout": "double",
+            "fields": [
+              {
+                "id": "113627fb-dce5-45c1-8c74-4791c5be6deb",
+                "field_key": "pan_number",
+                "field_label": "PAN Number",
+                "field_type": "textbox",
+                "field_position": 1,
+                "field_properties": {
+                  "required": false,
+                  "is_unique": false,
+                  "field_width": 50,
+                  "max_characters": 100
+                },
+                "is_visible": true
+              },
+              {
+                "id": "5b132ad6-ede9-48f0-b817-604d47f5d0a1",
+                "field_key": "aadhaar_card_number",
+                "field_label": "Aadhaar Card Number",
+                "field_type": "textbox",
+                "field_position": 2,
+                "field_properties": {
+                  "required": false,
+                  "is_unique": false,
+                  "field_width": 50,
+                  "max_characters": 100
+                },
+                "is_visible": true
+              }
+            ]
+          },
+          {
+            "id": "562200ad-d834-4aae-b2ce-0d70949bf985",
+            "row_position": 2,
+            "row_layout": "double",
+            "fields": [
+              {
+                "id": "38e6eb7a-cdc7-463b-bd6e-4deb65205cba",
+                "field_key": "pf_number",
+                "field_label": "PF Number",
+                "field_type": "textbox",
+                "field_position": 1,
+                "field_properties": {
+                  "required": false,
+                  "is_unique": false,
+                  "field_width": 50,
+                  "max_characters": 100
+                },
+                "is_visible": true
+              },
+              {
+                "id": "1189427f-71a0-473e-8733-1ede4f7b8d0f",
+                "field_key": "uan_number",
+                "field_label": "UAN Number",
+                "field_type": "textbox",
+                "field_position": 2,
+                "field_properties": {
+                  "required": false,
+                  "is_unique": false,
+                  "field_width": 50,
+                  "max_characters": 100
+                },
+                "is_visible": true
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "custom_field_unsectioned": []
+  },
+  "meta": {
+    "code": 1,
+    "message": "Employee fetched successfully.",
+    "unaccessedModuleList": []
+  }
+}
