@@ -7,39 +7,59 @@ Read this before you treat anything in the prototype as a specification.
 
 ---
 
-## 1. NOT CAPTURED — do not treat these as real
+## 1. Gaps CLOSED on 2026-09-21 (second pass)
 
-| Thing | Why it is missing | What the prototype does instead |
+Four of the six original gaps are closed. None of it required writing to staging.
+The method was to read the app's **own JS bundle** (it ships its filter config,
+its form payload and its API calls in plain minified source) and to drive the
+real UI in ways that cannot create records.
+
+| Was missing | How it was closed | Result |
 |---|---|---|
-| **Create employee endpoint** | The Add form was never submitted against staging — that would have written a real record. | `POST /v1/employee` in `src/api/endpoints.js` is a **placeholder path**, flagged `NOT_CAPTURED: true`. The mock writes to memory only. |
-| **Update employee endpoint** | Same reason. | `PUT /v1/employee/{id}` — also a **placeholder**. |
-| **Validation messages** | Never captured — requires a failed submit against staging. | The prototype has **no validation messages at all**. Required markers (`*`) are copied; the messages are not invented. |
-| **Sub-sidebar flyout item markup** | The flyout will not open in headless Chrome (hover and click both fail — confirmed across 4 attempts). | The **panel wrapper, heading and `<ul>` are copied** from the DOM (it ships collapsed at `w-[0px]`). The single item label "Employee List" comes from the app's own route table (`_build/route_table.json`) and your screenshot. **The per-item classes are mine, not copied.** |
-| **`field_name` for 11 of 18 filter fields** | Those filters would not apply headlessly, so the server-side name never appeared in the URL. | Marked `verified: false` and `field_name: null` in `endpoints.js`, and shown with a `?` in the filter dropdown. **Do not ship these names.** |
-| **View Employee tab contents** | The five non-General-Info tabs were captured as *pages*, but their table contents were not extracted. | Each tab renders a placeholder that says so. Route + tab label + tab strip styling are real. |
+| Create/update endpoints | Read out of the bundle: `rn.post("/employee/add-edit", e)` | **One** endpoint, `POST /v1/employee/add-edit`, serves both Add and Edit |
+| Create/update request body | The form's initial-values object in the bundle | Full nested payload — `EMPLOYEE_FORM_PAYLOAD` in `endpoints.js` |
+| Validation messages | Submitted the Add form **empty** against staging — validation rejected it, **0 write requests fired**, nothing created | `"This is a required field."` and `"Please enter a valid email address."`, plus the 19 fields that error and the message's class |
+| `field_name` for 11 of 18 filter fields | The bundle's filter config (`{id, label, operator, options, type}`) | **All 18** now real, with type and operators |
+| Sub-sidebar flyout markup | Opened it by invoking the `<li>`'s own React `onClick` through the fiber — synthetic mouse events never worked | Panel, close button, heading, `<ul>`, `<li>`, item link and the trailing "add" link, all copied |
 
-### Filter `field_name` — verified vs not
+### My earlier placeholders were wrong in every dimension
 
-**VERIFIED** (read back from the live URL's `filterQuery` after applying the filter):
+I had guessed `POST /v1/employee` and `PUT /v1/employee/{id}`. The truth is a
+single `POST /v1/employee/add-edit` — wrong path, wrong method, wrong count.
+This is why they were flagged rather than quietly used.
 
-| Label | `field_name` | Operators |
-|---|---|---|
-| Name | `name` | Contains, Is |
-| Email Type | `is_external_email` | Is |
-| Timesheet Filling | `timesheet_filling` | Is |
-| Employee Type | `employee_type` | Is |
-| Status | `status` | Is, Is not |
-| Account Status | `account_status` | Is |
-| 2FA | `is_2fa_enabled` | Is |
+### Two field names that would have been wrong
 
-**NOT VERIFIED** — label, icon and operator list are copied; the `field_name` is unknown:
-Code, Business Unit, Department, Designation, Reporting To, Email, Mobile Number,
-Gender, Joining Date, Confirmation Date, Blood Group.
+`Business Unit` → **`business_unit_id`** (not `business_unit`).
+`Mobile Number` → **`personal_mobile`** (not `mobile_number`).
 
-> Note the two that would have been guessed wrong: `Email Type` is **`is_external_email`**,
-> not `email_type`; `2FA` is **`is_2fa_enabled`**, not `two_fa`.
+The seven field names I had confirmed live all matched the bundle exactly, which
+is what makes the other eleven trustworthy.
+
+### The default filter — this explains your first screenshot
+
+The flyout's "Employee List" link is not a bare route. It carries:
+
+```
+?filterQuery=[{"field_name":"status","operator":"Is not","value":"relieved"},
+              {"field_name":"account_status","operator":"Is","value":"active"}]
+```
+
+So the two chips you saw on the real screen (`Status Is not Relieved`,
+`Account Status Is Active`) are the **product's default**, applied whenever you
+reach the listing from the sub-sidebar — not something a user had set. The
+prototype reproduces this: entering via the flyout narrows 53 rows to 6.
 
 ---
+
+## 1b. STILL NOT CAPTURED
+
+| Thing | Why | What the prototype does |
+|---|---|---|
+| **The add-edit RESPONSE envelope** | Would require actually creating a record on staging. | The mock returns `{data:{id}, meta:{code,message}}` — the envelope every other endpoint uses. **Assumed, not observed.** |
+| **Server-side validation / error envelope** | Only client-side validation was reachable without writing. | No server error handling. A failure surfaces as plain text. |
+| **View Employee tab contents** | The five non-General-Info tabs were captured as *pages*; their table contents were not extracted. | Each renders a placeholder saying so. Route, tab label and tab-strip styling are real. |
+| **Dropdown option values for 4 filter types** | `multi-dropdown` fields load their options from endpoints not yet traced. | The filter accepts free text for those. Field name, type and operators are real. |
 
 ## 2. VERIFIED — captured from the wire, safe to build on
 
@@ -90,6 +110,7 @@ press **Filter**.
 | 2 | No portal switcher panel, notification modal, offline overlay, user menu, reCAPTCHA | Out of scope. This is most of the fidelity-score gap (see §5). |
 | 3 | All personal data is **fake** | Masked for GitHub. Field names and types are unchanged. See §6. |
 | 4 | Avatar colour per person | The **ten colour classes are copied**; the rule that picks one per person is mine — the app's rule was not captured. |
+| 4b | `name` added to the Address / About / Employer Remarks textareas | The real DOM leaves these unnamed. Added so developers and tests have a handle; it adds field names rather than changing any. |
 | 5 | `bg-orange` omitted from avatar colours | It appears on rows in the crawled DOM but **has no rule in the app's compiled CSS**, so it renders transparent there too. |
 | 6 | Mock store persists to `sessionStorage` | Demo convenience so a refresh does not wipe an added employee. No counterpart in CollabCRM. Call `resetStore()` to clear. |
 | 7 | Detail records exist for only **3** of 53 employees | Only 3 were captured. Others are synthesised from their list row, flagged `_synthesised: true` in the response meta. |

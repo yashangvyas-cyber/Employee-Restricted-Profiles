@@ -16,6 +16,10 @@
 import { useMemo, useRef, useState } from 'react'
 import { FILTER_FIELDS } from '../api/endpoints'
 
+/** URL-loaded chips carry only field_name/operator/value; recover the label. */
+const labelFor = (fn) => FILTER_FIELDS.find((f) => f.field_name === fn)?.label || fn
+const iconFor = (fn) => FILTER_FIELDS.find((f) => f.field_name === fn)?.icon || 'icon-check-verified-02'
+
 export default function FilterBar({ chips, onApply, onRemoveChip, onClearAll }) {
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
@@ -36,7 +40,6 @@ export default function FilterBar({ chips, onApply, onRemoveChip, onClearAll }) 
       field_name: draft.field.field_name,
       operator: draft.operator,
       value: draft.value,
-      verified: draft.field.verified,
     })
     setDraft(null); setQuery(''); setOpen(false)
   }
@@ -64,8 +67,8 @@ export default function FilterBar({ chips, onApply, onRemoveChip, onClearAll }) 
                   key={i}
                   className="flex items-center gap-1 rounded-md border border-gray-300 bg-white px-2 py-1 2xl:text-sm 2xl-to-xl:text-xs text-xs"
                 >
-                  <span className="icon-check-verified-02 text-gray-500" />
-                  <span className="font-medium text-gray-700">{c.label}</span>
+                  <span className={`${iconFor(c.field_name)} text-gray-500`} />
+                  <span className="font-medium text-gray-700">{c.label || labelFor(c.field_name)}</span>
                   <span className="text-gray-500">{c.operator}</span>
                   <span className="font-medium text-gray-900">{String(c.value)}</span>
                   <span
@@ -142,11 +145,6 @@ export default function FilterBar({ chips, onApply, onRemoveChip, onClearAll }) 
                                 <div className="flex items-center">
                                   <span className={`${f.icon} text-gray-600 2xl:text-lg 2xl-to-xl:text-base text-base pe-2`} />
                                   <span>{f.label}</span>
-                                  {!f.verified && (
-                                    <span className="ms-auto ps-3 text-xxs text-gray-400" title="field_name not captured - see GAPS.md">
-                                      ?
-                                    </span>
-                                  )}
                                 </div>
                               </span>
                             </li>

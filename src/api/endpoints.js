@@ -49,12 +49,14 @@ export const ENDPOINTS = {
   countries:           { method: 'POST', path: '/v1/common/countries', base: MASTER_API_BASE },
   states:              { method: 'POST', path: '/v1/common/states',    base: MASTER_API_BASE },
 
-  // ---- WRITES: *** NOT CAPTURED *** -----------------------------------------
-  // The Add/Edit forms were never submitted against staging (that would have
-  // written real records), so the create/update contracts are UNKNOWN.
-  // The paths below are PLACEHOLDERS, not observed values. See GAPS.md.
-  employeeCreate:      { method: 'POST', path: '/v1/employee',              NOT_CAPTURED: true },
-  employeeUpdate:      { method: 'PUT',  path: (id) => `/v1/employee/${id}`, NOT_CAPTURED: true },
+  // ---- WRITES ---------------------------------------------------------------
+  // ONE endpoint serves both Add and Edit. Read out of the app's own bundle:
+  //   const pBr = async e => (await rn.post("/employee/add-edit", e)).data
+  // Editing sends the same call with the employee's id inside the payload.
+  // The request body is EMPLOYEE_FORM_PAYLOAD below.
+  // Not executed against staging - that would create real records - so the
+  // RESPONSE shape is still unconfirmed. See GAPS.md.
+  employeeAddEdit:     { method: 'POST', path: '/v1/employee/add-edit' },
 }
 
 /** Filter operators observed in the live filter bar for a text field ("Name"). */
@@ -62,34 +64,112 @@ export const ENDPOINTS = {
 /** The 18 filterable fields, copied in order from the live filter dropdown,
  *  each with the icon class the app renders next to it. */
 export const FILTER_FIELDS = [
-  // VERIFIED = field_name read back from the live URL's filterQuery after applying
-  // that filter through the real UI. UNVERIFIED = the filter would not apply
-  // headlessly, so the server-side name is unknown; the label and icon ARE copied.
-  { label: 'Name',              field_name: 'name',              icon: 'icon-user-01',           verified: true,  operators: ['Contains', 'Is'] },
-  { label: 'Code',              field_name: null,                icon: 'icon-hash',              verified: false, operators: ['Contains', 'Is'] },
-  { label: 'Business Unit',     field_name: null,                icon: 'icon-building-07',       verified: false, operators: ['Is'] },
-  { label: 'Department',        field_name: null,                icon: 'icon-dataflow-04',       verified: false, operators: ['Is', 'Is not'] },
-  { label: 'Designation',       field_name: null,                icon: 'icon-award-01',          verified: false, operators: ['Is', 'Is not'] },
-  { label: 'Reporting To',      field_name: null,                icon: 'icon-image-user-right',  verified: false, operators: ['Is'] },
-  { label: 'Email',             field_name: null,                icon: 'icon-mail-05',           verified: false, operators: ['Contains', 'Is'] },
-  { label: 'Email Type',        field_name: 'is_external_email', icon: 'icon-mail-05',           verified: true,  operators: ['Is'] },
-  { label: 'Mobile Number',     field_name: null,                icon: 'icon-phone-01',          verified: false, operators: ['Contains', 'Is'] },
-  { label: 'Gender',            field_name: null,                icon: 'icon-intersex',          verified: false, operators: ['Is'] },
-  { label: 'Joining Date',      field_name: null,                icon: 'icon-calendar',          verified: false, operators: ['Is'] },
-  { label: 'Confirmation Date', field_name: null,                icon: 'icon-calendar',          verified: false, operators: ['Is'] },
-  { label: 'Timesheet Filling', field_name: 'timesheet_filling', icon: 'icon-calendar-plus-01',  verified: true,  operators: ['Is'] },
-  { label: 'Employee Type',     field_name: 'employee_type',     icon: 'icon-two-arrow',         verified: true,  operators: ['Is'] },
-  { label: 'Status',            field_name: 'status',            icon: 'icon-check-verified-02', verified: true,  operators: ['Is', 'Is not'] },
-  { label: 'Account Status',    field_name: 'account_status',    icon: 'icon-shield-tick',       verified: true,  operators: ['Is'] },
-  { label: 'Blood Group',       field_name: null,                icon: 'icon-drop',              verified: false, operators: ['Is'] },
-  { label: '2FA',               field_name: 'is_2fa_enabled',    icon: 'icon-two-fa',            verified: true,  operators: ['Is'] },
+  // field_name, type and operators are the app's own filter config, read out of
+  // the JS bundle (each entry is {id, label, operator, options, type}). The seven
+  // marked `live: true` were additionally confirmed by applying that filter in the
+  // browser and reading field_name back from the URL - all seven agreed with the
+  // bundle, which is why the other eleven are trusted.
+  { label: 'Name',              field_name: 'name',              type: 'text',           icon: 'icon-user-01',           operators: ['Contains', 'Is'], live: true },
+  { label: 'Code',              field_name: 'employee_code',     type: 'text',           icon: 'icon-hash',              operators: ['Contains', 'Is'] },
+  { label: 'Business Unit',     field_name: 'business_unit_id',  type: 'multi-dropdown', icon: 'icon-building-07',       operators: ['Is'] },
+  { label: 'Department',        field_name: 'department',        type: 'multi-dropdown', icon: 'icon-dataflow-04',       operators: ['Is', 'Is not'] },
+  { label: 'Designation',       field_name: 'designation',       type: 'multi-dropdown', icon: 'icon-award-01',          operators: ['Is', 'Is not'] },
+  { label: 'Reporting To',      field_name: 'reporting_to',      type: 'multi-dropdown', icon: 'icon-image-user-right',  operators: ['Is'] },
+  { label: 'Email',             field_name: 'email',             type: 'text',           icon: 'icon-mail-05',           operators: ['Contains', 'Is'] },
+  { label: 'Email Type',        field_name: 'is_external_email', type: 'dropdown',       icon: 'icon-mail-05',           operators: ['Is'], live: true },
+  { label: 'Mobile Number',     field_name: 'personal_mobile',   type: 'text',           icon: 'icon-phone-01',          operators: ['Contains', 'Is'] },
+  { label: 'Gender',            field_name: 'gender',            type: 'dropdown',       icon: 'icon-intersex',          operators: ['Is'] },
+  { label: 'Joining Date',      field_name: 'joining_date',      type: 'date',           icon: 'icon-calendar',          operators: ['Is', 'Is between', 'Is ≥', 'Is ≤'] },
+  { label: 'Confirmation Date', field_name: 'confirmation_date', type: 'date',           icon: 'icon-calendar',          operators: ['Is', 'Is between', 'Is ≥', 'Is ≤'] },
+  { label: 'Timesheet Filling', field_name: 'timesheet_filling', type: 'dropdown',       icon: 'icon-calendar-plus-01',  operators: ['Is'], live: true },
+  { label: 'Employee Type',     field_name: 'employee_type',     type: 'dropdown',       icon: 'icon-two-arrow',         operators: ['Is'], live: true },
+  { label: 'Status',            field_name: 'status',            type: 'multi-dropdown', icon: 'icon-check-verified-02', operators: ['Is', 'Is not'], live: true },
+  { label: 'Account Status',    field_name: 'account_status',    type: 'dropdown',       icon: 'icon-shield-tick',       operators: ['Is'], live: true },
+  { label: 'Blood Group',       field_name: 'blood_group',       type: 'multi-dropdown', icon: 'icon-drop',              operators: ['Is'] },
+  { label: '2FA',               field_name: 'is_2fa_enabled',    type: 'dropdown',       icon: 'icon-two-fa',            operators: ['Is'], live: true },
 ]
+
+/** Every operator the filter bar can offer, with the value sent to the server.
+ *  Copied from the bundle's operator constants (label ≠ value for the date ones). */
+export const FILTER_OPERATORS = {
+  'Contains':   'Contains',
+  'Is':         'Is',
+  'Is not':     'Is not',
+  'Is ≥':       'Is greaterThan',
+  'Is ≤':       'Is lessThan',
+  'Is between': 'Is between',
+}
 
 /** Values observed alongside the verified field_names, copied from the live URL. */
 export const FILTER_VALUE_SAMPLES = {
   is_external_email: ['false', 'true'],
   timesheet_filling: ['true', 'false'],
-  employee_type: ['technical'],
+  employee_type: ['technical', 'non-technical'],
   account_status: ['active'],
   is_2fa_enabled: ['enable'],
+  status: ['confirmed', 'probation', 'intern', 'notice_period', 'relieved'],
+}
+
+/**
+ * The DEFAULT filter the app applies when you reach the listing from the
+ * sub-sidebar. Copied from the "Employee List" href in the flyout markup - this
+ * is why the real screen opens showing two chips.
+ */
+export const DEFAULT_FILTER_QUERY = [
+  { field_name: 'status',         operator: 'Is not', value: 'relieved' },
+  { field_name: 'account_status', operator: 'Is',     value: 'active' },
+]
+
+/**
+ * Request body for POST /v1/employee/add-edit, copied from the form's
+ * initial-values object in the app bundle. Note it is NESTED BY SECTION - it is
+ * not the flat field list the read endpoints return.
+ */
+export const EMPLOYEE_FORM_PAYLOAD = {
+  personal_info: { first_name: '', middle_name: '', last_name: '', gender: '', dob: null, blood_group: null, about: '' },
+  employee_info: { business_unit: null, employee_code: '', status: null, department: null, designation: null, reporting_to: null, employee_type: null, bioMetricId: '', active_shift: null },
+  employee_role_info: [{ role: '', expiryDate: '', remark: '' }],
+  deleted_employee_roles: [],
+  contact_info: { company_email: '', company_mobile_code: null, company_mobile: '', seating_location: '', extension_number: '', personal_email: '', personal_mobile_code: null, personal_mobile: '', alternate_mobile_code: null, alternate_mobile: '', is_external_email: false },
+  experience: { joined_date: null, confirmation_date: null, prev_exp_year: '', prev_exp_month: '', prev_organizations: [], isFresher: false },
+  family_details: { father_name: '', mother_name: '', marital_status: 'single', spouse_name: '', marriage_date: null, spouse_dob: null, children: [] },
+  present_address: { address: '', country: null, state: null, city: '', pincode: '' },
+  permanent_address: { address: '', country: null, state: null, city: '', pincode: '' },
+  documents: [],
+  deleted_documents: [],
+  health_insurance: false,
+  health_insurance_info: { insuree_name: '', relationship: 'Self', dob: null, gender: null, insurance_company: '', insurance_company_code: '', insurance_policy_number: '', insurance_phs_id: '', insurance_valid_from: null, insurance_valid_to: null, insurance_sum_assured: '' },
+  emergency_contacts: [{ name: '', country_code: '', contact_number: '', relation: null }],
+  deleted_emergency_contacts: [],
+  social_media_links: [],
+  deleted_social_media: [],
+  timesheet_filling: false,
+  source_of_hire: { source: null, remark: '' },
+  employer_remarks: { employer_remarks: '' },
+  invite_employee: true,
+  account_status: true,
+}
+
+/**
+ * Validation, captured by submitting the Add form EMPTY against staging
+ * (client-side validation rejected it, so nothing was created - 0 write
+ * requests fired). These are the app's real messages, verbatim.
+ */
+export const VALIDATION = {
+  required: 'This is a required field.',
+  email: 'Please enter a valid email address.',
+  /* class the app renders the message with */
+  errorClass: 'text-error-500 2xl:text-sm 2xl-to-xl:text-xs text-xs font-normal mt-1.5',
+  /* The fields that actually errored on an empty submit against staging,
+     named by this prototype's form-state keys. Business Unit, Employee Code,
+     Reporting to, Biometric ID, Active Shift, Date of Birth and State did NOT
+     error - they are prefilled or optional. */
+  requiredFields: [
+    'first_name', 'last_name', 'gender', 'status', 'department_id', 'designation_id',
+    'employee_type', 'role_id', 'company_email', 'personal_mobile', 'joined_date',
+    'address', 'country_id', 'city', 'zipcode',
+    'emergency_name', 'emergency_contact', 'emergency_relation',
+  ],
+  /* Previous experience errored too, but only because "Fresher" was unticked. */
+  requiredUnlessFresher: ['prev_exp_year'],
 }

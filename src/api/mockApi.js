@@ -7,7 +7,7 @@
  *
  * Request/response shapes were captured from staging on 2026-09-21.
  */
-import { ENDPOINTS, API_BASE } from './endpoints'
+import { ENDPOINTS, API_BASE, EMPLOYEE_FORM_PAYLOAD } from './endpoints'
 import listFixture from '../fixtures/employee-list.json'
 import statusCounts from '../fixtures/status-counts.json'
 import dropdowns from '../fixtures/dropdowns.json'
@@ -76,16 +76,29 @@ function applyFilters(rows, filters = []) {
     const { field_name, operator, value } = f
     if (!field_name || value === '' || value == null) return acc
     const val = String(value).toLowerCase()
+    /* Maps each real filter field_name onto the list row that backs it.
+       Names are the app's own (see FILTER_FIELDS in endpoints.js). */
     const read = (r) => {
       switch (field_name) {
-        case 'name': return r.name
-        case 'status': return r.status
-        case 'account_status': return r.account_status
-        case 'employee_type': return r.employee_type
+        case 'name':              return r.name
+        case 'employee_code':     return r.employee_code
+        case 'business_unit_id':  return r.business_unit_id
+        case 'department':        return r.department_name
+        case 'designation':       return r.designation_name
+        case 'reporting_to':      return r.reporting_name
+        case 'email':             return r.email
+        case 'personal_mobile':   return r.personal_mobile
+        case 'status':            return r.status
+        case 'account_status':    return r.account_status
+        case 'employee_type':     return r.employee_type
+        case 'joining_date':      return r.joined_date
+        case 'confirmation_date': return r.confirmed_date
         case 'timesheet_filling': return String(r.timesheet_filling)
-        case 'is_2fa_enabled': return r.is_2fa_enabled ? 'enable' : 'disable'
+        case 'is_2fa_enabled':    return r.is_2fa_enabled ? 'enable' : 'disable'
         case 'is_external_email': return String(r.is_external_email)
-        default: return r[field_name]
+        case 'gender':            return r.gender
+        case 'blood_group':       return r.blood_group
+        default:                  return r[field_name]
       }
     }
     return acc.filter((r) => {
@@ -211,54 +224,103 @@ function fromListRow(row) {
  * names used ARE the real ones (they come from the captured GET payloads);
  * the endpoint paths and the envelope are placeholders. See GAPS.md.          */
 
-export async function employeeCreate(payload) {
+/**
+ * POST /v1/employee/add-edit — ONE endpoint for both Add and Edit, as the app
+ * does it. `payload` is the nested EMPLOYEE_FORM_PAYLOAD shape; an edit carries
+ * the employee's id alongside it.
+ *
+ * The path and request shape are the app's own (read out of its bundle). The
+ * RESPONSE envelope below is NOT confirmed — the form was never submitted
+ * against staging, because that creates real records. See GAPS.md.
+ */
+export async function employeeAddEdit(payload, id = null) {
   await delay(320)
-  const id = `new-${Math.random().toString(36).slice(2, 10)}`
+  const p = payload || structuredClone(EMPLOYEE_FORM_PAYLOAD)
+  const pi = p.personal_info || {}
+  const ei = p.employee_info || {}
+  const ci = p.contact_info || {}
+  const ex = p.experience || {}
+
+  const name = [pi.first_name, pi.middle_name, pi.last_name].filter(Boolean).join(' ')
+  const pick = (v) => (v && typeof v === 'object' ? v.value ?? v.id ?? null : v)
+  const labelOf = (v) => (v && typeof v === 'object' ? v.label ?? v.title ?? null : v)
+
+  const employeeId = id || `new-${Math.random().toString(36).slice(2, 10)}`
   const row = {
     ...listFixture.data[0],
-    id,
-    name: [payload.first_name, payload.middle_name, payload.last_name].filter(Boolean).join(' '),
-    employee_code: payload.employee_code,
-    email: payload.company_email,
-    department_name: payload.department_name ?? null,
-    designation_name: payload.designation_name ?? null,
-    status: payload.status ?? 'probation',
-    account_status: 'active',
-    employee_type: payload.employee_type ?? 'technical',
-    personal_mobile: payload.personal_mobile ?? null,
-    reporting_name: payload.reporting_name ?? null,
-    joined_date: payload.joined_date ?? null,
-    confirmed_date: null,
-    last_login_time: null,
-    prev_exp_year: payload.prev_exp_year ?? 0,
-    prev_exp_month: payload.prev_exp_month ?? 0,
+    id: employeeId,
+    name,
+    employee_code: ei.employee_code,
+    email: ci.company_email,
+    department_name: labelOf(ei.department),
+    designation_name: labelOf(ei.designation),
+    reporting_name: labelOf(ei.reporting_to),
+    business_unit_id: pick(ei.business_unit),
+    status: pick(ei.status) || 'probation',
+    employee_type: pick(ei.employee_type) || 'technical',
+    account_status: p.account_status === false ? 'inactive' : 'active',
+    personal_mobile: ci.personal_mobile || null,
+    personal_country_code: ci.personal_mobile_code || null,
+    gender: pi.gender || null,
+    blood_group: pick(pi.blood_group),
+    joined_date: ex.joined_date || null,
+    confirmed_date: ex.confirmation_date || null,
+    prev_exp_year: ex.prev_exp_year || 0,
+    prev_exp_month: ex.prev_exp_month || 0,
+    timesheet_filling: !!p.timesheet_filling,
+    is_external_email: !!ci.is_external_email,
     is_2fa_enabled: false,
+    last_login_time: id ? undefined : null,
   }
-  store.employees = [row, ...store.employees]
-  store.details[id] = fromListRow(row)
-  store.editData[id] = fromListRow(row)
+
+  const existing = store.employees.find((e) => e.id === employeeId)
+  store.employees = existing
+    ? store.employees.map((e) => (e.id === employeeId ? { ...e, ...row } : e))
+    : [row, ...store.employees]
+
+  const detail = { ...fromListRow(row), ...flattenForDetail(p), id: employeeId }
+  store.details[employeeId] = detail
+  store.editData[employeeId] = detail
   persist()
-  return envelope({ id }, { message: 'Employee created successfully.' })
+  return envelope({ id: employeeId }, {
+    message: id ? 'Employee updated successfully.' : 'Employee created successfully.',
+  })
 }
 
-export async function employeeUpdate(id, payload) {
-  await delay(320)
-  store.employees = store.employees.map((e) => e.id !== id ? e : {
-    ...e,
-    name: [payload.first_name, payload.middle_name, payload.last_name].filter(Boolean).join(' ') || e.name,
-    employee_code: payload.employee_code ?? e.employee_code,
-    email: payload.company_email ?? e.email,
-    status: payload.status ?? e.status,
-    employee_type: payload.employee_type ?? e.employee_type,
-    personal_mobile: payload.personal_mobile ?? e.personal_mobile,
-    department_name: payload.department_name ?? e.department_name,
-    designation_name: payload.designation_name ?? e.designation_name,
-  })
-  const merged = { ...(store.details[id] || {}), ...payload, id }
-  store.details[id] = merged
-  store.editData[id] = merged
-  persist()
-  return envelope({ id }, { message: 'Employee updated successfully.' })
+/** Nested form payload -> the flat shape the READ endpoints return. */
+function flattenForDetail(p) {
+  const pi = p.personal_info || {}, ei = p.employee_info || {}
+  const ci = p.contact_info || {}, ex = p.experience || {}
+  const fd = p.family_details || {}, ad = p.present_address || {}
+  const pick = (v) => (v && typeof v === 'object' ? v.value ?? v.id ?? null : v)
+  const labelOf = (v) => (v && typeof v === 'object' ? v.label ?? v.title ?? null : v)
+  return {
+    first_name: pi.first_name, middle_name: pi.middle_name, last_name: pi.last_name,
+    gender: pi.gender, birth_date: pi.dob, blood_group: pick(pi.blood_group), about: pi.about,
+    employee_code: ei.employee_code, status: pick(ei.status),
+    employee_type: pick(ei.employee_type), biometric_id: ei.bioMetricId,
+    email: ci.company_email,
+    department: { title: labelOf(ei.department) },
+    designation: { title: labelOf(ei.designation) },
+    employee_contact_info: {
+      company_mobile: ci.company_mobile, seating_location: ci.seating_location,
+      extension_number: ci.extension_number, personal_email: ci.personal_email,
+      personal_mobile: ci.personal_mobile, personal_country_code: ci.personal_mobile_code,
+      alternate_mobile: ci.alternate_mobile,
+    },
+    employee_experiences: {
+      joined_date: ex.joined_date, confirmed_date: ex.confirmation_date,
+      prev_exp_year: ex.prev_exp_year, prev_exp_month: ex.prev_exp_month,
+    },
+    father_name: fd.father_name, mother_name: fd.mother_name,
+    marital_status: fd.marital_status, spouse_name: fd.spouse_name,
+    employee_addresses: [{
+      address: ad.address, city: ad.city, zipcode: ad.pincode,
+      country: { name: labelOf(ad.country) }, state: { name: labelOf(ad.state) },
+    }],
+    timesheet_filling: !!p.timesheet_filling,
+    employer_remarks: (p.employer_remarks || {}).employer_remarks,
+  }
 }
 
 /* --------------------------------------------------------- reference lookups */
