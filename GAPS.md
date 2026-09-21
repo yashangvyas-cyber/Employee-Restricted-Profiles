@@ -18,6 +18,7 @@ real UI in ways that cannot create records.
 |---|---|---|
 | Create/update endpoints | Read out of the bundle: `rn.post("/employee/add-edit", e)` | **One** endpoint, `POST /v1/employee/add-edit`, serves both Add and Edit |
 | Create/update request body | The form's initial-values object in the bundle | Full nested payload — `EMPLOYEE_FORM_PAYLOAD` in `endpoints.js` |
+| Create/update **response** | The bundle's own `onSuccess` handler for that call | `ADD_EDIT_RESPONSE` — and it revealed that saving is **two steps** (see below) |
 | Validation messages | Submitted the Add form **empty** against staging — validation rejected it, **0 write requests fired**, nothing created | `"This is a required field."` and `"Please enter a valid email address."`, plus the 19 fields that error and the message's class |
 | `field_name` for 11 of 18 filter fields | The bundle's filter config (`{id, label, operator, options, type}`) | **All 18** now real, with type and operators |
 | Sub-sidebar flyout markup | Opened it by invoking the `<li>`'s own React `onClick` through the fiber — synthetic mouse events never worked | Panel, close button, heading, `<ul>`, `<li>`, item link and the trailing "add" link, all copied |
@@ -35,6 +36,32 @@ This is why they were flagged rather than quietly used.
 
 The seven field names I had confirmed live all matched the bundle exactly, which
 is what makes the other eleven trustworthy.
+
+### Saving an employee is TWO steps — easy to miss
+
+The response's `meta` hands back **presigned upload URLs**. The client then PUTs
+each attached file straight to storage:
+
+```
+1.  POST /v1/employee/add-edit   ->  meta: {
+        code, message,
+        upload_url, upload_file_headers,     // profile picture
+        documentsUrl: [{ document_type_id, url, headers }],
+        custom_file_urls: { <fieldKey>: { upload_url, headers } }
+    }
+
+2.  for each file:
+      PUT <that url>  body: the file
+          headers: { 'content-type': file.type, ...headers from meta }
+```
+
+`meta.code` uses `STATUS_CODE = {SUCCESS:1, FAIL:0, WARNING:2, SANDWICH_LEAVE:7}`.
+On `FAIL` the app shows `meta.message` as a toast. On success it invalidates the
+`get-employees-list` query, which is why the listing is already refreshed when
+the form closes.
+
+**A developer who implements only step 1 will ship a form that silently drops
+every uploaded file.** That is the single most useful thing this pass found.
 
 ### The default filter — this explains your first screenshot
 
@@ -56,7 +83,6 @@ prototype reproduces this: entering via the flyout narrows 53 rows to 6.
 
 | Thing | Why | What the prototype does |
 |---|---|---|
-| **The add-edit RESPONSE envelope** | Would require actually creating a record on staging. | The mock returns `{data:{id}, meta:{code,message}}` — the envelope every other endpoint uses. **Assumed, not observed.** |
 | **Server-side validation / error envelope** | Only client-side validation was reachable without writing. | No server error handling. A failure surfaces as plain text. |
 | **View Employee tab contents** | The five non-General-Info tabs were captured as *pages*; their table contents were not extracted. | Each renders a placeholder saying so. Route, tab label and tab-strip styling are real. |
 | **Dropdown option values for 4 filter types** | `multi-dropdown` fields load their options from endpoints not yet traced. | The filter accepts free text for those. Field name, type and operators are real. |

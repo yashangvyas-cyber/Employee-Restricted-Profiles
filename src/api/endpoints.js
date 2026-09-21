@@ -53,9 +53,7 @@ export const ENDPOINTS = {
   // ONE endpoint serves both Add and Edit. Read out of the app's own bundle:
   //   const pBr = async e => (await rn.post("/employee/add-edit", e)).data
   // Editing sends the same call with the employee's id inside the payload.
-  // The request body is EMPLOYEE_FORM_PAYLOAD below.
-  // Not executed against staging - that would create real records - so the
-  // RESPONSE shape is still unconfirmed. See GAPS.md.
+  // Request body: EMPLOYEE_FORM_PAYLOAD. Response: ADD_EDIT_RESPONSE.
   employeeAddEdit:     { method: 'POST', path: '/v1/employee/add-edit' },
 }
 
@@ -148,6 +146,37 @@ export const EMPLOYEE_FORM_PAYLOAD = {
   employer_remarks: { employer_remarks: '' },
   invite_employee: true,
   account_status: true,
+}
+
+/**
+ * Response envelope of POST /v1/employee/add-edit, and the file-upload step
+ * that follows it. Read out of the bundle's own success handler, so no record
+ * had to be created on staging to learn this.
+ *
+ * SAVING AN EMPLOYEE IS TWO STEPS, not one:
+ *
+ *   1. POST /v1/employee/add-edit  ->  meta carries PRESIGNED UPLOAD URLS
+ *   2. for each file the user attached, PUT it straight to its presigned URL:
+ *        axios.put(presignedUrl, file, {
+ *          headers: { 'content-type': file.type, ...headersFromMeta }
+ *        })
+ *
+ * The app checks `meta.code === STATUS_CODE.FAIL` and, if so, shows
+ * `meta.message` as a toast. On success it invalidates the "get-employees-list"
+ * query, which is why the listing refreshes behind the form.
+ */
+export const STATUS_CODE = { SUCCESS: 1, FAIL: 0, WARNING: 2, SANDWICH_LEAVE: 7 }
+
+export const ADD_EDIT_RESPONSE = {
+  data: { /* the saved employee */ },
+  meta: {
+    code: 1,                    // STATUS_CODE
+    message: '',                // surfaced as a toast when code === FAIL
+    upload_url: null,           // presigned PUT target for the profile picture
+    upload_file_headers: null,  // headers to send with that PUT
+    documentsUrl: [],           // [{ document_type_id, url, headers }]
+    custom_file_urls: {},       // { <customFieldKey>: { upload_url, headers } }
+  },
 }
 
 /**

@@ -7,7 +7,7 @@
  *
  * Request/response shapes were captured from staging on 2026-09-21.
  */
-import { ENDPOINTS, API_BASE, EMPLOYEE_FORM_PAYLOAD } from './endpoints'
+import { ENDPOINTS, API_BASE, EMPLOYEE_FORM_PAYLOAD, STATUS_CODE } from './endpoints'
 import listFixture from '../fixtures/employee-list.json'
 import statusCounts from '../fixtures/status-counts.json'
 import dropdowns from '../fixtures/dropdowns.json'
@@ -65,7 +65,7 @@ const parse = (v) => (typeof v === 'string' ? JSON.parse(v) : v)
 const dd = (k) => { try { return parse(dropdowns[k]) } catch { return { data: [] } } }
 
 /** Mirrors the server's meta envelope exactly. */
-const envelope = (data, meta = {}) => ({ data, meta: { code: 1, message: '', ...meta } })
+const envelope = (data, meta = {}) => ({ data, meta: { code: STATUS_CODE.SUCCESS, message: '', ...meta } })
 
 /* ------------------------------------------------------------------ listing */
 
@@ -229,9 +229,13 @@ function fromListRow(row) {
  * does it. `payload` is the nested EMPLOYEE_FORM_PAYLOAD shape; an edit carries
  * the employee's id alongside it.
  *
- * The path and request shape are the app's own (read out of its bundle). The
- * RESPONSE envelope below is NOT confirmed — the form was never submitted
- * against staging, because that creates real records. See GAPS.md.
+ * Path, request shape AND response envelope are all the app's own, read out of
+ * its bundle (the call site plus its onSuccess handler) — no record had to be
+ * created on staging.
+ *
+ * Real clients must then do step 2: PUT each attached file to the presigned URL
+ * the response hands back in `meta`. This mock accepts no files, so it returns
+ * those keys empty rather than faking upload targets.
  */
 export async function employeeAddEdit(payload, id = null) {
   await delay(320)
@@ -284,6 +288,12 @@ export async function employeeAddEdit(payload, id = null) {
   persist()
   return envelope({ id: employeeId }, {
     message: id ? 'Employee updated successfully.' : 'Employee created successfully.',
+    /* presigned upload targets the real endpoint returns; empty here because
+       the mock takes no files. Shape copied from the app's success handler. */
+    upload_url: null,
+    upload_file_headers: null,
+    documentsUrl: [],
+    custom_file_urls: {},
   })
 }
 
