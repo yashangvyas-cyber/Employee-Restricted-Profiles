@@ -216,3 +216,36 @@ of the `yopmail` tenant, which our credentials cannot reach.
 
 To close this: either a DOM snippet of one inactive row, or credentials for a
 tenant that has one.
+
+---
+
+## The attendance / leave badge row — a real constraint (2026-09-22)
+
+The left profile panel's top row carries **today's transient state**, and the BA
+confirmed it can hold three badges at once:
+
+| Badge | Meaning |
+|---|---|
+| `SH` | leave tag (second half) |
+| `SH-WFH` | second-half work from home |
+| `YET TO CHECK-IN` | attendance — **turns green for In, red for Out** |
+
+**Measured capacity** (`flex gap-x-1 items-center`, **no `flex-wrap`**, inside a
+fixed `2xl:w-[326px] / w-[208px]` panel):
+
+| Panel | Available | 3 badges | + a Restricted badge |
+|---|---|---|---|
+| 2xl (326px) | 278px | 240px ✓ | **336px ✗** |
+| below 2xl (208px) | 184px | **240px — already overflows today** | 336px ✗ |
+
+So a fourth badge is not viable, and the row is **already tight without us** at
+the smaller breakpoint.
+
+**Decision: Restricted does NOT go in that row.** Beyond the space, it is the
+wrong place semantically — those three are *today's* state and change through
+the day, while Restricted is a permanent property of the record. It now sits in
+the identity block, under the department chip, with the full panel width.
+
+**NOT CAPTURED:** the green/red `CHECKED IN` / `CHECKED OUT` variants of the
+attendance badge. Our tenant only ever rendered `YET TO CHECK-IN`, so those two
+colour states have never been seen in a capture.

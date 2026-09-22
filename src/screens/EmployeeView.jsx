@@ -113,9 +113,6 @@ export default function EmployeeView() {
                 <div className="rounded-2xl border flex w-max font-medium items-center !rounded-lg cursor-pointer 2xl:!text-xs 2xl-to-xl:!text-xxs !text-xxs z-10 bg-gray-50 border-gray-200 py-0.5 px-2 text-xs">
                   <span><p>YET TO CHECK-IN</p></span>
                 </div>
-                {/* the captured badge row is flex gap-x-1, already built for more
-                    than one badge — so this needs no layout change. [PROPOSED] */}
-                {e.is_restricted && <RestrictedBadge />}
               </div>
             </div>
 
@@ -133,6 +130,18 @@ export default function EmployeeView() {
                     <span><p className="truncate max-w-48 text-gray-700">{e.department?.title}</p></span>
                   </div>
                 </div>
+                {/* Restricted sits with the IDENTITY, not in the badge row above.
+                    That row carries today's transient state - SH (leave), SH-WFH,
+                    and YET TO CHECK-IN which flips green/red through the day - and
+                    it has no flex-wrap inside a fixed 326px/208px panel; at the
+                    smaller breakpoint those three already overflow without us.
+                    Restricted is a permanent property of the record, so it belongs
+                    here and gets the full panel width. [PROPOSED] */}
+                {e.is_restricted && (
+                  <div className="flex justify-center mt-2">
+                    <RestrictedBadge />
+                  </div>
+                )}
                 <div className="mt-3 z-1 2xl:mb-0 2xl-to-xl:mb-1 mb-1">
                   <button type="submit" className="outline-none font-semibold rounded-lg disabled:cursor-not-allowed border disabled:opacity-100 hover:opacity-90 border-indigo-200 bg-indigo-50 text-indigo-700 2xl:py-1.5 2xl-to-xl:py-1 py-1 2xl:text-sm 2xl-to-xl:text-xs text-xs 2xl:whitespace-normal whitespace-nowrap px-2">
                     <div className="flex items-center justify-center gap-2">Send Password to Employee</div>
