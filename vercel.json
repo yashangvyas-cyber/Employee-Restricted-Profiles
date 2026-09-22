@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/((?!collabcrm/).*)", "destination": "/index.html" }
+  ]
+}
