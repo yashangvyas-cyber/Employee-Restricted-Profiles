@@ -153,3 +153,32 @@ until the PM decides. The helper text carries the meaning.
 An **optional, single-line Reason** input sits below the Restricted toggle and is
 **shown only when the toggle is ON**. Reuses the form's captured text input
 class. Its value goes into the audit trail alongside who and when.
+
+---
+
+## Scope decision — 2026-09-22 (from the PM discussion)
+
+**Build order is now fixed:**
+
+1. **People prototype screens — finish these first.** Impacts are handled on the People side.
+2. **Payroll** — needed, but after People.
+3. **Everything else is fine as-is** — those modules only need the person hidden, no screen work.
+
+### New module to build later — "Impact Brief"  `[NOT STARTED]`
+
+A module inside the prototype aimed at **non-technical readers**. For every
+screen and sub-screen it states:
+
+| Screen | Is the person shown? | If shown, who sees them? | Who does not? |
+|---|---|---|---|
+
+Rationale from the PM: there are too many modules, screens and sub-screens for
+anyone to hold the impact in their head, and the question people actually ask is
+*"will this person appear here, and to whom?"* — not *"which endpoint changed."*
+
+This is a **deliverable of its own**, not a section of an existing screen. Do not
+start it until the People screens are finished.
+
+Raw material already on hand: the route table (438 named paths), the shared
+`/v1/common/employees` dropdown usage counts (People 15, Recruitment 22, CRM 5,
+Projects 2, Reports 4), and the six Payroll screens that carry an employee.
