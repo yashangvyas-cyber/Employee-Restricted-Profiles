@@ -217,11 +217,32 @@ That is a genuine product problem the ticket does not address. Options:
 
 **Not my call — flagging it.**
 
-## Blocked
+## Capture status — NOT blocked
 
-- **yopmail tenant** — our crawl account is `bluewhaletechnosoft@maildrop.cc`; `/payroll/yopmail/*` returns **404**. Need yopmail credentials to capture that tenant.
-- **bluewhale payroll is nearly empty** — Employees Compensation returned 0 rows, `Total Employees on Payroll` = 0. Structure is captured; **populated states are not.**
-- `/people/attendance-data-for-payroll` → **404** on this tenant; the real route is unknown.
+An earlier version of this section said "blocked on the yopmail tenant". That
+was wrong and is retracted. The `bluewhaletechnosoftpvtltd` account we already
+have captured everything the build needs:
+
+| Screen | Data rows | Columns |
+|---|---|---|
+| **Salary Register** (the per-run pay list) | **4** | **22** |
+| Payroll Runs | 3 | 14 |
+| Tax Declarations | 9 | 10 |
+| Loans & Advances | 6 | 13 |
+| Expense & Reimbursement | 1 | 10 |
+| Employees Compensation | 0 | columns present in the earlier `employees_compensation.html` |
+
+Five of six screens are populated, including the one that matters most. The
+prototype uses masked fixtures anyway, so another tenant's real data adds
+nothing — structure is what the build needs, and structure is captured.
+
+**Minor, not blocking:** Employees Compensation returned 0 rows on the 2026-09-22
+pass. Its column set is already known from the earlier capture, so only a
+populated row sample is missing. Re-runnable any time with
+`_tools/payroll_crawl.cjs`.
+
+**Wrong route, unrelated:** `/people/attendance-data-for-payroll` 404s. The
+route table lists it, so the real path differs. Not needed for this ticket.
 
 ## Still PROPOSED for Payroll
 
