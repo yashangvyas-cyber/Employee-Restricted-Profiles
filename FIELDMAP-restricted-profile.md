@@ -106,8 +106,17 @@ Restricted is a **subset**, so `Restricted <= Active Employees`. The earlier
 | Row tint | `bg-warning-25` → `rgb(255 252 245)` | token **COPIED** from app CSS; **using it on a row is PROPOSED** — no row-tint pattern exists in CollabCRM |
 | Badge | `rounded-md border flex font-medium items-center w-max py-0.5 px-2 text-xs` + warning variant | **COPIED** pattern |
 | Badge icon | `icon-lock-01` | **COPIED** |
-| Badge text | **Restricted** | **PROPOSED** |
-| Placement | inside the **Name** cell (People) / **Employee** cell (Payroll) | **PROPOSED** — avoids a new column; the table already scrolls at 11 columns |
+| Badge text | **Restricted** | **PROPOSED** — kept for **View** and **Payroll** only |
+| **Listing: NO badge** | tint + hover tooltip *"This profile is restricted."* | **DECIDED 2026-09-22** — mirrors how the app marks an inactive profile |
+| Tooltip hook | `data-tooltip-id` / `data-tooltip-content` (react-tooltip) | **COPIED** mechanism — used on 38 elements in the captured listing |
+
+### Why no badge in the listing
+A text badge needs ~85px and the Name column is `min-w-[250px]` from the capture.
+Three attempts all cost real data: beside the name it overlapped the Department
+column; on the designation line it truncated the designation; without `min-w-36`
+it truncated the name. The BA's direction settles it — **the row colour carries
+the state and hovering explains it, exactly as the app already does for inactive
+profiles.** Name and designation are both intact.
 
 ---
 

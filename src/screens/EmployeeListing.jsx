@@ -11,7 +11,7 @@ import { peoplePath } from '../lib/tenant'
 import StatCard from '../components/StatCard'
 import FilterBar from '../components/FilterBar'
 import Pagination from '../components/Pagination'
-import { Avatar, Pill, StatusPill, PersonChip, TH, TD, BTN_PRIMARY, RestrictedBadge, ROW_TINT } from '../components/primitives'
+import { Avatar, Pill, StatusPill, PersonChip, TH, TD, BTN_PRIMARY, ROW_TINT } from '../components/primitives'
 
 /* Vertical stickiness comes from the app's own rule
      .tableSticky thead th { position: sticky; z-index: 9 }
@@ -225,7 +225,22 @@ export default function EmployeeListing() {
                   </tr>
                 )}
                 {!loading && rows.map((r, i) => (
-                  <tr key={r.id} className={`h-[65px] group hover:bg-gray-50${r.is_restricted ? ` ${ROW_TINT}` : ''}`}>
+                  <tr
+                    key={r.id}
+                    className={`h-[65px] group hover:bg-gray-50${r.is_restricted ? ` ${ROW_TINT}` : ''}`}
+                    {...(r.is_restricted
+                      ? {
+                          /* mirrors how the app marks an inactive profile: the row
+                             carries the state and hovering explains it. The app
+                             attaches react-tooltip via data-tooltip-id; `title`
+                             makes it work in the prototype. Exact tooltip styling
+                             is NOT CAPTURED - see GAPS.md. */
+                          'data-tooltip-id': `restricted+${r.id}`,
+                          'data-tooltip-content': 'This profile is restricted.',
+                          title: 'This profile is restricted.',
+                        }
+                      : {})}
+                  >
                     <td className={`${TD} w-[1%]`}>
                       <p className="text-gray-900 max-w-[160px] truncate font-medium line-clamp1">{from + i}</p>
                     </td>
@@ -241,16 +256,7 @@ export default function EmployeeListing() {
                         >
                           <Avatar name={r.name} />
                           <div className="min-w-0 flex-auto mr-10">
-                            {/* badge sits beside the name; min-w-36 is dropped on
-                                restricted rows or it pushes into the Department
-                                column, and keeping it on the designation line
-                                truncated the designation instead */}
-                            <div className="flex items-center gap-x-2 min-w-0">
-                              <p className="2xl:text-sm 2xl-to-xl:text-xs text-xs font-semibold leading-6 text-gray-900 text-ellipsis overflow-hidden min-w-36" title={r.name}>
-                                {r.name}
-                              </p>
-                              {r.is_restricted && <RestrictedBadge compact />}
-                            </div>
+                            <p className="2xl:text-sm 2xl-to-xl:text-xs text-xs font-semibold leading-6 text-gray-900 text-ellipsis overflow-hidden min-w-36" title={r.name}>{r.name}</p>
                             <p className="truncate 2xl:text-xs 2xl-to-xl:text-xxs text-xxs leading-5 text-gray-500">{r.designation_name}</p>
                           </div>
                         </Link>

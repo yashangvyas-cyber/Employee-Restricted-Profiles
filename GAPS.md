@@ -192,3 +192,27 @@ Employee codes (`TM-002`), departments, designations, dates and status values ar
 - Did not submit either form against staging.
 - Did not build any screen outside the five you listed.
 - Did not invent a validation message, an error state, or a success toast.
+
+
+---
+
+## NOT CAPTURED — the inactive-profile row pattern (2026-09-22)
+
+The Restricted row is meant to mirror how CollabCRM marks an **inactive**
+profile: an `(Inactive)` sub-label under the employee code, plus a hover tooltip
+*"This account is inactive."*
+
+**It could not be captured.** The crawl tenant `bluewhaletechnosoftpvtltd` has
+**0 employees with `account_status = inactive`**, so filtering the listing to
+them returns an empty table. The pattern is visible only in the BA's screenshot
+of the `yopmail` tenant, which our credentials cannot reach.
+
+| Part | Status |
+|---|---|
+| Tooltip **mechanism** (`data-tooltip-id` + react-tooltip) | **COPIED** — 38 uses in the captured listing |
+| Tooltip **wording** for restricted | **PROPOSED** — *"This profile is restricted."* |
+| Tooltip **styling** (the dark box in the screenshot) | **NOT CAPTURED** — the prototype uses the native `title` so hover works |
+| The `(Inactive)`-style **sub-label under the code** | **NOT CAPTURED** — not built; the BA asked for hover only |
+
+To close this: either a DOM snippet of one inactive row, or credentials for a
+tenant that has one.
