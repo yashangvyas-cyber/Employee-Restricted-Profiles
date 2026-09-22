@@ -30,8 +30,8 @@
           "sees": "RM, HR, Admin or similar",
           "not": "Every other role — the person returns no result",
           "treatment": "No result row at all",
-          "status": "AMBIGUOUS",
-          "flag": "The requirement says \"restricted people won't be able to search\". This is ambiguous — it could mean: (a) the person does not APPEAR in others' search results, or (b) the person cannot USE search at all. Since another requirement says RM/HR/Admin can \"see and search the person\", interpretation (a) is used here. If (b) was intended, that's an access-control change, not a visibility rule, and belongs under Account Status.",
+          "status": "DECIDED",
+          "flag": "The hidden person does not appear in search results for non-privileged roles. They can still use search themselves — this is a visibility rule, not an access-control restriction.",
           "source": "REQ-GLOBAL-2" }
       ]
     },
