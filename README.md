@@ -21,6 +21,25 @@ Opening `/` redirects to the employee list.
 
 Routes are the app's own, taken from its shipped route table.
 
+## "Show changes" — read this before reviewing
+
+The prototype is a pixel copy of CollabCRM, so our change is invisible against
+the existing product. Reviewers kept asking which parts were new.
+
+**Hit the `Show changes` button in the header.** Every element this ticket
+touches is outlined and labelled:
+
+| Tag | Meaning |
+|---|---|
+| **NEW** (purple) | did not exist before |
+| **CHANGED** (purple) | existed, restructured by this ticket |
+| **MOVED** (orange) | existed elsewhere, relocated |
+
+Anything **not** outlined is copied from the real system, unchanged.
+
+Off by default, so the prototype still reads as the real app. The state persists
+as you navigate.
+
 ## Read `GAPS.md` first
 
 It lists exactly what is copied from the real system, what is **not captured**

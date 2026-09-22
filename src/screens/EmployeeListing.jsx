@@ -145,6 +145,7 @@ export default function EmployeeListing() {
         {/* NEW — 7th card. Clicking it applies is_hidden Is true, exactly as
             the other cards apply their own filter. [PROPOSED] */}
         <StatCard
+          change="NEW"
           label="Hidden"
           value={counts?.total_hidden ?? '-'}
           onClick={() => writeChips([{ label: 'Hidden', field_name: 'is_hidden', operator: 'Is', value: 'true' }])}
@@ -265,7 +266,9 @@ export default function EmployeeListing() {
                             <div className="flex items-center gap-x-1.5 min-w-0">
                               <p className="2xl:text-sm 2xl-to-xl:text-xs text-xs font-semibold leading-6 text-gray-900 text-ellipsis overflow-hidden min-w-36" title={r.name}>{r.name}</p>
                               {r.is_hidden && (
-                                <IncognitoIcon className="2xl:size-4 size-3.5 text-warning-600" title="Hidden profile" />
+                                <span data-change="NEW">
+                                  <IncognitoIcon className="2xl:size-4 size-3.5 text-warning-600" title="Hidden profile" />
+                                </span>
                               )}
                             </div>
                             <p className="truncate 2xl:text-xs 2xl-to-xl:text-xxs text-xxs leading-5 text-gray-500">{r.designation_name}</p>

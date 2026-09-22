@@ -1,9 +1,13 @@
 /* Copied from modules/people/dom/employee_listing.html (crawled 2026-09-21).
    Every class string here is pasted from that dump. */
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { peoplePath } from '../lib/tenant'
+import { getShowChanges, setShowChanges } from '../lib/changes'
 
 export default function Header() {
+  const [changes, setChanges] = useState(getShowChanges)
+  const toggleChanges = () => { const v = !changes; setChanges(v); setShowChanges(v) }
   return (
     <div className="sticky top-0 z-[60] 2xl:h-[60px] 2xl-to-xl:h-[52px] h-[52px] border-b border-gray-200 bg-white shadow-sm ">
       <div className="flex items-center relative">
@@ -25,6 +29,22 @@ export default function Header() {
             <div className="border-[#FF0000] bg-[#FF0000] text-white font-extrabold 2xl:py-2 2xl-to-xl:py-1 py-1 2xl:h-10 2xl-to-xl:h-8 h-8 px-4 rounded-lg 2xl:text-base 2xl-to-xl:text-sm text-sm flex items-center justify-center">
               STAGING
             </div>
+            {/* PROTOTYPE-ONLY control. Not part of CollabCRM — it exists so a
+                reviewer can see what this ticket changes against the copied
+                product. Off by default. */}
+            <button
+              type="button"
+              onClick={toggleChanges}
+              title="Outline everything this ticket changes"
+              className={`inline-flex items-center gap-2 rounded-lg border font-semibold 2xl:h-10 2xl-to-xl:h-8 h-8 px-3 2xl:text-sm 2xl-to-xl:text-xs text-xs transition-colors ${
+                changes
+                  ? 'border-[#6941C6] bg-[#6941C6] text-white'
+                  : 'border-gray-300 bg-white text-gray-700 hover:bg-gray-50'
+              }`}
+            >
+              <span className={`inline-block size-2 rounded-full ${changes ? 'bg-white' : 'bg-[#6941C6]'}`} />
+              Show changes
+            </button>
           </div>
 
           <div className="flex items-center justify-center gap-3 2xl-to-xl:gap-3 2xl:gap-4">

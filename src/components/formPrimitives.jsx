@@ -4,9 +4,9 @@ import { VALIDATION } from '../api/endpoints'
 import { INPUT, TEXTAREA } from './primitives'
 
 /** Section: title+description in a left gutter, fields in a card on the right. */
-export function Section({ id, title, desc, first, children }) {
+export function Section({ id, title, desc, first, children, change }) {
   return (
-    <div id={id} className={first ? 'flex' : 'flex items-start 2xl:mt-4 mt-3'}>
+    <div id={id} className={first ? 'flex' : 'flex items-start 2xl:mt-4 mt-3'} {...(change ? { 'data-change': change } : {})}>
       <div className="2xl:w-1/4 2xl-to-xl:w-[20%] w-[20%] pr-2">
         <div className="flex items-center min-h-6">
           <p className="2xl:text-sm 2xl-to-xl:text-xs text-xs text-gray-700 font-medium">

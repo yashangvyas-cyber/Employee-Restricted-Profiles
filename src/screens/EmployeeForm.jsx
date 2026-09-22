@@ -545,7 +545,7 @@ export default function EmployeeForm({ mode }) {
               </div>
             </Section>
 
-            <Section {...S.employee_settings}>
+            <Section {...S.employee_settings} change="CHANGED">
               <div className="space-y-5">
                 <Toggle
                   id="account_status_toggle"
@@ -555,6 +555,7 @@ export default function EmployeeForm({ mode }) {
                   desc="If disabled, the employee will not be able to login to the portal."
                 />
                 {/* NEW — Hidden profile. Label and helper line are [PROPOSED]. */}
+                <div data-change="NEW">
                 <Toggle
                   id="is_hidden_toggle"
                   checked={!!f.is_hidden}
@@ -562,6 +563,7 @@ export default function EmployeeForm({ mode }) {
                   title="Hidden profile"
                   desc="When turned on, the employee becomes an internal payroll profile — not counted in headcount and not visible across other portals."
                 />
+                </div>
               </div>
             </Section>
 
@@ -573,6 +575,7 @@ export default function EmployeeForm({ mode }) {
                 A checkbox, not a toggle, for that reason. [DIVERGENCE: the real
                 Add form uses a toggle; deliberate, see PROTOTYPE_NOTES.md] */}
             {!isEdit && (
+              <div data-change="MOVED">
               <Section {...S.invite_employee}>
                 <Check
                   name="invite_employee"
@@ -583,6 +586,7 @@ export default function EmployeeForm({ mode }) {
                   Send invitation email to this employee
                 </Check>
               </Section>
+              </div>
             )}
 
           </div>

@@ -19,3 +19,35 @@
 .incognito:hover .incognito-hat {
   transform: translateY(-1.5px) rotate(-3deg);
 }
+
+/* ---- "Show changes" mode -------------------------------------------------
+   Off by default. When on, every element tagged data-change is outlined and
+   labelled, so a reviewer can see our change against the copied product. */
+[data-change] { position: relative; }
+
+body.show-changes [data-change] {
+  outline: 2px dashed rgb(105 65 198);      /* indigo-600-ish, distinct from the app's palette */
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+body.show-changes [data-change]::after {
+  content: attr(data-change);
+  position: absolute;
+  top: -9px;
+  left: -2px;
+  z-index: 40;
+  background: rgb(105 65 198);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  line-height: 1;
+  padding: 3px 5px;
+  border-radius: 4px;
+  pointer-events: none;
+  white-space: nowrap;
+}
+body.show-changes [data-change="REMOVED"] { outline-color: rgb(217 45 32); }
+body.show-changes [data-change="REMOVED"]::after { background: rgb(217 45 32); }
+body.show-changes [data-change="MOVED"]   { outline-color: rgb(220 104 3); }
+body.show-changes [data-change="MOVED"]::after   { background: rgb(220 104 3); }

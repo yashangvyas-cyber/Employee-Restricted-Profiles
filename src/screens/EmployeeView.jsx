@@ -57,7 +57,7 @@ const tenure = (from) => {
 /** Detail section: white card, grey-bordered header bar, 3-column body. */
 function Section({ id, title, children, cols = 3 }) {
   return (
-    <div id={id} className="bg-white border rounded-lg mb-3 last:mb-0 border-gray-200">
+    <div id={id} className="bg-white border rounded-lg mb-3 last:mb-0 border-gray-200" {...(change ? { 'data-change': change } : {})}>
       <div className="flex items-center justify-between border-b 2xl:p-4 2xl-to-xl:p-3 p-3 rounded-t-lg bg-gray-100 border-gray-200 !bg-white">
         <p className="2xl:text-sm 2xl-to-xl:text-xs text-xs text-gray-800 font-medium">{title}</p>
       </div>
@@ -120,7 +120,7 @@ export default function EmployeeView() {
             <div className="p-4 text-center border-b border-gray-200 flex flex-col items-center relative">
               {/* #OpenToWork-style arc band across the bottom of the avatar,
                   with the label curved along it. See RestrictedAvatar.jsx. */}
-              <div className="flex justify-center w-fit relative">
+              <div className="flex justify-center w-fit relative" {...(e.is_hidden ? { 'data-change': 'NEW' } : {})}>
                 <RestrictedAvatar initials={initials(full)} restricted={!!e.is_hidden} />
               </div>
               <p className="text-gray-900 font-medium 2xl:text-lg 2xl-to-xl:text-base text-base mt-4 max-w-72 overflow-hidden text-ellipsis">{full}</p>
@@ -372,7 +372,7 @@ export default function EmployeeView() {
 
                 {/* Read side of the new Add/Edit section. View has no such
                     section today — [PROPOSED], mirroring Access & Visibility. */}
-                <Section id="employee_settings" title="Access & Visibility">
+                <Section id="employee_settings" title="Access & Visibility" change="NEW">
                   <F label="Account Status" value={e.account_status} />
                   <F label="Hidden profile" value={e.is_hidden ? 'Yes' : 'No'} />
                 </Section>
