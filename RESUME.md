@@ -83,6 +83,34 @@ employees — the exclusion must NOT propagate there. Two code paths, deliberate
 
 ## Gates
 
+**Listing screens — this is the one that matters for Payroll:**
+
+```bash
+cd ~/.gemini/antigravity/scratch/CollabCrawl
+python3 _tools/diff_listing.py <built.html> payroll <captured-screen>
+```
+
+Compares stat-card labels, toolbar buttons, table headers **in order**, sticky
+cell **count**, and **every row cell's class string**. Exits 1 on divergence.
+
+Self-tested against six injected mutations — all caught:
+
+| Injected error | Caught |
+|---|---|
+| renamed a table header | ✅ |
+| dropped a stat card | ✅ |
+| lost ONE sticky cell | ✅ |
+| dropped a column | ✅ |
+| dropped `2xl:`/`2xl-to-xl:` from a cell | ✅ |
+| approximated a token (`gray-600` → `gray-500`) | ✅ |
+
+Unmutated input still passes. Two holes were found and closed while testing:
+sticky cells were deduped to a set (so losing one of seven changed nothing), and
+row cells were only counted, not compared — which missed an approximated class,
+this project's classic failure.
+
+**Other gates:**
+
 ```bash
 cd ~/.gemini/antigravity/scratch/CollabCrawl
 
