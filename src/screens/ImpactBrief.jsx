@@ -1,165 +1,256 @@
 /* HIDDEN PROFILE — VISIBILITY MAP
- *
- * ⚠ INVENTED SCREEN. This does not exist in CollabCRM and is not copied from any
- * capture. It is a prototype-only deliverable: one page that answers, portal by
- * portal, "does this person appear here, and to whom?".
- *
- * Its CONTENT is not invented - every row traces to a row in ma'am's impact list
- * (2026-09-22) via the `source` field in src/fixtures/impact-brief.json. Where
- * her list asked a question rather than gave a rule, the row says so instead of
- * answering it.
- *
- * Only the design tokens are copied, from _design-system/TOKENS.md, so the page
- * sits in the app without pretending to be a captured screen.
+ * Prototype-only screen: developer reference for hidden-profile visibility.
+ * Tabbed by portal so you only see one portal's rules at a time.
  */
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import brief from '../fixtures/impact-brief.json'
 
-const TH =
-  '2xl:py-2.5 2xl-to-xl:py-1.5 py-1.5 2xl:px-6 2xl-to-xl:px-4 px-4 whitespace-nowrap 2xl:text-sm 2xl-to-xl:text-xs text-xs font-medium text-gray-600 text-left bg-gray-50 top-0'
-const TD =
-  '2xl:px-6 2xl-to-xl:px-4 px-4 2xl:py-3 2xl-to-xl:py-2 py-2 2xl:text-sm 2xl-to-xl:text-xs text-xs text-gray-600 text-left align-top'
-const BADGE = 'rounded-2xl border flex w-max font-medium items-center py-0.5 px-2 2xl:text-xs 2xl-to-xl:text-xxs text-xxs whitespace-nowrap'
+/* ── Data setup ── */
+const RULE_MAP = Object.fromEntries(brief.rules.map((r) => [r.id, r]))
 
-const RULE = Object.fromEntries(brief.rules.map((r) => [r.id, r]))
-
-const STATUS = {
-  BUILT:     { cls: 'border-success-200 bg-success-50 text-success-700', label: 'Built' },
-  DECIDED:   { cls: 'border-gray-300 bg-gray-50 text-gray-700',          label: 'Decided' },
-  OPEN:      { cls: 'border-error-200 bg-error-50 text-error-700',       label: 'Needs a decision' },
-  AMBIGUOUS: { cls: 'border-warning-200 bg-warning-50 text-warning-700', label: 'Needs clarifying' },
+const STATUS_CFG = {
+  BUILT:     { bg: 'bg-success-50', border: 'border-success-200', text: 'text-success-700', dot: 'bg-success-500', label: 'Built' },
+  DECIDED:   { bg: 'bg-gray-50',    border: 'border-gray-200',    text: 'text-gray-600',    dot: 'bg-gray-400',    label: 'Decided' },
+  OPEN:      { bg: 'bg-error-50',   border: 'border-error-200',   text: 'text-error-700',   dot: 'bg-error-500',   label: 'Open' },
+  AMBIGUOUS: { bg: 'bg-warning-50', border: 'border-warning-200', text: 'text-warning-700', dot: 'bg-warning-500', label: 'Unclear' },
 }
 
-export default function ImpactBrief() {
-  const [openOnly, setOpenOnly] = useState(false)
-  const portals = brief.portals
-    .map((p) => ({ ...p, rows: p.rows.filter((r) => !openOnly || r.status === 'OPEN' || r.status === 'AMBIGUOUS') }))
-    .filter((p) => p.rows.length)
+const BADGE = 'rounded-full border inline-flex items-center font-medium py-0.5 px-2.5 2xl:text-xs text-xxs whitespace-nowrap'
 
-  const all = brief.portals.flatMap((p) => p.rows)
-  const unresolved = all.filter((r) => r.status === 'OPEN' || r.status === 'AMBIGUOUS').length
+
+export default function ImpactBrief() {
+  const [activePortal, setActivePortal] = useState(0)
+  const [expandedRow, setExpandedRow] = useState(null)
+  const [showLegend, setShowLegend] = useState(false)
+
+  const allRows = useMemo(() => brief.portals.flatMap((p) => p.rows), [])
+  const counts = useMemo(() => ({
+    total: allRows.length,
+    built: allRows.filter((r) => r.status === 'BUILT').length,
+    decided: allRows.filter((r) => r.status === 'DECIDED').length,
+    open: allRows.filter((r) => r.status === 'OPEN' || r.status === 'AMBIGUOUS').length,
+  }), [allRows])
+
+  const portal = brief.portals[activePortal]
 
   return (
-    <div className="2xl:p-5 2xl-to-xl:p-3 p-3">
-      {/* heading */}
-      <div className="bg-white border rounded-lg border-gray-200 2xl:p-5 2xl-to-xl:p-3 p-3 mb-3">
-        <div className="flex items-start justify-between gap-x-4 flex-wrap gap-y-3">
-          <div className="min-w-0">
-            <p className="font-semibold text-gray-900 2xl:text-lg 2xl-to-xl:text-base text-base">Hidden Profile — Visibility Map</p>
-            <p className="mt-1 text-gray-600 font-normal 2xl:text-sm 2xl-to-xl:text-xs text-xs max-w-3xl">
-              Where a hidden profile appears, and who can see them. {all.length} screens across {brief.portals.length} portals.
-            </p>
+    <div className="2xl:h-[calc(100vh-98px)] 2xl-to-xl:h-[calc(100vh-86px)] h-[calc(100vh-86px)] overflow-y-auto customScrollbar bg-gray-100">
+      <div className="2xl:p-6 2xl-to-xl:p-4 p-4">
+
+        {/* ━━ TOP BAR: title + stats ━━ */}
+        <div className="flex items-center justify-between gap-4 flex-wrap mb-4">
+          <div className="flex items-center gap-4">
+            <h1 className="font-semibold text-gray-900 2xl:text-lg text-base">Visibility Map</h1>
+            <span className="text-gray-300">|</span>
+            <div className="flex items-center gap-3">
+              <MiniStat count={counts.built} label="Built" dotCls="bg-success-500" />
+              <MiniStat count={counts.decided} label="Decided" dotCls="bg-gray-400" />
+              <MiniStat count={counts.open} label="Open" dotCls="bg-error-500" />
+            </div>
           </div>
           <button
-            type="button"
-            onClick={() => setOpenOnly((v) => !v)}
-            className={
-              'outline-none rounded-lg border hover:opacity-90 px-4 2xl:py-1.5 2xl-to-xl:py-1 py-1 2xl:h-9 2xl-to-xl:h-8 h-8 2xl:text-sm 2xl-to-xl:text-xs text-xs font-semibold ' +
-              (openOnly
-                ? 'bg-indigo-600 border-transparent text-white'
-                : 'bg-white border-gray-300 text-gray-700 enabled:hover:!bg-gray-50')
-            }
+            type="button" onClick={() => setShowLegend((v) => !v)}
+            className="outline-none rounded-lg border border-gray-300 bg-white hover:bg-gray-50 px-3 2xl:h-8 h-7 2xl:text-xs text-xxs font-medium text-gray-600 transition-colors flex items-center gap-1.5"
           >
-            <div className="flex items-center justify-center gap-2">
-              <i className="icon-filter-lines" />
-              {openOnly ? 'Showing unresolved only' : `Show the ${unresolved} unresolved`}
-            </div>
+            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M12 2a10 10 0 110 20 10 10 0 010-20z" />
+            </svg>
+            {showLegend ? 'Hide' : 'Show'} rules legend
           </button>
         </div>
 
-        {/* the global principle, stated once */}
-        <div className="mt-4 rounded-lg border border-indigo-200 bg-indigo-50 2xl:p-4 2xl-to-xl:p-3 p-3">
-          <p className="font-semibold text-indigo-900 2xl:text-sm 2xl-to-xl:text-xs text-xs">The rule that overrides every screen</p>
-          <p className="mt-1 text-indigo-800 font-normal 2xl:text-sm 2xl-to-xl:text-xs text-xs">{brief.principle.text}</p>
-        </div>
-
-        {/* legend */}
-        <div className="mt-4">
-          <p className="font-semibold text-gray-900 2xl:text-sm 2xl-to-xl:text-xs text-xs">
-            Every screen below uses one of these {brief.rules.length} rules — build the rules, not 26 special cases
+        {/* ━━ OVERRIDE PRINCIPLE ━━ */}
+        <div className="rounded-lg border border-indigo-200 bg-indigo-50 2xl:px-4 px-3 2xl:py-2.5 py-2 mb-4 flex items-start gap-2.5">
+          <svg className="w-4 h-4 text-indigo-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+          </svg>
+          <p className="2xl:text-sm text-xs text-indigo-900 leading-relaxed">
+            <span className="font-semibold">Global override:</span> {brief.principle.text}
           </p>
-          <div className="mt-2 grid 2xl:grid-cols-2 grid-cols-1 gap-2">
-            {brief.rules.map((r) => (
-              <div key={r.id} className="flex items-start gap-x-3 rounded-lg border border-gray-200 2xl:p-3 p-2">
-                <div className={`${BADGE} ${r.cls} shrink-0`}>{r.id}</div>
-                <div className="min-w-0">
-                  <p className="font-medium text-gray-900 2xl:text-sm 2xl-to-xl:text-xs text-xs">{r.name}</p>
-                  <p className="text-gray-600 font-normal 2xl:text-sm 2xl-to-xl:text-xs text-xs">{r.text}</p>
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
-      </div>
 
-      {/* one table per portal */}
-      {portals.map((p) => (
-        <div key={p.name} className="bg-white border rounded-lg border-gray-200 mb-3">
-          <div className="flex items-center gap-x-3 border-b 2xl:p-4 2xl-to-xl:p-3 p-3 rounded-t-lg border-gray-200">
-            <p className="2xl:text-base 2xl-to-xl:text-sm text-sm text-gray-900 font-semibold">{p.name}</p>
-            <div className={`${BADGE} border-gray-300 bg-gray-50 text-gray-700`}>{p.rows.length} {p.rows.length === 1 ? 'screen' : 'screens'}</div>
-            <p className="text-gray-600 font-normal 2xl:text-sm 2xl-to-xl:text-xs text-xs">{p.note}</p>
-          </div>
-          <div className="overflow-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead>
-                <tr>
-                  <th scope="col" className={`${TH} min-w-[220px]`}>Screen</th>
-                  <th scope="col" className={`${TH} min-w-[90px]`}>Rule</th>
-                  <th scope="col" className={`${TH} min-w-[200px]`}>Who sees them</th>
-                  <th scope="col" className={`${TH} min-w-[200px]`}>Who does not</th>
-                  <th scope="col" className={`${TH} min-w-[220px]`}>What the screen shows</th>
-                  <th scope="col" className={`${TH} min-w-[140px]`}>Status</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-[#EAEAEA] bg-white">
-                {p.rows.map((r) => {
-                  const st = STATUS[r.status] ?? STATUS.DECIDED
-                  const rule = RULE[r.rule]
-                  return (
-                    <tr key={p.name + r.screen} className="hover:bg-gray-50 align-top">
-                      <td className={`${TD} font-medium text-gray-900`}>
-                        {r.screen}
-                        <p className="mt-0.5 font-normal text-gray-400 2xl:text-xs text-xxs">{r.source}</p>
-                      </td>
-                      <td className={TD}>
-                        <div className={`${BADGE} ${rule.cls}`} title={rule.name}>{r.rule}</div>
-                      </td>
-                      <td className={TD}>{r.sees}</td>
-                      <td className={TD}>{r.not}</td>
-                      <td className={TD}>{r.treatment}</td>
-                      <td className={TD}>
-                        <div className={`${BADGE} ${st.cls}`}>{st.label}</div>
-                      </td>
-                    </tr>
-                  )
-                })}
-              </tbody>
-            </table>
-          </div>
-
-          {/* the notes that do not fit a cell - questions, warnings, my own calls */}
-          {p.rows.some((r) => r.flag) && (
-            <div className="border-t border-gray-200 2xl:p-4 2xl-to-xl:p-3 p-3 space-y-3">
-              {p.rows.filter((r) => r.flag).map((r) => {
-                const st = STATUS[r.status] ?? STATUS.DECIDED
-                return (
-                  <div key={r.screen} className="flex items-start gap-x-3">
-                    <div className={`${BADGE} ${st.cls} shrink-0 mt-0.5`}>{st.label}</div>
-                    <p className="text-gray-600 font-normal 2xl:text-sm 2xl-to-xl:text-xs text-xs">
-                      <span className="font-semibold text-gray-900">{r.screen} — </span>{r.flag}
-                    </p>
+        {/* ━━ RULES LEGEND (collapsible) ━━ */}
+        {showLegend && (
+          <div className="rounded-lg border border-gray-200 bg-white 2xl:p-4 p-3 mb-4">
+            <div className="grid 2xl:grid-cols-5 grid-cols-3 gap-3">
+              {brief.rules.map((r) => (
+                <div key={r.id} className="flex items-start gap-2">
+                  <span className={`${BADGE} ${r.cls} shrink-0`}>{r.id}</span>
+                  <div>
+                    <p className="font-medium text-gray-900 2xl:text-xs text-xxs">{r.name}</p>
+                    <p className="text-gray-500 2xl:text-xxs text-xxs mt-0.5 leading-relaxed">{r.text}</p>
                   </div>
-                )
-              })}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* ━━ PORTAL TABS ━━ */}
+        <div className="flex items-center gap-1 mb-4 border-b border-gray-200">
+          {brief.portals.map((p, i) => {
+            const isActive = i === activePortal
+            const portalOpen = p.rows.filter((r) => r.status === 'OPEN' || r.status === 'AMBIGUOUS').length
+            return (
+              <button
+                key={p.name} type="button"
+                onClick={() => { setActivePortal(i); setExpandedRow(null) }}
+                className={`relative 2xl:px-4 px-3 2xl:py-2.5 py-2 2xl:text-sm text-xs font-medium transition-colors rounded-t-lg ${
+                  isActive
+                    ? 'text-indigo-700 bg-white border border-b-0 border-gray-200 -mb-px'
+                    : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
+                }`}
+              >
+                <span className="flex items-center gap-2">
+                  {p.name}
+                  <span className={`2xl:text-xxs text-xxs rounded-full px-1.5 py-px ${isActive ? 'bg-indigo-100 text-indigo-700' : 'bg-gray-100 text-gray-500'}`}>
+                    {p.rows.length}
+                  </span>
+                  {portalOpen > 0 && (
+                    <span className="w-1.5 h-1.5 rounded-full bg-error-500" title={`${portalOpen} unresolved`} />
+                  )}
+                </span>
+              </button>
+            )
+          })}
+        </div>
+
+        {/* ━━ ACTIVE PORTAL CONTENT ━━ */}
+        <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
+          {/* Portal description */}
+          {portal.note && (
+            <div className="2xl:px-5 px-4 2xl:py-2.5 py-2 border-b border-gray-100 bg-gray-50/50">
+              <p className="text-gray-500 2xl:text-xs text-xxs">{portal.note}</p>
             </div>
           )}
-        </div>
-      ))}
 
-      <p className="text-gray-500 font-normal 2xl:text-xs text-xxs 2xl:px-5 px-3">
-        Source: {brief._source}
-      </p>
+          {/* Table */}
+          <table className="w-full">
+            <thead>
+              <tr className="border-b border-gray-200">
+                {['Screen', 'Rule', 'Visible to', 'Hidden from', 'UI treatment', 'Status', ''].map((h, i) => (
+                  <th key={h || i} className={`text-left 2xl:text-xs text-xxs font-medium text-gray-400 uppercase tracking-wider ${i === 0 ? '2xl:pl-5 pl-4' : 'pl-3'} pr-3 2xl:py-2.5 py-2 ${i === 6 ? 'w-10' : ''}`}>
+                    {h}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {portal.rows.map((row, idx) => {
+                const st = STATUS_CFG[row.status] ?? STATUS_CFG.DECIDED
+                const rule = RULE_MAP[row.rule]
+                const isExpanded = expandedRow === idx
+                const hasNote = !!row.flag
+                return (
+                  <TableRow
+                    key={row.screen} row={row} idx={idx}
+                    status={st} rule={rule}
+                    isExpanded={isExpanded} hasNote={hasNote}
+                    onToggle={() => setExpandedRow(isExpanded ? null : idx)}
+                  />
+                )
+              })}
+            </tbody>
+          </table>
+        </div>
+
+        {/* ━━ FOOTER ━━ */}
+        <p className="text-gray-400 2xl:text-xxs text-xxs mt-4">
+          {counts.total} screens across {brief.portals.length} portals · {brief._source}
+        </p>
+      </div>
     </div>
+  )
+}
+
+
+/* ── Table row with optional expandable note ── */
+function TableRow({ row, idx, status, rule, isExpanded, hasNote, onToggle }) {
+  return (
+    <>
+      <tr className={`border-b border-gray-100 last:border-0 hover:bg-gray-50/50 transition-colors ${isExpanded ? 'bg-gray-50/50' : ''}`}>
+        {/* Screen name */}
+        <td className="2xl:pl-5 pl-4 pr-3 2xl:py-3 py-2.5">
+          <p className="2xl:text-sm text-xs font-medium text-gray-900 leading-snug">{row.screen}</p>
+          <p className="2xl:text-xxs text-xxs text-gray-400 mt-0.5">{row.source}</p>
+        </td>
+
+        {/* Rule badge */}
+        <td className="px-3 2xl:py-3 py-2.5">
+          <span className={`${BADGE} ${rule.cls}`} title={`${rule.id}: ${rule.name}`}>{row.rule}</span>
+        </td>
+
+        {/* Visible to */}
+        <td className="px-3 2xl:py-3 py-2.5 2xl:text-sm text-xs text-gray-700">
+          {row.sees === '—' || row.sees === 'NOT STATED'
+            ? <span className="text-gray-300 italic">{row.sees}</span>
+            : row.sees}
+        </td>
+
+        {/* Hidden from */}
+        <td className="px-3 2xl:py-3 py-2.5 2xl:text-sm text-xs text-gray-500">
+          {row.not === '—' || row.not === 'NOT STATED'
+            ? <span className="text-gray-300 italic">{row.not}</span>
+            : row.not}
+        </td>
+
+        {/* Treatment */}
+        <td className="px-3 2xl:py-3 py-2.5 2xl:text-sm text-xs text-gray-600">
+          {row.treatment === '—' || row.treatment === 'NOT STATED'
+            ? <span className="text-gray-300 italic">{row.treatment}</span>
+            : row.treatment}
+        </td>
+
+        {/* Status */}
+        <td className="px-3 2xl:py-3 py-2.5">
+          <span className={`inline-flex items-center gap-1.5 ${BADGE} ${status.border} ${status.bg} ${status.text}`}>
+            <span className={`w-1.5 h-1.5 rounded-full ${status.dot}`} />
+            {status.label}
+          </span>
+        </td>
+
+        {/* Expand button */}
+        <td className="px-2 2xl:py-3 py-2.5 text-center">
+          {hasNote ? (
+            <button type="button" onClick={onToggle}
+              className="text-gray-400 hover:text-gray-600 p-1 rounded transition-colors hover:bg-gray-100" title="Show developer notes">
+              <svg className={`w-4 h-4 transition-transform duration-150 ${isExpanded ? 'rotate-180' : ''}`}
+                fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+          ) : (
+            <span className="w-4 h-4 inline-block" />
+          )}
+        </td>
+      </tr>
+
+      {/* Expandable note row */}
+      {isExpanded && hasNote && (
+        <tr className="bg-gray-50/30">
+          <td colSpan={7} className="2xl:pl-5 pl-4 pr-4 pb-3 pt-1">
+            <div className={`rounded-lg 2xl:px-4 px-3 2xl:py-2.5 py-2 2xl:text-xs text-xxs leading-relaxed border ${
+              row.status === 'OPEN' || row.status === 'AMBIGUOUS'
+                ? 'bg-amber-50 border-amber-200 text-amber-900'
+                : 'bg-blue-50 border-blue-200 text-blue-900'
+            }`}>
+              {row.flag}
+            </div>
+          </td>
+        </tr>
+      )}
+    </>
+  )
+}
+
+
+/* ── Mini stat in header ── */
+function MiniStat({ count, label, dotCls }) {
+  return (
+    <span className="flex items-center gap-1.5 2xl:text-sm text-xs text-gray-600">
+      <span className={`w-2 h-2 rounded-full ${dotCls}`} />
+      <span className="font-semibold text-gray-900">{count}</span>
+      <span>{label}</span>
+    </span>
   )
 }
