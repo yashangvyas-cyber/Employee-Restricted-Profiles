@@ -139,3 +139,95 @@ the same base (non-relieved), so `Active + Restricted = total non-relieved`.
 Recruitment 22, CRM 5, Projects 2, Reports 4**), Reports → Headcount & Diversity,
 celebration feeds, statutory-report inclusion, permission gating, audit trail,
 bulk action from the People list.
+
+---
+
+# PAYROLL field map  (added 2026-09-22)
+
+The earlier version of this file had **one line** for Payroll. That was not a
+field map. This section replaces it, from captures taken 2026-09-22.
+
+## Screens in Payroll that carry an employee — all need the indicator
+
+| # | Screen | Route | Employee-bearing column | Captured |
+|---|---|---|---|---|
+| 1 | **Salary Register** (per-run pay list) | `/run-payroll/:id/edit` | `No. / Employee Name` | ✅ `run_payroll_salary_register.html` |
+| 2 | Payroll Runs | `/run-payroll` | `Employees` (a **count**) | ✅ `run_payroll_2026-09-22.html` |
+| 3 | Employees Compensation | `/employees-compensation` | `Employee` | ✅ `employees_compensation_2026-09-22.html` |
+| 4 | Loans & Advances | `/loans-advances` | `Employee Name` | ✅ `loans_advances.html` |
+| 5 | Expense & Reimbursement | `/expense-management` | `Employee Name` | ✅ `expense_management.html` |
+| 6 | Tax Declarations | — | `Employee Name & ID` | ✅ `tax_declarations.html` |
+
+**Six screens, not one.** The ticket says "visible in Payroll with a different
+visual indication" — that indication has to be applied on all six, or the flag
+is inconsistent inside the same portal.
+
+## 1. Salary Register — the screen that matters most
+
+This is the actual pay list: 21 columns, 4 rows, inside a Back/Next wizard.
+
+| Part | Value | Source |
+|---|---|---|
+| Badge slot | the `No. / Employee Name` cell | **COPIED** |
+| Cell classes | `… min-w-[200px] sticky left-0 bg-white group-hover:bg-gray-50 drop-shadow-md border-r` | **COPIED** |
+| Export button | `Export Salary Register` | **COPIED** — an export surface; restricted rows will land in the file |
+| APIs | `/v1/payroll/run-payroll/:id/view`, `/:id/steps`, `/statistics` | **COPIED** |
+
+### ⚠️ Implementation gotcha — the tint will break here
+The employee cell is **`sticky left-0` with its own `bg-white`**. A row tint set
+on `<tr>` will **not** reach it — the frozen column will stay white while the
+rest of the row is tinted, leaving a visible gap.
+
+This is the same class of bug as the sticky Actions header in the People listing
+that we already had to fix. The tint must be applied to the sticky cell
+explicitly, not only to the row.
+
+## 2. Payroll Runs — the counting problem
+
+Stat cards captured, with live values:
+
+| Card | Value |
+|---|---|
+| Upcoming Payroll | October 2026 |
+| **Total Employees on Payroll** | 0 |
+| Total Payroll Cost (All Payroll cycles) | ₹ 3,46,543 |
+| Payroll On-Hold | 0 |
+
+Plus a per-run **`Employees`** count column.
+
+**Open question — needs your decision.** Both of these are headcount-shaped
+numbers *inside Payroll*, where restricted profiles **are** visible. So they
+should presumably **include** restricted employees — the opposite of the People
+decision. If so, the disclosure you proposed ("Includes 3 restricted profiles")
+belongs on this screen.
+
+## 3. Employees Compensation — a name collision
+
+Its stat cards are: **Active Employees**, Salary Structure Unassigned,
+Statutory Applicability.
+
+**Payroll has its own "Active Employees" card.** With the People decision
+(exclude restricted) and Payroll visibility (include restricted), the *same
+label* would show *two different numbers* in two portals.
+
+That is a genuine product problem the ticket does not address. Options:
+- (a) both exclude → but then Payroll under-counts people it is paying
+- (b) People excludes, Payroll includes → same label, two numbers; needs different wording on one side
+- (c) rename one of them
+
+**Not my call — flagging it.**
+
+## Blocked
+
+- **yopmail tenant** — our crawl account is `bluewhaletechnosoft@maildrop.cc`; `/payroll/yopmail/*` returns **404**. Need yopmail credentials to capture that tenant.
+- **bluewhale payroll is nearly empty** — Employees Compensation returned 0 rows, `Total Employees on Payroll` = 0. Structure is captured; **populated states are not.**
+- `/people/attendance-data-for-payroll` → **404** on this tenant; the real route is unknown.
+
+## Still PROPOSED for Payroll
+
+1. Badge text and placement in each of the six screens' employee cells
+2. Row tint — **plus** the sticky-cell fix above
+3. Whether `Total Employees on Payroll` and the per-run `Employees` count include restricted
+4. The "Includes N restricted profiles" disclosure — which screen, what wording
+5. Whether `Export Salary Register` marks restricted rows in the exported file
+6. Resolving the **Active Employees** label collision between People and Payroll
