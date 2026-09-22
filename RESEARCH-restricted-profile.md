@@ -1,140 +1,143 @@
 # Competitive research — hidden / payroll-only employee records
 
-Phase 1 of the Restricted Profile ticket. **No code written yet.**
-Research date: 2026-09-21.
+Phase 1 of the Restricted Profile ticket. **No prototype code written yet.**
+First written 2026-09-21. **Corrected 2026-09-22.**
 
 ---
 
-## The headline
+## ⚠️ Correction — the original headline was wrong
 
-**No major HR product ships a "hide this employee" toggle.**
+The first version of this file claimed:
 
-Every system I looked at solves this with **worker classification**, not a
-visibility flag. The record is marked as *what the person is* — contingent
-worker, contractor, non-employee — and then **each report decides whether that
-class counts**. Visibility is handled separately, by permissions.
+> ~~**No major HR product ships a "hide this employee" toggle.**~~
 
-That is a meaningfully different design from the one in the ticket, and the
-difference matters. More below.
+**That is false.** Keka ships almost exactly this feature, called **Private
+Profiles**. My searches used generic terms ("confidential employee", "exclude
+from headcount") and returned generic answers; Keka's help centre also blocks
+automated fetching (HTTP 403), so it never surfaced.
 
----
-
-## What each product actually does
-
-| Product | Mechanism | Notes |
-|---|---|---|
-| **SAP SuccessFactors** | `IsContingentWorker` — a standard field on the `employmentInfo` HRIS element | A **classification flag**, not a hide flag. Downstream processes read it. |
-| **Workday** | Worker object splits **Employee** vs **Contingent Worker** | The `All Active Employees` data source **excludes contingent workers by design**. Exclusion is a property of the data source, not of the person. |
-| **BambooHR** | **Access Levels** + **directory sharing settings** | Who sees what is a permission question. Directory fields are governed centrally, not per-record. |
-| **Keka** | Field-level profile privacy | Hides *fields* from other users, not the *person*. |
-
-Two patterns, consistently:
-
-1. **Classification, not concealment.** The record says what the person is; reports filter on it.
-2. **Visibility via permissions, not via a per-record flag.** Nobody makes a single record invisible to everyone.
+**The BA found it by searching properly.** The competitor findings below are
+theirs, not mine. I have kept only the parts of my original research that
+survive — the classification pattern in Workday/SAP, and the fraud risk.
 
 ---
 
-## The finding I'd want you to read twice
+## Keka — "Private Profiles" (the closest match to this ticket)
+
+| | |
+|---|---|
+| **What it does** | Admins mark certain employee profiles private. They are hidden from all employees **except privileged users** — Global Admin, HR Executives, Managers. |
+| **Where the control lives** | **NOT a toggle on the Add Employee form.** A separate list page: **Org → Employees → Private Profiles** |
+| **How you add someone** | Search their name under **"Add employee to hide"** |
+| **How you remove someone** | A delete icon beside the name, **or** multi-select several and remove together, then a **Confirm** popup |
+| **Related capability** | Keka can also restrict who sees whom by **Legal Entity** or **Business Unit** |
+
+**This matters for our design.** Keka's control is a *managed list*, not a field
+on the employee record. That is a real alternative to the ticket's approach, and
+it is also the natural home for **bulk** marking.
+
+Source: [How to Add or remove an employee from private profile — Keka](https://help.keka.com/hc/en-us/articles/39946617176977-How-to-Add-or-remove-an-employee-from-private-profile)
+
+---
+
+## The rest of the market
+
+| Product | How it's done | Where the control is | Bulk? | Payroll indicator? |
+|---|---|---|---|---|
+| **Keka** | Private Profiles — hidden except privileged roles | Separate list page | Bulk remove | Not found |
+| **greytHR** | **Disable Portal Access** — stops login without deleting the record, so data stays for payroll, statutory compliance and audit. Independent of termination (extended leave, suspension) | Separate action page | Not found | Not found |
+| **Zoho Payroll (India)** | Two checkboxes **on the Add Employee form**: *Director/Employee with substantial interest* (≥20% voting power, feeds Form 12BA) and *Enable Portal Access* | On the form | Yes | Not found |
+| **Personio** | No real feature. Admins can hide org-chart cards only for employees with no supervisors or reports. Personio's own answer to "hide someone on payroll but not working": make them inactive. Customers build custom permission rules or move people to dummy departments as workarounds | — | — | — |
+| **Google Workspace** | Per-user **Directory sharing** off → no autocomplete in Gmail/Calendar, absent from Contacts and search | User profile | Yes (API) | N/A |
+| **Workday** | Worker object splits **Employee** vs **Contingent Worker**; the `All Active Employees` data source excludes contingent workers by design | Classification on the record | — | — |
+| **SAP SuccessFactors** | `IsContingentWorker` on the `employmentInfo` HRIS element | Classification field | — | — |
+
+### Two patterns worth separating
+
+1. **Hide the person** — Keka Private Profiles, Google Directory sharing.
+2. **Separate "can log in" from "exists in payroll"** — greytHR's *Disable Portal Access*, Zoho's *Enable Portal Access*.
+
+CollabCRM already has the second one: `Account Status` ("If disabled, the
+employee will not be able to login to the portal"). **Restricted must not be
+conflated with it** — greytHR and Zoho both keep these as separate controls, and
+so should we.
+
+---
+
+## Where CollabCRM would be ahead
+
+The BA's research found **no competitor with a stat box for hidden profiles, and
+none with a visual badge in payroll.** Those two ideas in this ticket are genuinely
+ahead of the market.
+
+(Darwinbox, BambooHR and Rippling could not be checked — their public docs do not
+cover this.)
+
+---
+
+## The risk — independently reached by both of us
 
 An employee record that is **paid by payroll** but **hidden from headcount and
-from every listing** is the textbook definition of a **ghost employee** — the
-single most common payroll fraud pattern, and exactly what forensic auditors
-hunt for.
+every listing** is the textbook **ghost employee** pattern, the most common
+payroll fraud, and exactly what forensic auditors hunt for.
 
-From the fraud literature:
-
-- Ghost employee fraud is *"fictitious or inactive personnel remaining on payroll, collecting wages"* — an insider creates a record with a name, tax ID and a bank account they control.
 - It thrives on *"weak internal controls, poor oversight, lack of duty segregation"*.
-- The standard detection control is precisely *"reconciling headcounts with departmental managers"* and *"cross-checking payroll disbursements against active headcount"*.
+- The standard detection control is *"reconciling headcounts with departmental managers"* — the very control this feature weakens.
 
-**The ticket as written would build the concealment mechanism and remove the
-detection control in the same change.** Restricted profiles are paid, invisible
-in headcount, and absent from every listing outside Payroll.
-
-I am **not** saying don't build it. The legitimate cases are real — directors on
-payroll, retainers, consultants, dormant records kept for statutory reasons. But
-a spec that ships this without controls is one an auditor will fail, and it is
-the kind of thing that surfaces a year later as a finding.
-
-### Controls the spec should carry
+The legitimate cases are real: directors and founders taking a salary, family
+members on payroll, people on garden leave or notice, dormant accounts kept so
+salary/PF/TDS keep running. So the answer is controls, not refusal:
 
 | Control | Why |
 |---|---|
-| **Permission-gated** — only a named role can set Restricted | Prevents the "insider with payroll access" path. Segregation of duties is the #1 recommended preventive control. |
-| **Audit trail** — who set it, when, and why (a reason field) | Makes the flag accountable rather than silent. |
-| **Never invisible to everyone** — Payroll + an Admin/Auditor role always see them | An "invisible to all" record is the fraud pattern itself. |
-| **At least one report still counts them** | Preserves the headcount-reconciliation control that detection depends on. |
+| **Permission-gated** — only a named role can set it | Blocks the "insider with payroll access" path |
+| **Audit trail** — who, when, off→on, and a reason | Makes the flag accountable rather than silent |
+| **Never invisible to everyone** — Payroll + Admin always see them | An invisible-to-all record *is* the fraud pattern |
+| **At least one report still counts them** | Preserves the reconciliation control |
+| **Payroll run shows the count** | e.g. "Includes 3 restricted profiles" |
 
 ---
 
-## Vocabulary — "Restricted" is the wrong word
+## Naming
 
-Across these products **"restricted" consistently means access-restricted** —
-*who is allowed to see this record*. It does not mean *this person is not a real
-headcount employee*.
+Across these products **"restricted" generally means access-restricted** — who
+may *see* the record — which risks being read as a permission setting rather than
+a headcount exclusion.
 
-Calling the toggle **Restricted Profile** invites exactly the wrong reading: an
-HR user will assume it controls permissions, not headcount. That misreading is
-expensive on a payroll screen.
+| Option | Pros | Cons |
+|---|---|---|
+| **Restricted profile** | Matches the brief | Reads as "restricted access" or "blocked" |
+| **Private profile** | Keka users recognise it | Sounds like a privacy setting the employee controls |
+| **Payroll-only profile** | Says exactly what it is | Longer |
 
-Better-aligned options, in order of my preference:
-
-1. **Payroll Only** — says precisely what it is, matches the actual use case, and no one will misread it.
-2. **Non-Employee** — the Workday/SAP framing; accurate but sounds harsh on a profile.
-3. **Excluded from Headcount** — describes the effect rather than the thing; verbose but unambiguous.
-4. ~~Restricted Profile~~ — collides with the established meaning of "restricted".
-
----
-
-## My recommendation
-
-**Keep the toggle, change the framing.**
-
-A full worker-classification model is the "right" answer but it is a much larger
-change — it would touch employment type, headcount reporting and every module's
-data source. That is not what this ticket is, and I would not quietly expand it.
-
-So: build the toggle as specced, but
-
-1. **Rename it `Payroll Only`** (or your preferred alternative above) so it is not misread as an access control.
-2. **Add a reason field** beside the toggle — one line, captured in the audit trail. Costs almost nothing and converts a silent flag into an accountable one.
-3. **Permission-gate it** in the spec, even if the prototype does not enforce it.
-4. **Keep them visible to Payroll and Admin** — already in the ticket for Payroll; extend to an admin/audit view.
-5. **State in the spec that one report must still count them**, so the reconciliation control survives.
-
-Points 2–5 are spec additions, not prototype work. They cost you nothing now and
-save an audit conversation later.
+**BA's decision:** *Restricted profile*, plus helper text — *"Only visible in
+People and Payroll. Hidden from headcount, dropdowns and listings in other
+portals."* The helper text carries the meaning the label alone does not.
 
 ---
 
-## What this changes in the approved plan
+## What this changes in the plan
 
-| Plan item | Change |
+| Item | Status |
 |---|---|
-| Toggle label | Was **Restricted Profile** → recommend **Payroll Only** *(your call)* |
-| Combined section | Unchanged — still three toggles |
-| Toggle description | Rewrite to match the new label |
-| New | A **reason** field beside the toggle |
-| New | Spec section on permissions, audit trail and the retained headcount report |
-| Field naming | `is_payroll_only` / `payroll_only` if renamed |
-
-Everything else in the approved plan stands.
+| Toggle on the Add/Edit form | **Keep** — Zoho does put this class of control on the form |
+| Bulk marking from the People list | **Add** — this is Keka's model, and the natural home for bulk |
+| Keep Restricted separate from Account Status | **Confirmed** by greytHR and Zoho |
+| Permission gate + audit trail + reason | **Add to the spec** |
+| Stat box + payroll badge | **Keep** — no competitor has these |
 
 ---
 
 ## Sources
 
-- [What Is A Headcount Report In HR? — Workday](https://www.workday.com/en-us/topics/hr/headcount-report.html)
-- [The Workday Worker object — employees, contingent workers, data sources](https://irvineanalytics.ai/catalog/workday/objects/worker.html)
-- [Managing Contingent Workers in Workday](https://www.cloudapper.ai/workday-help/workday-contingent-worker-management/)
-- [SAP SuccessFactors and Contingent Workers — SAP Community](https://community.sap.com/t5/human-capital-management-blog-posts-by-members/sap-successfactors-and-contingent-workers/ba-p/13573055)
-- [Selecting SAP SuccessFactors Employee Central HRIS Elements and Fields](https://learning.sap.com/learning-journeys/configuring-sap-successfactors-onboarding/selecting-sap-successfactors-employee-central-hris-elements-and-fields_db0f97c1-9d4c-407d-bdae-3cbe1799c319)
-- [Access Levels in HR Software — BambooHR](https://www.bamboohr.com/blog/access-levels-bamboohr)
-- [Employee Access Manual — BambooHR](https://help.bamboohr.com/s/article/639584)
-- [How to hide certain details in the employee profile from other users — Keka](https://help.keka.com/hc/en-us/articles/39946688026385-How-to-hide-certain-details-in-the-employee-profile-from-other-users)
+Competitor findings: the BA's research, 2026-09-22.
+
+- [How to Add or remove an employee from private profile — Keka](https://help.keka.com/hc/en-us/articles/39946617176977-How-to-Add-or-remove-an-employee-from-private-profile)
+- [Disable Portal Access — greytHR](https://www.greythr.com/)
+- [Zoho Payroll — adding employees](https://www.zoho.com/in/payroll/help/adding-employees.html)
+- [Personio — hiding employees from the org chart](https://support.personio.de/)
+- [Google Workspace — Directory sharing](https://support.google.com/a/answer/60218)
+- [The Workday Worker object](https://irvineanalytics.ai/catalog/workday/objects/worker.html)
+- [SAP SuccessFactors and Contingent Workers](https://community.sap.com/t5/human-capital-management-blog-posts-by-members/sap-successfactors-and-contingent-workers/ba-p/13573055)
 - [What is a Ghost Employee? — Safeguard Global](https://www.safeguardglobal.com/resources/what-is-a-ghost-employee/)
-- [Ghost Employee Fraud: Strategies For Detection And Prevention — Papaya Global](https://www.papayaglobal.com/blog/ghost-employee-fraud-detection-and-strategies/)
-- [Unmasking Ghost Employees — Aprio](https://www.aprio.com/insights-events/unmasking-ghost-employees-ins-article/)
-- [Tightening Controls on Ghost Employees and Vendor Fraud — Moore Colson](https://moorecolson.com/news-insights/the-cost-of-the-unseen-tightening-controls-on-ghost-employees-and-vendor-fraud/)
-- [Safeguarding Your Payroll by Detecting and Preventing Ghost Employees — Gloroots](https://www.gloroots.com/blog/payroll-detecting-and-preventing-ghost-employees)
+- [Ghost Employee Fraud — Papaya Global](https://www.papayaglobal.com/blog/ghost-employee-fraud-detection-and-strategies/)

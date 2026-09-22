@@ -4,7 +4,7 @@ import Header from './Header'
 import Sidebar from './Sidebar'
 import Breadcrumb from './Breadcrumb'
 
-export default function AppShell({ breadcrumb = [], children }) {
+export default function AppShell({ breadcrumb = [], children, bare = false }) {
   return (
     <div className="main overflow-hidden relative">
       <div className="h-full">
@@ -16,9 +16,11 @@ export default function AppShell({ breadcrumb = [], children }) {
               <div className="relative">
                 <div className="w-[webkit-fill-available] h-full">
                   <Breadcrumb items={breadcrumb} />
-                  <div className="2xl:p-4 p-3 w-full bg-gray-100 overflow-x-auto customScrollbar 2xl:h-[calc(100vh-98px)] 2xl-to-xl:h-[calc(100vh-86px)] h-[calc(100vh-86px)]">
-                    {children}
-                  </div>
+                  {bare ? children : (
+                    <div className="2xl:p-4 p-3 w-full bg-gray-100 overflow-x-auto customScrollbar 2xl:h-[calc(100vh-98px)] 2xl-to-xl:h-[calc(100vh-86px)] h-[calc(100vh-86px)]">
+                      {children}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

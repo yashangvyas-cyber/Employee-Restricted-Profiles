@@ -20,12 +20,11 @@ const crumbs = {
 function ViewCrumbs() {
   const { tab = 'general-info' } = useParams()
   const label = {
-    'general-info': 'General Info', timeline: 'Timeline', 'assets-allocated': 'Assets Allocated',
-    'job-interviews': 'Job Interviews', 'interview-intimation': 'Client Interview Resource Allocation',
-    projects: 'Projects',
+    'general-info': 'General Info', timeline: 'Timeline',
+    'assets-allocated': 'Assets Allocated', performance: 'Performance',
   }[tab]
   return (
-    <AppShell breadcrumb={[{ label: 'Employees', to: peoplePath('/employee') }, { label: 'View Employee' }, { label }]}>
+    <AppShell bare breadcrumb={[{ label: 'Employees', to: peoplePath('/employee') }, { label: 'View Employee' }, { label }]}>
       <EmployeeView />
     </AppShell>
   )

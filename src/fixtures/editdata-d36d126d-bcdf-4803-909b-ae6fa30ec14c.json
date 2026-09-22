@@ -41,7 +41,7 @@
       "employee_code": "BL-041"
     },
     "businessUnit": {
-      "name": "Samar Bhatt",
+      "name": "Crestline Labs",
       "logo": "logo-1782904530I1T.jpeg",
       "logo_url": null
     },
@@ -153,7 +153,7 @@
       "effective_from": "2026-07-24",
       "effective_to": null,
       "id": "e4d0fe59-ccff-456d-99e2-f2baa269d767",
-      "name": "Meera Chauhan",
+      "name": "General Shift",
       "code": "GS",
       "color_code": "#3b82f6",
       "is_default": true,

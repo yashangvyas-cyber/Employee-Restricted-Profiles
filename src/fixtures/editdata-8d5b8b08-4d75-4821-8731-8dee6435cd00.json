@@ -44,7 +44,7 @@
       "employee_code": "BL-014"
     },
     "businessUnit": {
-      "name": "Qadir Banerjee",
+      "name": "Crestline Labs",
       "logo": "logo_type-1771305590JT8.webp",
       "logo_url": null
     },
@@ -156,7 +156,7 @@
       "effective_from": "2026-05-26",
       "effective_to": null,
       "id": "e4d0fe59-ccff-456d-99e2-f2baa269d767",
-      "name": "Meera Chauhan",
+      "name": "General Shift",
       "code": "GS",
       "color_code": "#3b82f6",
       "is_default": true,
