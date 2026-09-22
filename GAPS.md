@@ -246,6 +246,47 @@ wrong place semantically — those three are *today's* state and change through
 the day, while Restricted is a permanent property of the record. It now sits in
 the identity block, under the department chip, with the full panel width.
 
-**NOT CAPTURED:** the green/red `CHECKED IN` / `CHECKED OUT` variants of the
-attendance badge. Our tenant only ever rendered `YET TO CHECK-IN`, so those two
-colour states have never been seen in a capture.
+### Correction after the BA's screenshots (2026-09-22)
+
+Two things I had wrong above.
+
+**1. The row is two groups, not one packed list.** The container is
+`flex justify-between gap-x-1` — a LEFT group and a RIGHT group pushed to
+opposite ends. Our capture contained only the left group, because the tenant had
+no leave tag, so I measured the badges as if they all packed together. They do
+not.
+
+**2. The attendance badge has more states than we captured.** A screenshot shows
+a green **`IN`** badge. So at minimum: `YET TO CHECK-IN` (grey), `IN` (green),
+and presumably an `OUT` (red) that still has not been seen.
+
+**Observed across two screenshots — and they do not agree on placement:**
+
+| Screenshot | Left | Right |
+|---|---|---|
+| Employee A | `SH`, `SH-WFH`, `YET TO CHECK-IN` (packed together) | — |
+| Employee B (Super User) | `IN` (green) | `Leave` (red) |
+
+I cannot reconcile which group holds what from screenshots alone, and I am not
+going to guess. **To close this properly: a DOM capture of one profile whose row
+has BOTH groups populated.**
+
+**What does not change:** Restricted still does not belong in this row. It is
+today's state versus a permanent property of the record, and that argument is
+independent of the layout. The badge stays in the identity block.
+
+**Also unresolved:** whether three badges genuinely overflow at the 208px
+breakpoint. My earlier arithmetic assumed a single packed group; with
+`justify-between` the geometry differs. Flagged rather than restated as fact.
+
+### Tab strip varies far more than we built
+
+The same screenshot shows **6+ tabs** — General Info, Timeline, Assets
+Allocated, Job Interviews, Client Interview Resource Allocation, Client
+Interview… — plus **two** action buttons (`Edit Employee` **and** `Edit
+Profile`) and a kebab menu.
+
+The prototype builds the 4-tab variant captured for our tenant
+(General Info, Timeline, Assets Allocated, Performance) with one button. The tab
+set and the actions are clearly **per-employee / per-permission**; the richer
+variant above is a user viewing their own profile. **Not built.**
