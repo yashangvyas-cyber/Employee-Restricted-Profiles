@@ -5,30 +5,56 @@ Decisions, risks and things that must reach a release note. Kept separate from
 
 ---
 
-## Q3 — counting: DECIDED
+## Q3 — counting: DECIDED (revised 2026-09-22)
 
-**Active Employees EXCLUDES restricted profiles.**
-Flag: `excludeRestrictedFromOtherStatBoxes = true`.
+**Active Employees INCLUDES restricted profiles.**
+Flag `excludeRestrictedFromOtherStatBoxes` is **dropped** — it was added under
+the earlier reading and no longer applies.
 
-**No migration needed.** The Restricted toggle defaults **OFF**, so no customer's
-count changes on release day. A count only moves when HR marks someone
-restricted — a deliberate act, by a person, with a confirm step.
-
-**Definition parity (acceptance test):** the Restricted stat box uses the *same*
-base definition as Active Employees — **non-relieved only**. Therefore:
+Restricted is a **subset** of Active, not a sibling of it:
 
 ```
-Active Employees + Restricted Employees = total non-relieved
+Restricted  ⊆  Active Employees
 ```
 
-This must be an assertion in the test suite, not a comment.
+The earlier assertion `Active + Restricted = total non-relieved` is **void** —
+it only held while the two were mutually exclusive. The acceptance test becomes:
 
-### Today's baseline, for the test
-Tenant `bluewhaletechnosoftpvtltd`: 53 employees — 47 relieved, 5 confirmed,
-1 probation. `total_employees` = **6** = non-relieved. With 2 marked restricted
-the cards must read Active **4** / Restricted **2**, summing to 6.
+```
+every restricted employee also appears in the Active Employees count
+Restricted count  <=  Active Employees count
+```
 
----
+### What this resolves
+The **Active Employees label collision** between People and Payroll disappears.
+Payroll's Employees Compensation has its own `Active Employees` card; under the
+previous decision the same label would have shown two different numbers in two
+portals. Both now count the same way. That was the open item from the Payroll
+field map — closed by this decision.
+
+### The distinction a developer must not blur
+"Hidden from headcount" in the ticket does **not** mean the People stat card:
+
+| Surface | Counts restricted? |
+|---|---|
+| People → Active Employees card | **Yes** — operational count inside the portal where HR can see them anyway |
+| Payroll → Active Employees card | **Yes** |
+| Payroll → Total Employees on Payroll, per-run Employees | **Yes** |
+| Reports → Headcount & Diversity | **No** |
+| Any other portal's listing or dropdown | **No** |
+
+`Active Employees` is an in-portal operational count. *Headcount* is the
+reporting surface. They are different numbers with different rules, and a
+developer implementing a single global exclusion will get this wrong.
+
+### Still no migration
+The toggle defaults **OFF**, and nothing is excluded from Active Employees
+anyway, so **no count moves on release day** under this reading either.
+
+### Consequence worth noting
+Because the number silently contains restricted profiles, the disclosure you
+proposed — *"Includes N restricted profiles"* — matters **more**, not less. It is
+the only thing telling a viewer the total is not purely regular staff.
 
 ## Confirm on enabling Restricted — component IS captured
 
@@ -71,9 +97,10 @@ sits on the `+` icon, not the card. **No subtext or tooltip is being added.**
 
 ## For the release note
 
-> **Active Employees now excludes restricted profiles.** Employees marked as a
-> restricted profile are counted in the new Restricted Employees box instead.
-> Existing counts are unaffected until someone is marked restricted.
+> **New: Restricted profiles.** Employees can be marked as a restricted profile —
+> they remain counted in Active Employees and remain visible in People and
+> Payroll, but are hidden from headcount reports, employee dropdowns and
+> listings in other portals.
 
 ---
 

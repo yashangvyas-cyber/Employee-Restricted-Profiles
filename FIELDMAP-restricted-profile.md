@@ -76,8 +76,9 @@ Fires on **save**, only when the toggle went off → on.
 | Subtext | **none** | **COPIED** — no stat card in the app has subtext |
 | Grid | `grid-cols-7` **or** wrapped 2nd row | **OPEN — you pick from screenshots.** No 7-card row exists anywhere in CollabCRM |
 
-**Counting (decided):** Active Employees **excludes** restricted. Both boxes use
-the same base (non-relieved), so `Active + Restricted = total non-relieved`.
+**Counting (decided 2026-09-22):** Active Employees **includes** restricted.
+Restricted is a **subset**, so `Restricted <= Active Employees`. The earlier
+`Active + Restricted = total non-relieved` assertion is void.
 
 ---
 
@@ -195,27 +196,18 @@ Stat cards captured, with live values:
 
 Plus a per-run **`Employees`** count column.
 
-**Open question — needs your decision.** Both of these are headcount-shaped
-numbers *inside Payroll*, where restricted profiles **are** visible. So they
-should presumably **include** restricted employees — the opposite of the People
-decision. If so, the disclosure you proposed ("Includes 3 restricted profiles")
-belongs on this screen.
+**RESOLVED 2026-09-22.** Both **include** restricted, consistent with People.
+The disclosure you proposed ("Includes 3 restricted profiles") belongs on this
+screen, because the totals silently contain them.
 
 ## 3. Employees Compensation — a name collision
 
 Its stat cards are: **Active Employees**, Salary Structure Unassigned,
 Statutory Applicability.
 
-**Payroll has its own "Active Employees" card.** With the People decision
-(exclude restricted) and Payroll visibility (include restricted), the *same
-label* would show *two different numbers* in two portals.
-
-That is a genuine product problem the ticket does not address. Options:
-- (a) both exclude → but then Payroll under-counts people it is paying
-- (b) People excludes, Payroll includes → same label, two numbers; needs different wording on one side
-- (c) rename one of them
-
-**Not my call — flagging it.**
+**RESOLVED 2026-09-22** by the decision that Active Employees includes
+restricted. Both portals now count the same way, so the label means the same
+number in both. No rename needed.
 
 ## Capture status — NOT blocked
 
@@ -251,4 +243,3 @@ route table lists it, so the real path differs. Not needed for this ticket.
 3. Whether `Total Employees on Payroll` and the per-run `Employees` count include restricted
 4. The "Includes N restricted profiles" disclosure — which screen, what wording
 5. Whether `Export Salary Register` marks restricted rows in the exported file
-6. Resolving the **Active Employees** label collision between People and Payroll
