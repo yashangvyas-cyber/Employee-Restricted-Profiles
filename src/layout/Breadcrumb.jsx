@@ -10,7 +10,7 @@ export default function Breadcrumb({ items = [] }) {
           <span className="icon-home-line text-gray-500 2xl:text-lg 2xl-to-xl:text-base text-base" />
         </li>
         {items.map((c, i) => (
-          <li className="" key={c.label}>
+          <li className="" key={c.label ?? i}>
             <div className="flex items-center">
               <span className="icon-chevron-right text-gray-300 text-base" />
               {c.to && i !== items.length - 1 ? (

@@ -24,8 +24,7 @@ import { peoplePath, TENANT } from '../lib/tenant'
 import { VALIDATION } from '../api/endpoints'
 import {
   Section, GRID, GRID_TOP, Text, Select, Phone, TextArea, Toggle, Check,
-  AddButton, FieldError, LabelRow, DateField, InlineCheck, SubHeading, RadioGroup, Typeahead,
-} from '../components/formPrimitives'
+  AddButton, FieldError, LabelRow, DateField, InlineCheck, SubHeading, RadioGroup, Typeahead, INFO } from '../components/formPrimitives'
 import {
   GENDER, BLOOD_GROUP, EMPLOYEE_STATUS, EMPLOYEE_TYPE, RELATION, MARITAL_STATUS,
 } from '../api/options'
@@ -378,7 +377,7 @@ export default function EmployeeForm({ mode }) {
                 <Text label="Biometric ID" required name="biometric_id" value={f.biometric_id} onChange={set} error={err('biometric_id')} />
                 <Select label="Active Shift" required name="shift_id" value={f.shift_id} onChange={set} options={ref.shifts} />
                 <div>
-                  <LabelRow required>Employee Type</LabelRow>
+                  <LabelRow required info={INFO.employee_type}>Employee Type</LabelRow>
                   <div className="mt-1.5">
                     <RadioGroup name="employee_type" value={f.employee_type} options={EMPLOYEE_TYPE} onChange={(v) => set('employee_type', v)} />
                   </div>
@@ -390,7 +389,7 @@ export default function EmployeeForm({ mode }) {
             <Section {...S.employee_role_information}>
               <div className={GRID}>
                 <Select label="Employee Role" required name="role_id" value={f.role_id} onChange={set} options={ref.roles} error={err('role_id')} />
-                <DateField label="Expiry Date" info name="role_expire_date" value={f.role_expire_date} onChange={set} />
+                <DateField label="Expiry Date" info={INFO.role_expiry} name="role_expire_date" value={f.role_expire_date} onChange={set} />
                 <Text label="Remark" name="remark" value={f.remark} onChange={set} />
               </div>
               <input name="role" type="hidden" value={f.role_id ?? ''} readOnly />
@@ -435,7 +434,7 @@ export default function EmployeeForm({ mode }) {
             <Section {...S.experience}>
               <div className={GRID}>
                 <DateField label="Joining Date" required name="joined_date" value={f.joined_date} onChange={set} error={err('joined_date')} />
-                <DateField label="Confirmation Date" required name="confirmed_date" value={f.confirmed_date} onChange={set} />
+                <DateField label="Confirmation Date" required info={INFO.confirmation} name="confirmed_date" value={f.confirmed_date} onChange={set} />
                 {/* tenure at the business unit - the app shows it read-only */}
                 <Text label={`Experience @ ${buName || ''}`.trim()} name="experience_at_bu" value={tenure} onChange={() => {}} />
               </div>
@@ -561,7 +560,7 @@ export default function EmployeeForm({ mode }) {
                   checked={!!f.is_hidden}
                   onChange={(v) => set('is_hidden', v)}
                   title="Hidden profile"
-                  desc="When turned on, the employee becomes an internal payroll profile — not counted in headcount and not visible across other portals."
+                  desc="When turned on, the employee becomes an Internal &amp; Payroll profile — not counted in headcount and not visible across other portals."
                 />
                 </div>
               </div>

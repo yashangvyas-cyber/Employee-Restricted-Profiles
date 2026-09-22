@@ -99,8 +99,8 @@ export const ROW_TINT = 'bg-warning-25'
    name or the designation. The row tint carries the "different" signal, the
    lock confirms it, the tooltip supplies the word.
    The full badge is used where there is room — the View header, Payroll. */
-export function RestrictedBadge({ compact = false }) {
-  const title = 'Hidden profile — an internal payroll profile, not counted in headcount and not visible across other portals'
+export function HiddenBadge({ compact = false }) {
+  const title = 'Hidden profile — an Internal & Payroll profile, not counted in headcount and not visible across other portals'
   if (compact) {
     return (
       <span

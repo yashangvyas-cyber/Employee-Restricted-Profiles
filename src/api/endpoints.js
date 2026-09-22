@@ -119,7 +119,7 @@ export const FILTER_VALUE_SAMPLES = {
 export const DEFAULT_FILTER_QUERY = [
   { field_name: 'status',         operator: 'Is not', value: 'relieved' },
   { field_name: 'account_status', operator: 'Is',     value: 'active' },
-  /* NEW — restricted profiles are hidden by default; the Restricted stat card
+  /* NEW — hidden profiles are hidden by default; the Hidden stat card
      is the way in. [PROPOSED] */
   { field_name: 'is_hidden',  operator: 'Is',     value: 'false' },
 ]

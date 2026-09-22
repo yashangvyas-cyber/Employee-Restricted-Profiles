@@ -3,6 +3,11 @@
  * Scope per the brief: the main sidebar shows ONLY "Employees" and the
  * sub-sidebar shows ONLY "Employee List".
  *
+ * ADDED 2026-09-22 on request: a second item, "Hidden Profile Map", below
+ * Employees. It is INVENTED - CollabCRM has no such nav entry - and it opens the
+ * prototype-only visibility map. The <li>/icon/label markup is the copied
+ * Employees item with its own label, so it matches the real nav exactly.
+ *
  * Source: modules/people/dom/employee_listing.html (sidebar) and
  *         modules/people/dom/employee_subsidebar_flyout.html (the open flyout).
  *
@@ -21,10 +26,13 @@ import { DEFAULT_FILTER_QUERY } from '../api/endpoints'
 const EMPLOYEE_LIST_HREF =
   peoplePath('/employee') + '?filterQuery=' + encodeURIComponent(JSON.stringify(DEFAULT_FILTER_QUERY))
 
+const IMPACT_HREF = peoplePath('/hidden-profile-map')
+
 export default function Sidebar() {
   const [open, setOpen] = useState(false)
   const { pathname } = useLocation()
   const onEmployees = pathname.includes('/employee')
+  const onImpact = pathname.includes('/hidden-profile-map')
 
   return (
     <div className="">
@@ -47,6 +55,19 @@ export default function Sidebar() {
                 <p>Employees</p>
                 <span className="icon-chevron-right block ml-auto text-xl text-indigo-300" />
               </div>
+            </li>
+            <li title="Hidden Profile Map" className="relative group cursor-pointer" data-change="NEW">
+              <Link
+                to={IMPACT_HREF}
+                onMouseEnter={() => setOpen(false)}
+                className={
+                  'text-white hover:bg-indigo-600 relative z-2 cursor-pointer flex items-center gap-x-3 rounded-md 2xl:p-3 2xl-to-xl:p-2 p-2 text-sm leading-6 font-semibold whitespace-nowrap' +
+                  (onImpact ? ' bg-indigo-800' : '')
+                }
+              >
+                <span className="text-indigo-200 group-hover:text-white h-6 w-6 shrink-0 whitespace-nowrap flex items-center justify-center text-base 2xl-to-xl:text-base 2xl:text-xl icon-eye-off" />
+                <p>Hidden Profile Map</p>
+              </Link>
             </li>
           </ul>
         </nav>

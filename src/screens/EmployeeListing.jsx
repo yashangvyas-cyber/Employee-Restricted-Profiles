@@ -53,12 +53,12 @@ const fmtDateTime = (d) => {
 /* The Experience column is TENURE, not previous experience: a row joined
    01-Jul-2026 rendered "2M" and one joined 01-Apr-2020 rendered "6Y 5M" in the
    crawled listing. Computed from joined_date to today. */
-/* Hover message for a restricted row. Applied to every cell so it fires wherever
+/* Hover message for a hidden row. Applied to every cell so it fires wherever
    the pointer lands. The app attaches react-tooltip through data-tooltip-id;
    `title` is what actually renders in the prototype. */
-const restrictedHover = (r) =>
+const hiddenHover = (r) =>
   r.is_hidden
-    ? { 'data-tooltip-id': `restricted+${r.id}`,
+    ? { 'data-tooltip-id': `hidden+${r.id}`,
         'data-tooltip-content': 'This is a hidden profile.',
         title: 'This is a hidden profile.' }
     : {}
@@ -247,14 +247,14 @@ export default function EmployeeListing() {
                   >
                     <td
                       className={`${TD} w-[1%] ${r.is_hidden ? 'border-l-4 border-warning-400' : ''}`}
-                      {...restrictedHover(r)}
+                      {...hiddenHover(r)}
                     >
                       <p className="text-gray-900 max-w-[160px] truncate font-medium line-clamp1">{from + i}</p>
                     </td>
-                    <td className={TD} {...restrictedHover(r)}>
+                    <td className={TD} {...hiddenHover(r)}>
                       <div><p className="text-gray-900 max-w-[160px] truncate font-medium line-clamp1">{r.employee_code}</p></div>
                     </td>
-                    <td className={`${TD} min-w-[250px]`} {...restrictedHover(r)}>
+                    <td className={`${TD} min-w-[250px]`} {...hiddenHover(r)}>
                       <div>
                         <Link
                           className="grid 2xl:grid-cols-[35px_1fr] 2xl-to-xl:grid-cols-[32px_1fr] grid-cols-[32px_1fr] min-w-0 items-center 2xl:gap-x-4 2xl-to-xl:gap-x-2 gap-x-2"
@@ -276,16 +276,16 @@ export default function EmployeeListing() {
                         </Link>
                       </div>
                     </td>
-                    <td className={TD} {...restrictedHover(r)}>{r.department_name ? <Pill>{r.department_name}</Pill> : <span className="text-gray-400">-</span>}</td>
-                    <td className={TD} {...restrictedHover(r)}>
+                    <td className={TD} {...hiddenHover(r)}>{r.department_name ? <Pill>{r.department_name}</Pill> : <span className="text-gray-400">-</span>}</td>
+                    <td className={TD} {...hiddenHover(r)}>
                       <p>{r.email}</p>
                       <p>{r.personal_mobile ? `+${r.personal_country_code || '91'} ${r.personal_mobile}` : '-'}</p>
                     </td>
-                    <td className={TD} {...restrictedHover(r)}><StatusPill status={r.status} /></td>
-                    <td className={`${TD} min-w-40`} {...restrictedHover(r)}><PersonChip name={r.reporting_name} /></td>
-                    <td className={TD} {...restrictedHover(r)}><div className="text-center">{fmtExp(r.joined_date)}</div></td>
-                    <td className={TD} {...restrictedHover(r)}><div className="text-center">{fmtDate(r.joined_date)}</div></td>
-                    <td className={TD} {...restrictedHover(r)}>
+                    <td className={TD} {...hiddenHover(r)}><StatusPill status={r.status} /></td>
+                    <td className={`${TD} min-w-40`} {...hiddenHover(r)}><PersonChip name={r.reporting_name} /></td>
+                    <td className={TD} {...hiddenHover(r)}><div className="text-center">{fmtExp(r.joined_date)}</div></td>
+                    <td className={TD} {...hiddenHover(r)}><div className="text-center">{fmtDate(r.joined_date)}</div></td>
+                    <td className={TD} {...hiddenHover(r)}>
                       <div className="w-36 flex items-center gap-x-2 whitespace-normal">
                         <span className="inline-block w-5" />{fmtDateTime(r.last_login_time)}
                       </div>

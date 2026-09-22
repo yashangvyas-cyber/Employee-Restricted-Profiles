@@ -3,6 +3,21 @@
 import { VALIDATION } from '../api/endpoints'
 import { INPUT, TEXTAREA } from './primitives'
 
+/* The form's three info icons, COPIED from modules/people/dom/employee_add_form2.html.
+   Each has its own class string and its own react-tooltip id - they are not one
+   shared component in the app. The tooltip TEXT is NOT CAPTURED: react-tooltip
+   renders the bubble on hover, so it is absent from a static dump. */
+export const INFO = {
+  employee_type: { id: 'employee_type', cls: 'h-[14px] w-[14px] mb-[3px] ml-1 bottom-[37px] icon-info-circle left-[60px] text-sm cursor-pointer text-gray-500' },
+  role_expiry:   { id: 'role-expiry-info', cls: 'h-[14px] w-[14px] mb-[3px] bottom-[37px] icon-info-circle left-[60px] text-sm cursor-pointer text-gray-500' },
+  confirmation:  { id: 'confirmation-info', cls: 'h-[14px] w-[14px] mb-[5px] text-sm bottom-[37px] icon-info-circle left-[56px] cursor-pointer text-gray-500' },
+}
+function Info({ info }) {
+  if (!info) return null
+  if (typeof info === 'object') return <span data-tooltip-id={info.id} className={info.cls} />
+  return <span className="icon-info-circle text-gray-400 text-sm" title={info} />
+}
+
 /** Section: title+description in a left gutter, fields in a card on the right. */
 export function Section({ id, title, desc, first, children, change }) {
   return (
@@ -37,7 +52,7 @@ export function LabelRow({ children, required, info }) {
       <div className="flex items-end min-h-6">
         <label className="label">{children}&nbsp;</label>
         {required && <span className="text-error-500 pe-1">*</span>}
-        {info && <span className="icon-info-circle text-gray-400 text-sm" title={info} />}
+        <Info info={info} />
       </div>
       <div />
     </div>
@@ -52,7 +67,7 @@ export function DateField({ label, required, info, name, value, onChange, error,
       <div className="mb-1.5 flex items-end min-h-6">
         <span className={`label${info ? ' mr-1' : ''}`}>{label}</span>
         {required && <span className="text-error-500 pe-1">*</span>}
-        {info && <span className="icon-info-circle text-gray-400 text-sm" title={info} />}
+        <Info info={info} />
       </div>
       <input
         className={INPUT}

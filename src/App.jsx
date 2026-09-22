@@ -9,6 +9,8 @@ import AppShell from './layout/AppShell'
 import EmployeeListing from './screens/EmployeeListing'
 import EmployeeView from './screens/EmployeeView'
 import EmployeeForm from './screens/EmployeeForm'
+import PayrollSalaryRegister from './screens/PayrollSalaryRegister'
+import ImpactBrief from './screens/ImpactBrief'
 import { peoplePath, TENANT } from './lib/tenant'
 
 const crumbs = {
@@ -24,7 +26,15 @@ function ViewCrumbs() {
     'assets-allocated': 'Assets Allocated', performance: 'Performance',
   }[tab]
   return (
-    <AppShell bare breadcrumb={[{ label: 'Employees', to: peoplePath('/employee') }, { label: 'View Employee' }, { label }]}>
+    <AppShell
+      bare
+      breadcrumb={[
+        { label: 'Employees', to: peoplePath('/employee') },
+        { label: 'View Employee' },
+        /* an unrecognised :tab must not add an empty crumb */
+        ...(label ? [{ label }] : []),
+      ]}
+    >
       <EmployeeView />
     </AppShell>
   )
@@ -40,6 +50,24 @@ export default function App() {
       <Route path={`/people/${TENANT}/employee/:id/edit`} element={<AppShell breadcrumb={crumbs.edit}><EmployeeForm mode="edit" /></AppShell>} />
       <Route path={`/people/${TENANT}/employee-detail/:id/:tab`} element={<ViewCrumbs />} />
       <Route path={`/people/${TENANT}/employee-detail/:id`} element={<ViewCrumbs />} />
+      <Route
+        path={`/people/${TENANT}/hidden-profile-map`}
+        element={
+          <AppShell bare breadcrumb={[{ label: 'Hidden Profile Map' }]}>
+            <ImpactBrief />
+          </AppShell>
+        }
+      />
+
+      {/* Payroll */}
+      <Route
+        path={`/payroll/${TENANT}/run-payroll/:runId/edit`}
+        element={
+          <AppShell breadcrumb={[{ label: 'Run Payroll' }, { label: 'Salary Register' }]}>
+            <PayrollSalaryRegister />
+          </AppShell>
+        }
+      />
       <Route path="*" element={<Navigate to={peoplePath('/employee')} replace />} />
     </Routes>
   )

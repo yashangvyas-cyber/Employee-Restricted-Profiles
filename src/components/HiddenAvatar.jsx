@@ -29,8 +29,8 @@ const [ax, ay] = pt(160)
 const [bx, by] = pt(20)
 const LABEL_ARC = `M ${ax.toFixed(1)},${ay.toFixed(1)} A ${RING_R},${RING_R} 0 0 0 ${bx.toFixed(1)},${by.toFixed(1)}`
 
-export default function RestrictedAvatar({ initials, restricted, label = 'RESTRICTED' }) {
-  if (!restricted) {
+export default function HiddenAvatar({ initials, hidden, label = 'HIDDEN PROFILE' }) {
+  if (!hidden) {
     return (
       <div className="rounded-full 2xl:size-[160px] 2xl-to-xl:size-[120px] size-[120px] border-4 border-white bg-primary-500 flex items-center justify-center">
         <span className="font-medium text-white uppercase text-3xl">{initials}</span>
@@ -49,7 +49,7 @@ export default function RestrictedAvatar({ initials, restricted, label = 'RESTRI
 
       <svg viewBox={`0 0 ${BOX} ${BOX}`} className="absolute inset-0 size-full pointer-events-none">
         <defs>
-          <path id="restricted-arc" d={LABEL_ARC} fill="none" />
+          <path id="hidden-arc" d={LABEL_ARC} fill="none" />
         </defs>
         {/* the COMPLETE ring, around the photo */}
         <circle
@@ -62,7 +62,7 @@ export default function RestrictedAvatar({ initials, restricted, label = 'RESTRI
         />
         {/* label curved along the bottom of that ring */}
         <text fill="#ffffff" fontSize="13" fontWeight="700" letterSpacing="1.3" dominantBaseline="middle">
-          <textPath href="#restricted-arc" startOffset="50%" textAnchor="middle">
+          <textPath href="#hidden-arc" startOffset="50%" textAnchor="middle">
             {label}
           </textPath>
         </text>

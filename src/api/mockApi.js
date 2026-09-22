@@ -159,8 +159,8 @@ export async function employeeStatusCounts() {
     total_probation: String(s.filter((e) => e.status === 'probation').length),
     total_intern: String(s.filter((e) => e.status === 'intern').length),
     total_notice_period: String(s.filter((e) => e.status === 'notice_period').length),
-    /* Restricted is a SUBSET of Active — same base (non-relieved), so
-       Restricted <= Active Employees. See PROTOTYPE_NOTES.md Q3. */
+    /* Hidden is a SUBSET of Active — same base (non-relieved), so
+       Hidden <= Active Employees. See PROTOTYPE_NOTES.md Q3. */
     total_hidden: String(notRelieved.filter((e) => e.is_hidden).length),
   }, { message: 'Employees listing counts.' })
 }
