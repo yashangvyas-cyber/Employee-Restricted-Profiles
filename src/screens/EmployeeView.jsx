@@ -117,10 +117,33 @@ export default function EmployeeView() {
             </div>
 
             <div className="p-4 text-center border-b border-gray-200 flex flex-col items-center relative">
+              {/* Restricted is shown as a ring around the avatar with a label on
+                  the bottom arc — the avatar is the largest element on the panel,
+                  so it is read before the name, and this costs no extra row in an
+                  already-crowded identity block. Same idea as LinkedIn's
+                  #OpenToWork frame. Ring colour is warning-400 (rgb 253 176 34),
+                  a real token from the app's stylesheet. [PROPOSED] */}
               <div className="flex justify-center w-fit relative">
-                <div className="rounded-full 2xl:size-[160px] 2xl-to-xl:size-[120px] size-[120px] border-4 border-white bg-primary-500 flex items-center justify-center">
+                <div
+                  className={`rounded-full 2xl:size-[160px] 2xl-to-xl:size-[120px] size-[120px] bg-primary-500 flex items-center justify-center ${
+                    e.is_restricted ? 'border-4 border-warning-400' : 'border-4 border-white'
+                  }`}
+                >
                   <span className="font-medium text-white uppercase text-3xl">{initials(full)}</span>
                 </div>
+                {e.is_restricted && (
+                  <div
+                    className="absolute left-1/2 -translate-x-1/2 bottom-0 translate-y-1/2 z-10"
+                    title="Restricted profile — hidden from headcount, dropdowns and listings in other portals"
+                    data-tooltip-id="restricted-avatar"
+                    data-tooltip-content="Restricted profile"
+                  >
+                    <div className="flex items-center gap-1 rounded-full bg-warning-400 text-white font-semibold uppercase tracking-wide whitespace-nowrap shadow-sm border-2 border-white 2xl:px-2.5 px-2 py-0.5 2xl:text-xxs text-[9px]">
+                      <span className="icon-lock-01" />
+                      Restricted
+                    </div>
+                  </div>
+                )}
               </div>
               <p className="text-gray-900 font-medium 2xl:text-lg 2xl-to-xl:text-base text-base mt-4 max-w-72 overflow-hidden text-ellipsis">{full}</p>
               <p className="text-gray-600 2xl:text-sm 2xl-to-xl:text-xs text-xs font-normal max-w-72 overflow-hidden text-ellipsis">{e.designation?.title}</p>
@@ -130,18 +153,6 @@ export default function EmployeeView() {
                     <span><p className="truncate max-w-48 text-gray-700">{e.department?.title}</p></span>
                   </div>
                 </div>
-                {/* Restricted sits with the IDENTITY, not in the badge row above.
-                    That row carries today's transient state - SH (leave), SH-WFH,
-                    and YET TO CHECK-IN which flips green/red through the day - and
-                    it has no flex-wrap inside a fixed 326px/208px panel; at the
-                    smaller breakpoint those three already overflow without us.
-                    Restricted is a permanent property of the record, so it belongs
-                    here and gets the full panel width. [PROPOSED] */}
-                {e.is_restricted && (
-                  <div className="flex justify-center mt-2">
-                    <RestrictedBadge />
-                  </div>
-                )}
                 <div className="mt-3 z-1 2xl:mb-0 2xl-to-xl:mb-1 mb-1">
                   <button type="submit" className="outline-none font-semibold rounded-lg disabled:cursor-not-allowed border disabled:opacity-100 hover:opacity-90 border-indigo-200 bg-indigo-50 text-indigo-700 2xl:py-1.5 2xl-to-xl:py-1 py-1 2xl:text-sm 2xl-to-xl:text-xs text-xs 2xl:whitespace-normal whitespace-nowrap px-2">
                     <div className="flex items-center justify-center gap-2">Send Password to Employee</div>

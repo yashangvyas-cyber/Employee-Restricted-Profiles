@@ -120,12 +120,31 @@ profiles.** Name and designation are both intact.
 
 ---
 
-## 6. View Employee
+## 6. View Employee — avatar ring  `[DECIDED 2026-09-22]`
+
+The indicator is a **ring around the avatar with a label on the bottom arc**,
+the same device as LinkedIn's `#OpenToWork` frame.
 
 | Part | Value | Source |
 |---|---|---|
-| Header pill | second pill beside the existing status pill | **COPIED** pill class |
-| Settings row | `Restricted profile` / `Yes`–`No`, beside the existing Timesheet Filling row | **COPIED** label/value pattern |
+| Ring | `border-4 border-warning-400` → `rgb(253 176 34)` | token **COPIED**; using it as a ring is **PROPOSED** |
+| Label | `RESTRICTED` pill on the bottom arc — `bg-warning-400 text-white border-2 border-white rounded-full` | **PROPOSED** |
+| Position | `absolute left-1/2 -translate-x-1/2 bottom-0 translate-y-1/2` | **PROPOSED** |
+| Detail | `Access & Visibility` section — `Restricted profile: Yes` + `Reason` | **PROPOSED** section |
+
+### Why here
+The avatar is the largest element on the panel, so it is read **before the
+name**, and the ring **costs no extra row**. That mattered: the identity block
+already holds avatar, name, designation, department chip and a full-width
+button inside a 208–326px panel, and adding a sixth element made it cramped —
+which is what the reviewer rejected.
+
+### Rejected placements, and why
+| Placement | Why not |
+|---|---|
+| Status badge row (top) | No room — 3 badges already fill a 208px panel, `flex` with **no wrap**. And semantically wrong: those are *today's* state, this is permanent. |
+| Chip under the department chip | Crowded a block that already had five stacked elements. |
+| Second pill beside the status pill | The View header has no status pill — that was an assumption from the old, wrong build. |
 
 ---
 
