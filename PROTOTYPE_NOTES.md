@@ -81,9 +81,9 @@ reusing it verbatim for the Restricted confirm.
 rather than chosen silently.
 
 ### Confirm copy  `[PROPOSED]`
-> This employee will not be counted in Active Employees or headcount, and will be
-> hidden from dropdowns and listings in other portals. They will still appear in
-> People and Payroll.
+> This employee will be hidden from headcount reports, and from dropdowns and
+> listings in other portals. They will still be counted in Active Employees and
+> remain visible in People and Payroll.
 
 ---
 

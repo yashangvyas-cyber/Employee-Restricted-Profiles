@@ -55,7 +55,7 @@ Reuses the captured confirm from `modules/project-mgmt/dom/c2_row_action.html`.
 | Part | Value | Source |
 |---|---|---|
 | Title | **Restricted profile** | **PROPOSED** |
-| Body | *This employee will not be counted in Active Employees or headcount, and will be hidden from dropdowns and listings in other portals. They will still appear in People and Payroll.* | **PROPOSED** *(your copy)* |
+| Body | *This employee will be hidden from headcount reports, and from dropdowns and listings in other portals. They will still be counted in Active Employees and remain visible in People and Payroll.* | **PROPOSED** *(your copy)* |
 | Remarks field | label `Remarks` + required `*` + `0/1000` counter | **COPIED** — already in the captured confirm |
 | Cancel | `!bg-white border border-gray-300 !text-gray-700 … w-full` | **COPIED** |
 | Confirm | `bg-indigo-600` (primary, non-destructive) | **COPIED** class; **the variant choice is PROPOSED** — captured original is `bg-error-600` |
