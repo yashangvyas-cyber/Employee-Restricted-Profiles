@@ -52,6 +52,16 @@ const fmtDateTime = (d) => {
 /* The Experience column is TENURE, not previous experience: a row joined
    01-Jul-2026 rendered "2M" and one joined 01-Apr-2020 rendered "6Y 5M" in the
    crawled listing. Computed from joined_date to today. */
+/* Hover message for a restricted row. Applied to every cell so it fires wherever
+   the pointer lands. The app attaches react-tooltip through data-tooltip-id;
+   `title` is what actually renders in the prototype. */
+const restrictedHover = (r) =>
+  r.is_restricted
+    ? { 'data-tooltip-id': `restricted+${r.id}`,
+        'data-tooltip-content': 'This profile is restricted.',
+        title: 'This profile is restricted.' }
+    : {}
+
 const fmtExp = (joined) => {
   if (!joined) return '-'
   const d = new Date(joined); if (Number.isNaN(+d)) return '-'
@@ -227,27 +237,15 @@ export default function EmployeeListing() {
                 {!loading && rows.map((r, i) => (
                   <tr
                     key={r.id}
-                    className={`h-[65px] group hover:bg-gray-50${r.is_restricted ? ` ${ROW_TINT}` : ''}`}
-                    {...(r.is_restricted
-                      ? {
-                          /* mirrors how the app marks an inactive profile: the row
-                             carries the state and hovering explains it. The app
-                             attaches react-tooltip via data-tooltip-id; `title`
-                             makes it work in the prototype. Exact tooltip styling
-                             is NOT CAPTURED - see GAPS.md. */
-                          'data-tooltip-id': `restricted+${r.id}`,
-                          'data-tooltip-content': 'This profile is restricted.',
-                          title: 'This profile is restricted.',
-                        }
-                      : {})}
+                    className={`h-[65px] group ${r.is_restricted ? `${ROW_TINT} hover:bg-warning-50` : 'hover:bg-gray-50'}`}
                   >
-                    <td className={`${TD} w-[1%]`}>
+                    <td className={`${TD} w-[1%]`} {...restrictedHover(r)}>
                       <p className="text-gray-900 max-w-[160px] truncate font-medium line-clamp1">{from + i}</p>
                     </td>
-                    <td className={TD}>
+                    <td className={TD} {...restrictedHover(r)}>
                       <div><p className="text-gray-900 max-w-[160px] truncate font-medium line-clamp1">{r.employee_code}</p></div>
                     </td>
-                    <td className={`${TD} min-w-[250px]`}>
+                    <td className={`${TD} min-w-[250px]`} {...restrictedHover(r)}>
                       <div>
                         <Link
                           className="grid 2xl:grid-cols-[35px_1fr] 2xl-to-xl:grid-cols-[32px_1fr] grid-cols-[32px_1fr] min-w-0 items-center 2xl:gap-x-4 2xl-to-xl:gap-x-2 gap-x-2"
@@ -262,16 +260,16 @@ export default function EmployeeListing() {
                         </Link>
                       </div>
                     </td>
-                    <td className={TD}>{r.department_name ? <Pill>{r.department_name}</Pill> : <span className="text-gray-400">-</span>}</td>
-                    <td className={TD}>
+                    <td className={TD} {...restrictedHover(r)}>{r.department_name ? <Pill>{r.department_name}</Pill> : <span className="text-gray-400">-</span>}</td>
+                    <td className={TD} {...restrictedHover(r)}>
                       <p>{r.email}</p>
                       <p>{r.personal_mobile ? `+${r.personal_country_code || '91'} ${r.personal_mobile}` : '-'}</p>
                     </td>
-                    <td className={TD}><StatusPill status={r.status} /></td>
-                    <td className={`${TD} min-w-40`}><PersonChip name={r.reporting_name} /></td>
-                    <td className={TD}><div className="text-center">{fmtExp(r.joined_date)}</div></td>
-                    <td className={TD}><div className="text-center">{fmtDate(r.joined_date)}</div></td>
-                    <td className={TD}>
+                    <td className={TD} {...restrictedHover(r)}><StatusPill status={r.status} /></td>
+                    <td className={`${TD} min-w-40`} {...restrictedHover(r)}><PersonChip name={r.reporting_name} /></td>
+                    <td className={TD} {...restrictedHover(r)}><div className="text-center">{fmtExp(r.joined_date)}</div></td>
+                    <td className={TD} {...restrictedHover(r)}><div className="text-center">{fmtDate(r.joined_date)}</div></td>
+                    <td className={TD} {...restrictedHover(r)}>
                       <div className="w-36 flex items-center gap-x-2 whitespace-normal">
                         <span className="inline-block w-5" />{fmtDateTime(r.last_login_time)}
                       </div>
@@ -289,7 +287,7 @@ export default function EmployeeListing() {
                       </div>
                       {/* the sticky cell paints its own background; without this
                           the frozen column stays white while the row is tinted */}
-                      <div className={`absolute top-px left-0 right-0 bottom-0 -z-10 group-hover:bg-gray-50 ${r.is_restricted ? ROW_TINT : 'bg-white'}`} />
+                      <div className={`absolute top-px left-0 right-0 bottom-0 -z-10 ${r.is_restricted ? `${ROW_TINT} group-hover:bg-warning-50` : 'bg-white group-hover:bg-gray-50'}`} />
                     </td>
                   </tr>
                 ))}
