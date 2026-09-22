@@ -135,9 +135,21 @@ CollabCRM's People dashboard has such a feed — captured in
 
 ---
 
-## Naming still open
+## Pending PM questions (not build blockers)
 
-Research found **"restricted" means access-restricted** across every product
-surveyed, which risks being read as a permission setting rather than a headcount
-exclusion. Alternatives considered: *Private Profile* (Keka's term), *Payroll
-Only*. Current direction is **Restricted profile + helper text**, per the BA.
+**Rename to "Payroll only"?**
+Risk: *"Restricted"* may be read as an access setting rather than a headcount
+exclusion — that is how the word is used across the products surveyed.
+Keka's equivalent is *Private Profiles*.
+
+**Decided for now:** the prototype uses **Restricted profile**, as the brief
+says. Field name stays **`isRestricted`** (or the captured API naming style)
+until the PM decides. The helper text carries the meaning.
+
+---
+
+## Reason field `[PROPOSED]`
+
+An **optional, single-line Reason** input sits below the Restricted toggle and is
+**shown only when the toggle is ON**. Reuses the form's captured text input
+class. Its value goes into the audit trail alongside who and when.

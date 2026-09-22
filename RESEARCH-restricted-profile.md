@@ -12,9 +12,14 @@ The first version of this file claimed:
 > ~~**No major HR product ships a "hide this employee" toggle.**~~
 
 **That is false.** Keka ships almost exactly this feature, called **Private
-Profiles**. My searches used generic terms ("confidential employee", "exclude
-from headcount") and returned generic answers; Keka's help centre also blocks
-automated fetching (HTTP 403), so it never surfaced.
+Profiles**.
+
+The specific mistake: **I read Keka's *field-privacy* article — a different
+feature — and reported it as Keka's answer to this problem.** It hides *fields*
+on a profile; Private Profiles hides *the person*. My searches also used generic
+terms ("confidential employee", "exclude from headcount"), and Keka's help
+centre blocks automated fetching (HTTP 403), so the right article never
+surfaced.
 
 **The BA found it by searching properly.** The competitor findings below are
 theirs, not mine. I have kept only the parts of my original research that
@@ -82,7 +87,17 @@ every listing** is the textbook **ghost employee** pattern, the most common
 payroll fraud, and exactly what forensic auditors hunt for.
 
 - It thrives on *"weak internal controls, poor oversight, lack of duty segregation"*.
-- The standard detection control is *"reconciling headcounts with departmental managers"* — the very control this feature weakens.
+- The standard detection control is *"reconciling headcounts with departmental managers"*.
+
+**Correction — I overstated this.** The first version said restricted profiles
+would be *"absent from every listing outside Payroll"*, removing the detection
+control. That is not what this design does. **Restricted employees stay visible
+in People → Employee list**, with their own stat box and a Restricted True/False
+filter. **That IS the reconciliation view**, and it is kept. The control is
+preserved, not removed.
+
+The controls below still apply — they make the flag accountable — but the
+reconciliation path is already in the design.
 
 The legitimate cases are real: directors and founders taking a salary, family
 members on payroll, people on garden leave or notice, dormant accounts kept so
@@ -91,7 +106,8 @@ salary/PF/TDS keep running. So the answer is controls, not refusal:
 | Control | Why |
 |---|---|
 | **Permission-gated** — only a named role can set it | Blocks the "insider with payroll access" path |
-| **Audit trail** — who, when, off→on, and a reason | Makes the flag accountable rather than silent |
+| **Audit trail** — who, when, off→on, **and the reason** | Makes the flag accountable rather than silent |
+| **Reason field** — optional, single line, shown only when the toggle is ON | Captures *why* at the moment of the decision |
 | **Never invisible to everyone** — Payroll + Admin always see them | An invisible-to-all record *is* the fraud pattern |
 | **At least one report still counts them** | Preserves the reconciliation control |
 | **Payroll run shows the count** | e.g. "Includes 3 restricted profiles" |
@@ -110,9 +126,14 @@ a headcount exclusion.
 | **Private profile** | Keka users recognise it | Sounds like a privacy setting the employee controls |
 | **Payroll-only profile** | Says exactly what it is | Longer |
 
-**BA's decision:** *Restricted profile*, plus helper text — *"Only visible in
+**DECIDED for the prototype:** keep **Restricted profile** — it is what the brief
+says. Helper text carries the meaning the label alone does not: *"Only visible in
 People and Payroll. Hidden from headcount, dropdowns and listings in other
-portals."* The helper text carries the meaning the label alone does not.
+portals."*
+
+Field name stays **`isRestricted`** (or the captured API naming style) until the
+PM decides. A possible rename to *Payroll only* is logged as a pending PM
+question in `PROTOTYPE_NOTES.md` — **not** an open item for the build.
 
 ---
 
@@ -124,6 +145,7 @@ portals."* The helper text carries the meaning the label alone does not.
 | Bulk marking from the People list | **Add** — this is Keka's model, and the natural home for bulk |
 | Keep Restricted separate from Account Status | **Confirmed** by greytHR and Zoho |
 | Permission gate + audit trail + reason | **Add to the spec** |
+| Optional Reason field under the toggle | **Add** — single line, visible only when ON `[PROPOSED]` |
 | Stat box + payroll badge | **Keep** — no competitor has these |
 
 ---
