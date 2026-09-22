@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { employeeDetail } from '../api/mockApi'
 import { peoplePath } from '../lib/tenant'
-import { StatusPill, initials } from '../components/primitives'
+import { StatusPill, initials, RestrictedBadge } from '../components/primitives'
 
 /* Captured for this employee. The tab set is per-employee / permission driven —
    a different employee showed Job Interviews, Client Interview Resource
@@ -113,6 +113,9 @@ export default function EmployeeView() {
                 <div className="rounded-2xl border flex w-max font-medium items-center !rounded-lg cursor-pointer 2xl:!text-xs 2xl-to-xl:!text-xxs !text-xxs z-10 bg-gray-50 border-gray-200 py-0.5 px-2 text-xs">
                   <span><p>YET TO CHECK-IN</p></span>
                 </div>
+                {/* the captured badge row is flex gap-x-1, already built for more
+                    than one badge — so this needs no layout change. [PROPOSED] */}
+                {e.is_restricted && <RestrictedBadge />}
               </div>
             </div>
 
@@ -368,6 +371,14 @@ export default function EmployeeView() {
                     ))}
                   </div>
                 </div>
+
+                {/* Read side of the new Add/Edit section. View has no such
+                    section today — [PROPOSED], mirroring Access & Visibility. */}
+                <Section id="employee_settings" title="Access & Visibility">
+                  <F label="Account Status" value={e.account_status} />
+                  <F label="Restricted profile" value={e.is_restricted ? 'Yes' : 'No'} />
+                  {e.is_restricted && <F label="Reason" value={e.restricted_reason} />}
+                </Section>
 
                 <Section id="timesheet_filling" title="Timesheet Filling" cols={1}>
                   <F label="Timesheet filling required" value={e.timesheet_filling ? 'Yes' : 'No'} />

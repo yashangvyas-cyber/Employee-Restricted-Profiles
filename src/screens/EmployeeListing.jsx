@@ -11,7 +11,7 @@ import { peoplePath } from '../lib/tenant'
 import StatCard from '../components/StatCard'
 import FilterBar from '../components/FilterBar'
 import Pagination from '../components/Pagination'
-import { Avatar, Pill, StatusPill, PersonChip, TH, TD, BTN_PRIMARY } from '../components/primitives'
+import { Avatar, Pill, StatusPill, PersonChip, TH, TD, BTN_PRIMARY, RestrictedBadge, ROW_TINT } from '../components/primitives'
 
 /* Vertical stickiness comes from the app's own rule
      .tableSticky thead th { position: sticky; z-index: 9 }
@@ -65,6 +65,9 @@ const fmtExp = (joined) => {
 
 export default function EmployeeListing() {
   const [params, setParams] = useSearchParams()
+  /* OPEN DECISION — no 7-card stat row exists in CollabCRM. Default is the
+     wrapped row; ?grid=7 shows the single 7-column row. */
+  const STAT_GRID = params.get('grid') === '7' ? 'grid grid-cols-7' : 'grid grid-cols-4'
   const [rows, setRows] = useState([])
   const [meta, setMeta] = useState({ total: 0, page: 1, per_page: 10 })
   const [counts, setCounts] = useState(null)
@@ -117,14 +120,24 @@ export default function EmployeeListing() {
 
   return (
     <>
-      {/* KPI cards - labels and order copied from the live listing */}
-      <div className="grid grid-cols-6 gap-4 w-full pb-5 relative">
+      {/* KPI cards - labels and order copied from the live listing.
+          STAT_GRID is the open decision: CollabCRM has no 7-card row anywhere,
+          so both options are built and screenshotted for the BA to pick.
+          Flip via ?grid=7 or ?grid=wrap on the URL. */}
+      <div className={`${STAT_GRID} gap-4 w-full pb-5 relative`}>
         <StatCard label="Active Employees" value={counts?.total_employees ?? '-'}     action="add" />
         <StatCard label="Confirmed"        value={counts?.total_confirmed ?? '-'}     action="verified" />
         <StatCard label="Intern"           value={counts?.total_intern ?? '-'}        disabled={counts?.total_intern === '0'} />
         <StatCard label="On Probation"     value={counts?.total_probation ?? '-'} />
         <StatCard label="On Notice Period" value={counts?.total_notice_period ?? '-'} disabled={counts?.total_notice_period === '0'} />
         <StatCard label="Joining Soon"     value={counts?.total_yet_to_join ?? '-'} />
+        {/* NEW — 7th card. Clicking it applies is_restricted Is true, exactly as
+            the other cards apply their own filter. [PROPOSED] */}
+        <StatCard
+          label="Restricted"
+          value={counts?.total_restricted ?? '-'}
+          onClick={() => writeChips([{ label: 'Restricted', field_name: 'is_restricted', operator: 'Is', value: 'true' }])}
+        />
       </div>
 
       {/* toolbar */}
@@ -212,7 +225,7 @@ export default function EmployeeListing() {
                   </tr>
                 )}
                 {!loading && rows.map((r, i) => (
-                  <tr key={r.id} className="h-[65px] group hover:bg-gray-50">
+                  <tr key={r.id} className={`h-[65px] group hover:bg-gray-50${r.is_restricted ? ` ${ROW_TINT}` : ''}`}>
                     <td className={`${TD} w-[1%]`}>
                       <p className="text-gray-900 max-w-[160px] truncate font-medium line-clamp1">{from + i}</p>
                     </td>
@@ -228,7 +241,16 @@ export default function EmployeeListing() {
                         >
                           <Avatar name={r.name} />
                           <div className="min-w-0 flex-auto mr-10">
-                            <p className="2xl:text-sm 2xl-to-xl:text-xs text-xs font-semibold leading-6 text-gray-900 text-ellipsis overflow-hidden min-w-36" title={r.name}>{r.name}</p>
+                            {/* badge sits beside the name; min-w-36 is dropped on
+                                restricted rows or it pushes into the Department
+                                column, and keeping it on the designation line
+                                truncated the designation instead */}
+                            <div className="flex items-center gap-x-2 min-w-0">
+                              <p className="2xl:text-sm 2xl-to-xl:text-xs text-xs font-semibold leading-6 text-gray-900 text-ellipsis overflow-hidden min-w-36" title={r.name}>
+                                {r.name}
+                              </p>
+                              {r.is_restricted && <RestrictedBadge compact />}
+                            </div>
                             <p className="truncate 2xl:text-xs 2xl-to-xl:text-xxs text-xxs leading-5 text-gray-500">{r.designation_name}</p>
                           </div>
                         </Link>
@@ -259,7 +281,9 @@ export default function EmployeeListing() {
                           </Link>
                         </div>
                       </div>
-                      <div className="absolute top-px left-0 right-0 bottom-0 -z-10 bg-white group-hover:bg-gray-50" />
+                      {/* the sticky cell paints its own background; without this
+                          the frozen column stays white while the row is tinted */}
+                      <div className={`absolute top-px left-0 right-0 bottom-0 -z-10 group-hover:bg-gray-50 ${r.is_restricted ? ROW_TINT : 'bg-white'}`} />
                     </td>
                   </tr>
                 ))}

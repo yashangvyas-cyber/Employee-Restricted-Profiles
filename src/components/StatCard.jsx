@@ -2,7 +2,7 @@
    modules/people/dom/employee_listing.html. The app renders two variants:
    an enabled card (hover border) and a disabled one (cursor-not-allowed). */
 
-export default function StatCard({ label, value, action = 'view', disabled }) {
+export default function StatCard({ label, value, action = 'view', disabled, onClick }) {
   const shell = disabled
     ? '2xl:py-5 2xl-to-xl:p-4 p-4 transition-colors focus:outline-none focus-visible:outline-none h-full bg-white rounded-xl border cursor-not-allowed'
     : '2xl:py-5 2xl-to-xl:p-4 p-4 focus:outline-none focus-visible:outline-none h-full bg-white rounded-xl border transition-colors cursor-pointer hover:border-indigo-200 hover:bg-indigo-50/60'
@@ -17,7 +17,7 @@ export default function StatCard({ label, value, action = 'view', disabled }) {
       : 'icon-eye 2xl:text-xl 2xl-to-xl:text-lg text-lg 2xl:p-2 2xl-to-xl:p-1.5 p-1.5 rounded-lg border border-gray-300 cursor-pointer text-gray-700'
 
   return (
-    <div className="h-full">
+    <div className="h-full" onClick={disabled ? undefined : onClick}>
       <div className={shell}>
         <h3 className="text-gray-600 2xl:text-sm 2xl-to-xl:text-xs text-xs font-medium">{label}</h3>
         <div className="flex justify-between items-center mt-4">

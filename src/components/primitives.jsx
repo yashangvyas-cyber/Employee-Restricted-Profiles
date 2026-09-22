@@ -86,6 +86,41 @@ export function PersonChip({ name }) {
   )
 }
 
+/* Restricted profile marker.
+   The badge class is the app's captured pill pattern; the icon (icon-lock-01)
+   exists in the icon font. The ROW TINT is a NEW pattern for CollabCRM - the app
+   differentiates rows only via the status pill today. bg-warning-25 is a real
+   token: rgb(255 252 245). [PROPOSED] */
+export const ROW_TINT = 'bg-warning-25'
+
+/* Two variants.
+   `compact` (icon only) is used in the Name cell: the column is min-w-[250px]
+   from the capture and a text badge needs ~85px, which truncated either the
+   name or the designation. The row tint carries the "different" signal, the
+   lock confirms it, the tooltip supplies the word.
+   The full badge is used where there is room — the View header, Payroll. */
+export function RestrictedBadge({ compact = false }) {
+  const title = 'Restricted profile — hidden from headcount, dropdowns and listings in other portals'
+  if (compact) {
+    return (
+      <span
+        className="icon-lock-01 text-warning-700 shrink-0 2xl:text-base text-sm"
+        title={title}
+        aria-label="Restricted profile"
+      />
+    )
+  }
+  return (
+    <div
+      className="rounded-md border flex w-max font-medium items-center bg-warning-50 border-warning-300 text-warning-700 py-0.5 px-2 2xl:!text-xs 2xl-to-xl:!text-xxs !text-xxs"
+      title={title}
+    >
+      <span className="icon-lock-01 me-1" />
+      <span>Restricted</span>
+    </div>
+  )
+}
+
 /** Primary button - exact class string from the "Add Employee" button. */
 export const BTN_PRIMARY =
   'outline-none font-semibold rounded-lg disabled:cursor-not-allowed border disabled:opacity-100 hover:opacity-90 disabled:bg-indigo-200 px-4 border-transparent bg-indigo-600 text-white 2xl:py-[7px] 2xl-to-xl:py-1 py-1 2xl:h-9 2xl-to-xl:h-8 h-8 2xl:text-sm 2xl-to-xl:text-xs text-xs'

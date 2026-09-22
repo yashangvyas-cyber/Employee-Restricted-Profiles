@@ -85,6 +85,8 @@ export const FILTER_FIELDS = [
   { label: 'Account Status',    field_name: 'account_status',    type: 'dropdown',       icon: 'icon-shield-tick',       operators: ['Is'], live: true },
   { label: 'Blood Group',       field_name: 'blood_group',       type: 'multi-dropdown', icon: 'icon-drop',              operators: ['Is'] },
   { label: '2FA',               field_name: 'is_2fa_enabled',    type: 'dropdown',       icon: 'icon-two-fa',            operators: ['Is'], live: true },
+  /* NEW — 19th field. Follows the is_2fa_enabled pattern exactly. */
+  { label: 'Restricted',        field_name: 'is_restricted',     type: 'dropdown',       icon: 'icon-lock-01',           operators: ['Is'], proposed: true },
 ]
 
 /** Every operator the filter bar can offer, with the value sent to the server.
@@ -106,6 +108,7 @@ export const FILTER_VALUE_SAMPLES = {
   account_status: ['active'],
   is_2fa_enabled: ['enable'],
   status: ['confirmed', 'probation', 'intern', 'notice_period', 'relieved'],
+  is_restricted: ['true', 'false'],
 }
 
 /**
@@ -116,6 +119,9 @@ export const FILTER_VALUE_SAMPLES = {
 export const DEFAULT_FILTER_QUERY = [
   { field_name: 'status',         operator: 'Is not', value: 'relieved' },
   { field_name: 'account_status', operator: 'Is',     value: 'active' },
+  /* NEW — restricted profiles are hidden by default; the Restricted stat card
+     is the way in. [PROPOSED] */
+  { field_name: 'is_restricted',  operator: 'Is',     value: 'false' },
 ]
 
 /**
