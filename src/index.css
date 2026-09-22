@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Hover animation for the incognito mark.
+   Technique: transform a CHILD of the inline SVG on group-hover, with a
+   transition so it eases back when the pointer leaves. Pure CSS, no library —
+   this is how the animated icons in modern UIs are done. */
+.incognito .incognito-glasses,
+.incognito .incognito-hat {
+  transition: transform 180ms cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
+}
+.group:hover .incognito .incognito-glasses,
+.incognito:hover .incognito-glasses {
+  transform: translateY(-1px);
+}
+.group:hover .incognito .incognito-hat,
+.incognito:hover .incognito-hat {
+  transform: translateY(-1.5px) rotate(-3deg);
+}

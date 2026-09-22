@@ -12,6 +12,7 @@ import StatCard from '../components/StatCard'
 import FilterBar from '../components/FilterBar'
 import Pagination from '../components/Pagination'
 import { Avatar, Pill, StatusPill, PersonChip, TH, TD, BTN_PRIMARY, ROW_TINT } from '../components/primitives'
+import IncognitoIcon from '../components/IncognitoIcon'
 
 /* Vertical stickiness comes from the app's own rule
      .tableSticky thead th { position: sticky; z-index: 9 }
@@ -56,10 +57,10 @@ const fmtDateTime = (d) => {
    the pointer lands. The app attaches react-tooltip through data-tooltip-id;
    `title` is what actually renders in the prototype. */
 const restrictedHover = (r) =>
-  r.is_restricted
+  r.is_hidden
     ? { 'data-tooltip-id': `restricted+${r.id}`,
-        'data-tooltip-content': 'This profile is restricted.',
-        title: 'This profile is restricted.' }
+        'data-tooltip-content': 'This is a hidden profile.',
+        title: 'This is a hidden profile.' }
     : {}
 
 const fmtExp = (joined) => {
@@ -141,12 +142,12 @@ export default function EmployeeListing() {
         <StatCard label="On Probation"     value={counts?.total_probation ?? '-'} />
         <StatCard label="On Notice Period" value={counts?.total_notice_period ?? '-'} disabled={counts?.total_notice_period === '0'} />
         <StatCard label="Joining Soon"     value={counts?.total_yet_to_join ?? '-'} />
-        {/* NEW — 7th card. Clicking it applies is_restricted Is true, exactly as
+        {/* NEW — 7th card. Clicking it applies is_hidden Is true, exactly as
             the other cards apply their own filter. [PROPOSED] */}
         <StatCard
-          label="Restricted"
-          value={counts?.total_restricted ?? '-'}
-          onClick={() => writeChips([{ label: 'Restricted', field_name: 'is_restricted', operator: 'Is', value: 'true' }])}
+          label="Hidden"
+          value={counts?.total_hidden ?? '-'}
+          onClick={() => writeChips([{ label: 'Hidden', field_name: 'is_hidden', operator: 'Is', value: 'true' }])}
         />
       </div>
 
@@ -237,9 +238,16 @@ export default function EmployeeListing() {
                 {!loading && rows.map((r, i) => (
                   <tr
                     key={r.id}
-                    className={`h-[65px] group ${r.is_restricted ? `${ROW_TINT} hover:bg-warning-50` : 'hover:bg-gray-50'}`}
+                    className={`h-[65px] group ${
+                      r.is_hidden
+                        ? 'bg-warning-50 hover:bg-warning-100'   /* deeper than warning-25, which read as a smudge */
+                        : 'hover:bg-gray-50'
+                    }`}
                   >
-                    <td className={`${TD} w-[1%]`} {...restrictedHover(r)}>
+                    <td
+                      className={`${TD} w-[1%] ${r.is_hidden ? 'border-l-4 border-warning-400' : ''}`}
+                      {...restrictedHover(r)}
+                    >
                       <p className="text-gray-900 max-w-[160px] truncate font-medium line-clamp1">{from + i}</p>
                     </td>
                     <td className={TD} {...restrictedHover(r)}>
@@ -254,7 +262,12 @@ export default function EmployeeListing() {
                         >
                           <Avatar name={r.name} />
                           <div className="min-w-0 flex-auto mr-10">
-                            <p className="2xl:text-sm 2xl-to-xl:text-xs text-xs font-semibold leading-6 text-gray-900 text-ellipsis overflow-hidden min-w-36" title={r.name}>{r.name}</p>
+                            <div className="flex items-center gap-x-1.5 min-w-0">
+                              <p className="2xl:text-sm 2xl-to-xl:text-xs text-xs font-semibold leading-6 text-gray-900 text-ellipsis overflow-hidden min-w-36" title={r.name}>{r.name}</p>
+                              {r.is_hidden && (
+                                <IncognitoIcon className="2xl:size-4 size-3.5 text-warning-600" title="Hidden profile" />
+                              )}
+                            </div>
                             <p className="truncate 2xl:text-xs 2xl-to-xl:text-xxs text-xxs leading-5 text-gray-500">{r.designation_name}</p>
                           </div>
                         </Link>
@@ -287,7 +300,7 @@ export default function EmployeeListing() {
                       </div>
                       {/* the sticky cell paints its own background; without this
                           the frozen column stays white while the row is tinted */}
-                      <div className={`absolute top-px left-0 right-0 bottom-0 -z-10 ${r.is_restricted ? `${ROW_TINT} group-hover:bg-warning-50` : 'bg-white group-hover:bg-gray-50'}`} />
+                      <div className={`absolute top-px left-0 right-0 bottom-0 -z-10 ${r.is_hidden ? 'bg-warning-50 group-hover:bg-warning-100' : 'bg-white group-hover:bg-gray-50'}`} />
                     </td>
                   </tr>
                 ))}

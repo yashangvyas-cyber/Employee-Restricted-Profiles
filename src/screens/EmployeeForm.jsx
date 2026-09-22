@@ -51,7 +51,9 @@ const SECTIONS = [
   /* NEW — replaces the standalone account_status and invite_employee sections.
      Title and description are [PROPOSED]; the two existing toggles' helper lines
      are their former section descriptions, copied verbatim. */
-  ['employee_settings',            'Access & Visibility',          'Login, invitation and visibility settings of the employee.'],
+  ['employee_settings',            'Access & Visibility',          'Login and visibility settings of the employee.'],
+  /* Add-only: absent from the Edit form in the capture. */
+  ['invite_employee',              'Invite Employee',              'If turned on, employee will receive a welcome email with the instructions to create their password for the portal.'],
 ]
 const S = Object.fromEntries(SECTIONS.map(([id, title, desc]) => [id, { id, title, desc }]))
 
@@ -71,8 +73,8 @@ export default function EmployeeForm({ mode }) {
   const [f, setF] = useState({
     employee_type: 'technical', marital_status: 'single',
     account_status: 'active', invite_employee: true,
-    /* Restricted defaults OFF, so no existing count moves on release day. */
-    is_restricted: false, restricted_reason: '',
+    /* Hidden defaults OFF, so no existing count moves on release day. */
+    is_hidden: false,
   })
   const [ref, setRef] = useState({})
   const [saving, setSaving] = useState(false)
@@ -152,8 +154,7 @@ export default function EmployeeForm({ mode }) {
         marital_status: d.employee_family_details?.marital_status || d.marital_status || 'single',
         health_insurance: (d.employee_insurances || []).length > 0,
         invite_employee: true,
-        is_restricted: !!d.is_restricted,
-        restricted_reason: d.restricted_reason || '',
+        is_hidden: !!d.is_hidden,
       })
     })
   }, [id, isEdit])
@@ -239,10 +240,9 @@ export default function EmployeeForm({ mode }) {
     invite_employee: f.invite_employee !== false,
     account_status: f.account_status !== 'inactive',
     /* Sibling top-level boolean, same shape as invite_employee / account_status.
-       Snake_case per the captured API style; `restricted_reason` feeds the audit
+       Snake_case per the captured API style; `hidden_reason` feeds the audit
        trail. Naming pending PM — see PROTOTYPE_NOTES.md. */
-    is_restricted: !!f.is_restricted,
-    restricted_reason: f.is_restricted ? (f.restricted_reason ?? '') : '',
+    is_hidden: !!f.is_hidden,
     ...(isEdit ? { id } : {}),
     ...(f.pan_number || f.aadhaar_card_number || f.pf_number || f.uan_number
       ? { custom_fields: {
@@ -554,40 +554,36 @@ export default function EmployeeForm({ mode }) {
                   title="Account Status"
                   desc="If disabled, the employee will not be able to login to the portal."
                 />
+                {/* NEW — Hidden profile. Label and helper line are [PROPOSED]. */}
                 <Toggle
-                  id="invite_employee_toggle"
-                  checked={f.invite_employee !== false}
-                  onChange={(v) => set('invite_employee', v)}
-                  title="Invite Employee"
-                  desc="If turned on, employee will receive a welcome email with the instructions to create their password for the portal."
+                  id="is_hidden_toggle"
+                  checked={!!f.is_hidden}
+                  onChange={(v) => set('is_hidden', v)}
+                  title="Hidden profile"
+                  desc="When turned on, the employee becomes an internal payroll profile — not counted in headcount and not visible across other portals."
                 />
-                {/* NEW — Restricted profile. Label and helper line are [PROPOSED]. */}
-                <div>
-                  <Toggle
-                    id="is_restricted_toggle"
-                    checked={!!f.is_restricted}
-                    onChange={(v) => set('is_restricted', v)}
-                    title="Restricted profile"
-                    desc="Only visible in People and Payroll. Hidden from headcount, dropdowns and listings in other portals."
-                  />
-                  {/* optional, single line, shown only when the toggle is ON */}
-                  {f.is_restricted && (
-                    <div className="mt-3 2xl:ml-[50px] ml-[47px] max-w-md">
-                      <LabelRow>Reason</LabelRow>
-                      <div className="rounded-lg relative mt-1.5">
-                        <input
-                          className={INPUT}
-                          type="text"
-                          name="restricted_reason"
-                          value={f.restricted_reason ?? ''}
-                          onChange={(e) => set('restricted_reason', e.target.value)}
-                        />
-                      </div>
-                    </div>
-                  )}
-                </div>
               </div>
             </Section>
+
+            {/* Invite Employee is its own section and exists ONLY on Add.
+                Verified against the captures: the Add form has 17 sections, Edit
+                has 16 — invite_employee is absent from Edit, because sending an
+                invitation is a one-time action at creation, not stored state you
+                can come back and flip.
+                A checkbox, not a toggle, for that reason. [DIVERGENCE: the real
+                Add form uses a toggle; deliberate, see PROTOTYPE_NOTES.md] */}
+            {!isEdit && (
+              <Section {...S.invite_employee}>
+                <Check
+                  name="invite_employee"
+                  id="invite_employee_check"
+                  checked={f.invite_employee !== false}
+                  onChange={(v) => set('invite_employee', v)}
+                >
+                  Send invitation email to this employee
+                </Check>
+              </Section>
+            )}
 
           </div>
         </div>

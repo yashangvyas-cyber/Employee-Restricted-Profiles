@@ -73,8 +73,8 @@
       "pip_id": "1d4e2ba7-c0e0-485c-8639-7669192f5aef",
       "pip_history_count": 1,
       "is_job_interview": 0,
-      "is_restricted": true,
-      "restricted_reason": "Director on payroll"
+      "is_hidden": true,
+      "hidden_reason": "Director on payroll"
     },
     {
       "name": "Dhruv Sinha",
@@ -142,8 +142,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": true,
-      "restricted_reason": "Director on payroll"
+      "is_hidden": true,
+      "hidden_reason": "Director on payroll"
     },
     {
       "name": "Qadir Banerjee",
@@ -211,8 +211,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     },
     {
       "name": "Rohan Chauhan",
@@ -280,8 +280,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     },
     {
       "name": "Nikhil Jain",
@@ -349,8 +349,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     },
     {
       "name": "Ojas Malhotra",
@@ -418,8 +418,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     },
     {
       "name": "Diya Saxena",
@@ -487,8 +487,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     },
     {
       "name": "Zara Reddy",
@@ -556,8 +556,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     },
     {
       "name": "Uday Bhatt",
@@ -625,8 +625,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     },
     {
       "name": "Aditya Bose",
@@ -694,8 +694,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     },
     {
       "name": "Isha Iyer",
@@ -763,8 +763,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     },
     {
       "name": "Vani Verma",
@@ -832,8 +832,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     },
     {
       "name": "Samar Khanna",
@@ -901,8 +901,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     },
     {
       "name": "Rohan Joshi",
@@ -970,8 +970,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     },
     {
       "name": "Rohan Kulkarni",
@@ -1039,8 +1039,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     },
     {
       "name": "Dhruv Sharma",
@@ -1108,8 +1108,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     },
     {
       "name": "Naman Kapoor",
@@ -1177,8 +1177,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     },
     {
       "name": "Nisha Iyer",
@@ -1246,8 +1246,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     },
     {
       "name": "Zara Khanna",
@@ -1315,8 +1315,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     },
     {
       "name": "Harsh Verma",
@@ -1384,8 +1384,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     },
     {
       "name": "Aman Bhatt",
@@ -1453,8 +1453,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     },
     {
       "name": "Dev Banerjee",
@@ -1522,8 +1522,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     },
     {
       "name": "Shreya Sinha",
@@ -1591,8 +1591,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     },
     {
       "name": "Pooja Sharma",
@@ -1660,8 +1660,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     },
     {
       "name": "Kabir Trivedi",
@@ -1729,8 +1729,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     },
     {
       "name": "Dhruv Shah",
@@ -1798,8 +1798,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     },
     {
       "name": "Charu Patel",
@@ -1867,8 +1867,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     },
     {
       "name": "Tara Trivedi",
@@ -1936,8 +1936,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     },
     {
       "name": "Jay Mehta",
@@ -2005,8 +2005,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     },
     {
       "name": "Yash Banerjee",
@@ -2074,8 +2074,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     },
     {
       "name": "Isha Desai",
@@ -2143,8 +2143,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     },
     {
       "name": "Aman Ghosh",
@@ -2212,8 +2212,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     },
     {
       "name": "Qadir Chopra",
@@ -2281,8 +2281,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     },
     {
       "name": "Isha Kapoor",
@@ -2350,8 +2350,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     },
     {
       "name": "Jay Chauhan",
@@ -2419,8 +2419,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     },
     {
       "name": "Qadir Reddy",
@@ -2488,8 +2488,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     },
     {
       "name": "Charu Verma",
@@ -2557,8 +2557,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     },
     {
       "name": "Parth Reddy",
@@ -2626,8 +2626,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     },
     {
       "name": "Rohan Ghosh",
@@ -2695,8 +2695,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     },
     {
       "name": "Siddharth Kapoor",
@@ -2764,8 +2764,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     },
     {
       "name": "Ananya Ghosh",
@@ -2833,8 +2833,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     },
     {
       "name": "Samar Iyer",
@@ -2902,8 +2902,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     },
     {
       "name": "Dhruv Banerjee",
@@ -2971,8 +2971,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     },
     {
       "name": "Zara Dutta",
@@ -3040,8 +3040,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     },
     {
       "name": "Siddharth Saxena",
@@ -3109,8 +3109,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     },
     {
       "name": "Rohan Shetty",
@@ -3178,8 +3178,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     },
     {
       "name": "Maya Rao",
@@ -3247,8 +3247,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     },
     {
       "name": "Jay Desai",
@@ -3316,8 +3316,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     },
     {
       "name": "Dev Reddy",
@@ -3385,8 +3385,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     },
     {
       "name": "Dhruv Iyer",
@@ -3454,8 +3454,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     },
     {
       "name": "Zara Verma",
@@ -3523,8 +3523,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     },
     {
       "name": "Diya Kulkarni",
@@ -3592,8 +3592,8 @@
       "pip_id": "0862be66-e56b-49f8-8b51-955301a8a6e7",
       "pip_history_count": 1,
       "is_job_interview": 15,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     },
     {
       "name": "Jay Khanna",
@@ -3661,8 +3661,8 @@
       "pip_id": null,
       "pip_history_count": 0,
       "is_job_interview": 0,
-      "is_restricted": false,
-      "restricted_reason": ""
+      "is_hidden": false,
+      "hidden_reason": ""
     }
   ]
 }

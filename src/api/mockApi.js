@@ -96,7 +96,7 @@ function applyFilters(rows, filters = []) {
         case 'timesheet_filling': return String(r.timesheet_filling)
         case 'is_2fa_enabled':    return r.is_2fa_enabled ? 'enable' : 'disable'
         case 'is_external_email': return String(r.is_external_email)
-        case 'is_restricted':     return String(!!r.is_restricted)
+        case 'is_hidden':     return String(!!r.is_hidden)
         case 'gender':            return r.gender
         case 'blood_group':       return r.blood_group
         default:                  return r[field_name]
@@ -161,7 +161,7 @@ export async function employeeStatusCounts() {
     total_notice_period: String(s.filter((e) => e.status === 'notice_period').length),
     /* Restricted is a SUBSET of Active — same base (non-relieved), so
        Restricted <= Active Employees. See PROTOTYPE_NOTES.md Q3. */
-    total_restricted: String(notRelieved.filter((e) => e.is_restricted).length),
+    total_hidden: String(notRelieved.filter((e) => e.is_hidden).length),
   }, { message: 'Employees listing counts.' })
 }
 
@@ -172,12 +172,12 @@ export async function employeeDetail(id) {
   await delay()
   const d = store.details[id]
   if (d) {
-    /* The captured detail records predate is_restricted, so carry the flag
+    /* The captured detail records predate is_hidden, so carry the flag
        across from the list row rather than letting View read a stale false. */
     const row = store.employees.find((e) => e.id === id)
     return envelope(
-      { ...d, is_restricted: !!(d.is_restricted ?? row?.is_restricted),
-              restricted_reason: d.restricted_reason || row?.restricted_reason || '' },
+      { ...d, is_hidden: !!(d.is_hidden ?? row?.is_hidden),
+              hidden_reason: d.hidden_reason || row?.hidden_reason || '' },
       { message: 'Employee details fetched successfully.' },
     )
   }
@@ -195,8 +195,8 @@ export async function employeeEditData(id) {
   if (d) {
     const row = store.employees.find((e) => e.id === id)
     return envelope(
-      { ...d, is_restricted: !!(d.is_restricted ?? row?.is_restricted),
-              restricted_reason: d.restricted_reason || row?.restricted_reason || '' },
+      { ...d, is_hidden: !!(d.is_hidden ?? row?.is_hidden),
+              hidden_reason: d.hidden_reason || row?.hidden_reason || '' },
       { message: 'Employee details fetched successfully.' },
     )
   }
@@ -223,8 +223,8 @@ function fromListRow(row) {
     business_unit_id: row.business_unit_id,
     profile_picture: row.profile_picture,
     profile_picture_url: null,
-    is_restricted: !!row.is_restricted,
-    restricted_reason: row.restricted_reason || '',
+    is_hidden: !!row.is_hidden,
+    hidden_reason: row.hidden_reason || '',
     department: { ...tmpl.department, title: row.department_name },
     designation: { ...tmpl.designation, title: row.designation_name },
     businessUnit: row.businessUnit || tmpl.businessUnit,
@@ -296,8 +296,8 @@ export async function employeeAddEdit(payload, id = null) {
     timesheet_filling: !!p.timesheet_filling,
     is_external_email: !!ci.is_external_email,
     is_2fa_enabled: false,
-    is_restricted: !!p.is_restricted,
-    restricted_reason: p.restricted_reason || '',
+    is_hidden: !!p.is_hidden,
+    hidden_reason: p.hidden_reason || '',
     last_login_time: id ? undefined : null,
   }
 

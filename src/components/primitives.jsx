@@ -86,7 +86,7 @@ export function PersonChip({ name }) {
   )
 }
 
-/* Restricted profile marker.
+/* Hidden profile marker.
    The badge class is the app's captured pill pattern; the icon (icon-lock-01)
    exists in the icon font. The ROW TINT is a NEW pattern for CollabCRM - the app
    differentiates rows only via the status pill today. bg-warning-25 is a real
@@ -100,13 +100,13 @@ export const ROW_TINT = 'bg-warning-25'
    lock confirms it, the tooltip supplies the word.
    The full badge is used where there is room — the View header, Payroll. */
 export function RestrictedBadge({ compact = false }) {
-  const title = 'Restricted profile — hidden from headcount, dropdowns and listings in other portals'
+  const title = 'Hidden profile — an internal payroll profile, not counted in headcount and not visible across other portals'
   if (compact) {
     return (
       <span
         className="icon-lock-01 text-warning-700 shrink-0 2xl:text-base text-sm"
         title={title}
-        aria-label="Restricted profile"
+        aria-label="Hidden profile"
       />
     )
   }
@@ -116,7 +116,7 @@ export function RestrictedBadge({ compact = false }) {
       title={title}
     >
       <span className="icon-lock-01 me-1" />
-      <span>Restricted</span>
+      <span>Hidden</span>
     </div>
   )
 }

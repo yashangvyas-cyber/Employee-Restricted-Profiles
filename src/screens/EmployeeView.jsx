@@ -121,7 +121,7 @@ export default function EmployeeView() {
               {/* #OpenToWork-style arc band across the bottom of the avatar,
                   with the label curved along it. See RestrictedAvatar.jsx. */}
               <div className="flex justify-center w-fit relative">
-                <RestrictedAvatar initials={initials(full)} restricted={!!e.is_restricted} />
+                <RestrictedAvatar initials={initials(full)} restricted={!!e.is_hidden} />
               </div>
               <p className="text-gray-900 font-medium 2xl:text-lg 2xl-to-xl:text-base text-base mt-4 max-w-72 overflow-hidden text-ellipsis">{full}</p>
               <p className="text-gray-600 2xl:text-sm 2xl-to-xl:text-xs text-xs font-normal max-w-72 overflow-hidden text-ellipsis">{e.designation?.title}</p>
@@ -374,8 +374,7 @@ export default function EmployeeView() {
                     section today — [PROPOSED], mirroring Access & Visibility. */}
                 <Section id="employee_settings" title="Access & Visibility">
                   <F label="Account Status" value={e.account_status} />
-                  <F label="Restricted profile" value={e.is_restricted ? 'Yes' : 'No'} />
-                  {e.is_restricted && <F label="Reason" value={e.restricted_reason} />}
+                  <F label="Hidden profile" value={e.is_hidden ? 'Yes' : 'No'} />
                 </Section>
 
                 <Section id="timesheet_filling" title="Timesheet Filling" cols={1}>
