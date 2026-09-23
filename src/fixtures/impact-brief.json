@@ -135,7 +135,7 @@
           "screen": "My Team",
           "rule": "V2",
           "sees": "Reporting manager only",
-          "not": "All other team members",
+          "not": "—",
           "treatment": "Card/row absent",
           "status": "DECIDED",
           "flag": "This rule names the reporting manager alone, without HR or Admin. Confirm whether that is deliberate, or whether the global rule — RM, HR and Admin can always see a hidden profile — applies here too.",
