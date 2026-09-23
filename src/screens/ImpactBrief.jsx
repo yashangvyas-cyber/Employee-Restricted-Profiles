@@ -63,13 +63,6 @@ export default function ImpactBrief() {
 
         {/* ━━ ACTIVE PORTAL CONTENT ━━ */}
         <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
-          {/* Portal description */}
-          {portal.note && (
-            <div className="2xl:px-5 px-4 2xl:py-2.5 py-2 border-b border-gray-100 bg-gray-50/50">
-              <p className="text-gray-500 2xl:text-xs text-xxs">{portal.note}</p>
-            </div>
-          )}
-
           {/* Table */}
           <table className="w-full">
             <thead>

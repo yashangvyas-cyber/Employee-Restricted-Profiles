@@ -39,7 +39,6 @@
   "portals": [
     {
       "name": "Global",
-      "note": "Applies across every portal, not to one screen.",
       "rows": [
         {
           "screen": "Global search bar",
@@ -58,7 +57,6 @@
     },
     {
       "name": "People",
-      "note": "The portal where HR must still be able to find the person. Reconciliation lives here.",
       "rows": [
         {
           "screen": "Employee List",
@@ -238,7 +236,6 @@
     },
     {
       "name": "Payroll",
-      "note": "The person is paid here, so they are never removed. Payroll shows them to whoever can already open payroll.",
       "rows": [
         {
           "screen": "Employees Compensation",
@@ -332,7 +329,6 @@
     },
     {
       "name": "Recruitment",
-      "note": "Hidden profiles are fully excluded from this portal. Both rows are hard exclusions.",
       "rows": [
         {
           "screen": "Interview Panellist Selection",
@@ -416,7 +412,6 @@
     },
     {
       "name": "CRM & Invoice",
-      "note": "Here the rule is about RECORDS the person created, not the person's own row.",
       "rows": [
         {
           "screen": "Goals Tracker > Team & Organization",
@@ -487,7 +482,6 @@
     },
     {
       "name": "Project Management",
-      "note": "Mostly undecided. The requirements for this portal are written as open questions, not rules.",
       "rows": [
         {
           "screen": "Project resourcing",
