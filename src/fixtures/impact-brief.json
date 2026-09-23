@@ -85,7 +85,7 @@
         {
           "screen": "Profile Update Requests",
           "rule": "V2",
-          "sees": "Users holding the relevant permission",
+          "sees": "HR, and anyone else given access",
           "not": "Everyone else",
           "treatment": "Row absent",
           "status": "DECIDED",
@@ -97,7 +97,7 @@
         {
           "screen": "Employment Changes",
           "rule": "V2",
-          "sees": "Users holding the relevant permission",
+          "sees": "HR, and anyone else given access",
           "not": "Everyone else",
           "treatment": "Row absent",
           "status": "DECIDED",
@@ -109,7 +109,7 @@
         {
           "screen": "PIP",
           "rule": "V2",
-          "sees": "Users holding the relevant permission",
+          "sees": "HR, and anyone else given access",
           "not": "Everyone else",
           "treatment": "Row absent",
           "status": "DECIDED",
@@ -122,7 +122,7 @@
         {
           "screen": "Probation Management",
           "rule": "V2",
-          "sees": "Users holding the relevant permission",
+          "sees": "HR, and anyone else given access",
           "not": "Everyone else",
           "treatment": "Row absent",
           "status": "DECIDED",
