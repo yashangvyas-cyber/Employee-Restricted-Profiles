@@ -191,7 +191,6 @@
           "not": "Every other role",
           "treatment": "A public screen, so the person is not in the chart for anyone.",
           "status": "OPEN",
-          "flag": "Removing a node from a hierarchy creates a structural problem: if the hidden person has direct reports, their subtree is left orphaned. What the chart should do in that case is still to be decided.",
           "source": "REQ-PEOPLE-7",
           "route": "/people/{t}/organization-chart",
           "verified": "VERIFIED",
