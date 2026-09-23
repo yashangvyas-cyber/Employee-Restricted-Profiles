@@ -200,16 +200,15 @@
         {
           "screen": "Meeting Room Booking",
           "rule": "??",
-          "sees": "—",
+          "sees": "Nobody",
           "not": "—",
-          "treatment": "—",
-          "status": "OPEN",
-          "flag": "Still to be decided: can a hidden profile book a meeting room? This is the only item in the map about what the person can DO rather than who can see them.",
+          "treatment": "The person cannot book a meeting room.",
+          "status": "DECIDED",
           "source": "REQ-PEOPLE-8",
           "route": "/people/{t}/meeting-rooms",
           "verified": "VERIFIED",
           "verified_note": "route_table — the app calls it 'Meeting Rooms'",
-          "verdict": "open"
+          "verdict": "hidden"
         },
         {
           "screen": "Organization Calendar",
