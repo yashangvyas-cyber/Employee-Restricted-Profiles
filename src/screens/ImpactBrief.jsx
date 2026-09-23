@@ -3,7 +3,7 @@
  * Tabbed by portal so you only see one portal's rules at a time.
  */
 import { useSearchParams } from 'react-router-dom'
-import { useState, useMemo } from 'react'
+import { useState } from 'react'
 import brief from '../fixtures/impact-brief.json'
 
 /* ── Data setup ── */
@@ -18,13 +18,6 @@ export default function ImpactBrief() {
   const [activePortal, setActivePortal] = useState(fromUrl >= 0 ? fromUrl : 0)
   const [expandedRow, setExpandedRow] = useState(null)
 
-  const allRows = useMemo(() => brief.portals.flatMap((p) => p.rows), [])
-  const counts = useMemo(() => ({
-    total: allRows.length,
-    built: allRows.filter((r) => r.status === 'BUILT').length,
-    decided: allRows.filter((r) => r.status === 'DECIDED').length,
-    open: allRows.filter((r) => r.status === 'OPEN' || r.status === 'AMBIGUOUS').length,
-  }), [allRows])
 
   const portal = brief.portals[activePortal]
 
@@ -103,11 +96,6 @@ export default function ImpactBrief() {
             </tbody>
           </table>
         </div>
-
-        {/* ━━ FOOTER ━━ */}
-        <p className="text-gray-400 2xl:text-xxs text-xxs mt-4">
-          {counts.total} screens across {brief.portals.length} portals · {brief._source}
-        </p>
       </div>
     </div>
   )
