@@ -73,7 +73,7 @@
         {
           "screen": "Exit Management",
           "rule": "V2",
-          "sees": "RM, HR, Admin",
+          "sees": "HR, and anyone else given access",
           "not": "Every other role",
           "treatment": "Row absent",
           "status": "DECIDED",
