@@ -15,8 +15,8 @@ const PORTALS = [
   { name: 'Recruitment',        icon: 'icon-jobs',                 to: MAP + '?portal=' + encodeURIComponent('Recruitment') },
   { name: 'CRM & Invoice',      icon: 'icon-deals',                to: MAP + '?portal=' + encodeURIComponent('CRM & Invoice') },
   { name: 'Project Management', icon: 'icon-layers-three-02',      to: MAP + '?portal=' + encodeURIComponent('Project Management') },
-  { name: 'Reports',            icon: 'icon-bar-chart-square-01',  to: MAP + '?portal=' + encodeURIComponent('Reports') },
-  { name: 'Administration',     icon: 'icon-administration',       to: MAP + '?portal=' + encodeURIComponent('Administration'), divider: true },
+  { name: 'Reports',            icon: 'icon-bar-chart-square-01' },
+  { name: 'Administration',     icon: 'icon-administration', divider: true },
 ]
 
 export default function Header() {
@@ -54,6 +54,7 @@ export default function Header() {
                   <li key={p.name}>
                     {p.divider && <div className="border -mx-4" />}
                     <div className={'cursor-pointer hover:bg-gray-100 rounded-md group ' + (active ? 'bg-gray-100' : 'bg-white')}>
+                      {p.to ? (
                       <Link to={p.to} className="flex justify-between w-full items-start 2xl:py-2.5 2xl-to-xl:py-2 py-2 2xl:px-2 2xl-to-xl:px-1.5 px-1.5">
                         <div className="flex items-start gap-3">
                           <span className="flex justify-center items-center h-6 w-6">
@@ -71,6 +72,18 @@ export default function Header() {
                           </div>
                         )}
                       </Link>
+                      ) : (
+                        /* out of scope for this ticket - shown because the real
+                           switcher shows it, but it does not navigate */
+                        <div className="flex justify-between w-full items-start 2xl:py-2.5 2xl-to-xl:py-2 py-2 2xl:px-2 2xl-to-xl:px-1.5 px-1.5 opacity-50 cursor-default" title="Out of scope for this ticket">
+                          <div className="flex items-start gap-3">
+                            <span className="flex justify-center items-center h-6 w-6">
+                              <i className={`stroke-current 2xl:text-xl 2xl-to-xl:text-base text-base text-gray-500 ${p.icon}`} />
+                            </span>
+                            <div className="font-semibold 2xl:text-base 2xl-to-xl:text-sm text-sm text-gray-500">{p.name}</div>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </li>
                 )

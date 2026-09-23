@@ -399,16 +399,6 @@
           "verified_note": "route_table — these are TWO separate screens: /daily-allocation and /resource-planner"
         }
       ]
-    },
-    {
-      "name": "Reports",
-      "note": "NOT IN THE REQUIREMENTS LIST. The switcher reaches this portal, but no rule was written for it. It matters: PROTOTYPE_NOTES records that Reports > Headcount & Diversity must EXCLUDE hidden profiles - that is the whole point of hiding someone - yet no row covers it.",
-      "rows": []
-    },
-    {
-      "name": "Administration",
-      "note": "NOT IN THE REQUIREMENTS LIST. The switcher reaches this portal, but no rule was written for it.",
-      "rows": []
     }
   ],
   "_verification": "Every screen was checked on 2026-09-23 against the crawl library: the live People sub-sidebar capture (modules/people/dom/employee_subsidebar_flyout.html), the app's own 438-path route table (_build/route_table.json) and ROUTES.md (353 routes from 406 crawled DOMs). `route` is the real path, `app_label` appears where the app's own name differs from the name used here."
