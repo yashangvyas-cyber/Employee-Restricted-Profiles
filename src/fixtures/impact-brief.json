@@ -51,7 +51,8 @@
           "source": "REQ-GLOBAL-2",
           "route": "—",
           "verified": "VERIFIED",
-          "verified_note": "NOT A ROUTE — header control; no path in the app's route table. Correct, but it means there is no screen to point a developer at."
+          "verified_note": "NOT A ROUTE — header control; no path in the app's route table. Correct, but it means there is no screen to point a developer at.",
+          "verdict": "shown"
         }
       ]
     },
@@ -68,7 +69,8 @@
           "source": "REQ-PEOPLE-1",
           "route": "/people/{t}/employee",
           "verified": "VERIFIED",
-          "verified_note": "route_table + captured DOM"
+          "verified_note": "route_table + captured DOM",
+          "verdict": "shown"
         },
         {
           "screen": "Exit Management",
@@ -81,7 +83,8 @@
           "route": "/people/{t}/separation",
           "verified": "VERIFIED",
           "verified_note": "sub-sidebar flyout — nav label is 'Exit Management', but the ROUTE is /separation",
-          "group": "everyone"
+          "group": "everyone",
+          "verdict": "shown"
         },
         {
           "screen": "Profile Update Requests",
@@ -94,7 +97,8 @@
           "route": "/people/{t}/profile-update-requests",
           "verified": "VERIFIED",
           "verified_note": "sub-sidebar flyout",
-          "group": "everyone"
+          "group": "everyone",
+          "verdict": "shown"
         },
         {
           "screen": "Employment Changes",
@@ -107,7 +111,8 @@
           "route": "/people/{t}/employment-changes",
           "verified": "VERIFIED",
           "verified_note": "sub-sidebar flyout",
-          "group": "everyone"
+          "group": "everyone",
+          "verdict": "shown"
         },
         {
           "screen": "PIP",
@@ -121,7 +126,8 @@
           "verified": "VERIFIED",
           "verified_note": "sub-sidebar flyout — the app calls it 'PIP Management'",
           "app_label": "PIP Management",
-          "group": "everyone"
+          "group": "everyone",
+          "verdict": "shown"
         },
         {
           "screen": "Probation Management",
@@ -134,7 +140,8 @@
           "route": "/people/{t}/probation-management/active-probation",
           "verified": "VERIFIED",
           "verified_note": "sub-sidebar flyout — note the route lands on the 'active-probation' tab",
-          "group": "everyone"
+          "group": "everyone",
+          "verdict": "shown"
         },
         {
           "screen": "My Team",
@@ -148,44 +155,48 @@
           "route": "/people/{t}/my-team/employee-listing",
           "verified": "VERIFIED",
           "verified_note": "route_table — My Team has TWO screens: /my-team/employee-listing and /my-team/job-interviews",
-          "group": "everyone"
+          "group": "everyone",
+          "verdict": "shown"
         },
         {
           "screen": "Leave Calendar",
           "rule": "V2",
-          "sees": "RM and permission holders",
+          "sees": "Nobody",
           "not": "Everyone else",
-          "treatment": "Leave / WFH entry absent",
+          "treatment": "A public screen, so the leave and WFH entries do not appear for anyone.",
           "status": "DECIDED",
           "source": "REQ-PEOPLE-5",
           "route": "/people/{t}/attendance/leave-calendar",
           "verified": "VERIFIED",
-          "verified_note": "route_table + captured DOM"
+          "verified_note": "route_table + captured DOM",
+          "verdict": "hidden"
         },
         {
           "screen": "Asset Assignment",
           "rule": "V2",
-          "sees": "Admin department, HR, RM",
+          "sees": "Admin",
           "not": "Everyone else",
-          "treatment": "Row absent",
+          "treatment": "An admin-only screen, so the person appears there.",
           "status": "DECIDED",
           "source": "REQ-PEOPLE-6",
           "route": "/people/{t}/asset/asset-list",
           "verified": "VERIFIED",
-          "verified_note": "route_table + captured DOM"
+          "verified_note": "route_table + captured DOM",
+          "verdict": "shown"
         },
         {
           "screen": "Organization Chart",
           "rule": "V2",
-          "sees": "RM and higher admin / HR roles",
+          "sees": "Nobody",
           "not": "Every other role",
-          "treatment": "Node absent from the chart",
+          "treatment": "A public screen, so the person is not in the chart for anyone.",
           "status": "OPEN",
           "flag": "Removing a node from a hierarchy creates a structural problem: if the hidden person has direct reports, their subtree is left orphaned. What the chart should do in that case is still to be decided.",
           "source": "REQ-PEOPLE-7",
           "route": "/people/{t}/organization-chart",
           "verified": "VERIFIED",
-          "verified_note": "route_table — it DOES exist"
+          "verified_note": "route_table — it DOES exist",
+          "verdict": "hidden"
         },
         {
           "screen": "Meeting Room Booking",
@@ -198,31 +209,43 @@
           "source": "REQ-PEOPLE-8",
           "route": "/people/{t}/meeting-rooms",
           "verified": "VERIFIED",
-          "verified_note": "route_table — the app calls it 'Meeting Rooms'"
+          "verified_note": "route_table — the app calls it 'Meeting Rooms'",
+          "verdict": "open"
         },
         {
           "screen": "Organization Calendar",
           "rule": "V2",
-          "sees": "Permission holders only",
+          "sees": "Nobody",
           "not": "Everyone else",
-          "treatment": "Entry absent",
+          "treatment": "A public screen, so nothing appears for anyone.",
           "status": "DECIDED",
           "source": "REQ-PEOPLE-9",
           "route": "/people/{t}/organization-calendar",
           "verified": "VERIFIED",
-          "verified_note": "route_table — it DOES exist"
+          "verified_note": "route_table — it DOES exist",
+          "verdict": "hidden"
         },
         {
           "screen": "Shift Management",
           "rule": "V2",
-          "sees": "HR / similar role with permission",
+          "sees": "HR",
           "not": "Everyone else",
-          "treatment": "Row absent",
+          "treatment": "Highlighted row with the incognito icon.",
           "status": "DECIDED",
           "source": "REQ-PEOPLE-10",
           "route": "/people/{t}/shift-management",
           "verified": "VERIFIED",
-          "verified_note": "route_table — 4 screens: /shift-management, /shift-assignments, /shift-calendar, /shift-settings"
+          "verified_note": "route_table — 4 screens: /shift-management, /shift-assignments, /shift-calendar, /shift-settings",
+          "verdict": "shown"
+        },
+        {
+          "screen": "Dashboard feed & widgets (birthdays, work anniversaries)",
+          "verdict": "hidden",
+          "sees": "Nobody",
+          "treatment": "The person is not announced in the feed or the widget.",
+          "status": "DECIDED",
+          "source": "",
+          "route": "/people/{tenant}/dashboard"
         },
         {
           "screen": "Dashboard — counts and charts",
@@ -235,7 +258,8 @@
           "route": "/dashboard",
           "verified": "VERIFIED",
           "verified_note": "Screen confirmed in the application.",
-          "flag": "This screen shows counts and charts, not a list of people. There is no row to hide: a hidden profile is counted in every total and every chart segment unless the underlying figures exclude them. Whether they should is still to be decided."
+          "flag": "This screen shows counts and charts, not a list of people. There is no row to hide: a hidden profile is counted in every total and every chart segment unless the underlying figures exclude them. Whether they should is still to be decided.",
+          "verdict": "open"
         }
       ]
     },
@@ -252,7 +276,8 @@
           "source": "REQ-PAYROLL-1",
           "route": "/payroll/{t}/employees-compensation",
           "verified": "VERIFIED",
-          "verified_note": "route_table + captured DOM"
+          "verified_note": "route_table + captured DOM",
+          "verdict": "shown"
         },
         {
           "screen": "Tax Declaration",
@@ -265,7 +290,8 @@
           "route": "/payroll/{t}/tax-declarations",
           "verified": "VERIFIED",
           "verified_note": "route_table — the route and label are PLURAL",
-          "app_label": "Tax Declarations"
+          "app_label": "Tax Declarations",
+          "verdict": "shown"
         },
         {
           "screen": "Salary Register (per-run pay list)",
@@ -278,7 +304,8 @@
           "source": "REQ-PAYROLL-3",
           "route": "/payroll/{t}/run-payroll/:id/edit",
           "verified": "VERIFIED",
-          "verified_note": "route_table + captured DOM (this is the screen already built)"
+          "verified_note": "route_table + captured DOM (this is the screen already built)",
+          "verdict": "shown"
         },
         {
           "screen": "Payroll Runs",
@@ -290,7 +317,8 @@
           "source": "REQ-PAYROLL-4",
           "route": "/payroll/{t}/run-payroll",
           "verified": "VERIFIED",
-          "verified_note": "route_table + captured DOM"
+          "verified_note": "route_table + captured DOM",
+          "verdict": "shown"
         },
         {
           "screen": "Loans & Advances",
@@ -302,7 +330,8 @@
           "source": "REQ-PAYROLL-5",
           "route": "/payroll/{t}/loans-advances",
           "verified": "VERIFIED",
-          "verified_note": "route_table + captured DOM"
+          "verified_note": "route_table + captured DOM",
+          "verdict": "shown"
         },
         {
           "screen": "Expense & Reimbursement",
@@ -315,7 +344,8 @@
           "route": "/payroll/{t}/expense-management",
           "verified": "VERIFIED",
           "verified_note": "route_table — the app calls it 'Expense Management'",
-          "app_label": "Expense Management"
+          "app_label": "Expense Management",
+          "verdict": "shown"
         },
         {
           "screen": "Dashboard — counts and charts",
@@ -328,7 +358,8 @@
           "route": "/dashboard",
           "verified": "VERIFIED",
           "verified_note": "Screen confirmed in the application.",
-          "flag": "This screen shows counts and charts, not a list of people. There is no row to hide: a hidden profile is counted in every total and every chart segment unless the underlying figures exclude them. Whether they should is still to be decided."
+          "flag": "This screen shows counts and charts, not a list of people. There is no row to hide: a hidden profile is counted in every total and every chart segment unless the underlying figures exclude them. Whether they should is still to be decided.",
+          "verdict": "open"
         }
       ]
     },
@@ -340,14 +371,15 @@
           "rule": "V3",
           "sees": "Nobody",
           "not": "Every role, privileged included",
-          "treatment": "Absent from the selectable panellist list",
+          "treatment": "The person cannot be selected as a panellist when scheduling an interview.",
           "status": "DECIDED",
           "flag": "This is an ELIGIBILITY rule, not just a visibility one — the person cannot be chosen as a panellist at all. Edge case: if an existing panellist is later marked hidden, the behaviour for their already-scheduled interviews is not specified.",
           "source": "REQ-RECRUIT-1",
           "route": "/recruitment/{t}/interviews",
           "verified": "VERIFIED",
           "verified_note": "captured DOM — the real control is a field labelled 'Interview Panel' (tooltip: 'Select members responsible for this interview'), and a column of the same name. There is no 'panellist' anywhere in the app.",
-          "app_label": "Interview Panel"
+          "app_label": "Interview Panel",
+          "verdict": "hidden"
         },
         {
           "screen": "External Panel view",
@@ -359,7 +391,8 @@
           "source": "REQ-RECRUIT-2",
           "route": "—",
           "verified": "NOT VERIFIED",
-          "verified_note": "No screen of this name was identified in the application. The screen needs confirming before this rule can be built."
+          "verified_note": "No screen of this name was identified in the application. The screen needs confirming before this rule can be built.",
+          "verdict": "shown"
         },
         {
           "screen": "Jobs — Add / Edit",
@@ -372,7 +405,8 @@
           "route": "/recruitment/{tenant}/jobs/add · /jobs/:id/edit",
           "verified": "VERIFIED",
           "verified_note": "Screen confirmed in the application.",
-          "flag": "This form selects an employee from the shared employee list. Whether a hidden profile can be selected here is still to be decided."
+          "flag": "This form selects an employee from the shared employee list. Whether a hidden profile can be selected here is still to be decided.",
+          "verdict": "open"
         },
         {
           "screen": "Candidates — Add / Edit",
@@ -385,7 +419,8 @@
           "route": "/recruitment/{tenant}/candidates/add · /candidates/:id/edit",
           "verified": "VERIFIED",
           "verified_note": "Screen confirmed in the application.",
-          "flag": "This form selects an employee from the shared employee list. Whether a hidden profile can be selected here is still to be decided."
+          "flag": "This form selects an employee from the shared employee list. Whether a hidden profile can be selected here is still to be decided.",
+          "verdict": "open"
         },
         {
           "screen": "Job Applications — Add",
@@ -398,7 +433,8 @@
           "route": "/recruitment/{tenant}/job-applications/add",
           "verified": "VERIFIED",
           "verified_note": "Screen confirmed in the application.",
-          "flag": "This form selects an employee from the shared employee list. Whether a hidden profile can be selected here is still to be decided."
+          "flag": "This form selects an employee from the shared employee list. Whether a hidden profile can be selected here is still to be decided.",
+          "verdict": "open"
         },
         {
           "screen": "Dashboard — counts and charts",
@@ -411,7 +447,8 @@
           "route": "/dashboard",
           "verified": "VERIFIED",
           "verified_note": "Screen confirmed in the application.",
-          "flag": "This screen shows counts and charts, not a list of people. There is no row to hide: a hidden profile is counted in every total and every chart segment unless the underlying figures exclude them. Whether they should is still to be decided."
+          "flag": "This screen shows counts and charts, not a list of people. There is no row to hide: a hidden profile is counted in every total and every chart segment unless the underlying figures exclude them. Whether they should is still to be decided.",
+          "verdict": "open"
         }
       ]
     },
@@ -429,7 +466,8 @@
           "source": "REQ-CRM-1",
           "route": "/sales-crm/{t}/goals-tracker",
           "verified": "VERIFIED",
-          "verified_note": "route_table + captured DOM"
+          "verified_note": "route_table + captured DOM",
+          "verdict": "open"
         },
         {
           "screen": "Contacts, Companies, Leads, Deals, Client Interviews, Invoices, Payments",
@@ -442,7 +480,8 @@
           "source": "REQ-CRM-2",
           "route": "/sales-crm/{t}/contacts · /companies · /leads · /deals · /invoice-management/invoices",
           "verified": "VERIFIED",
-          "verified_note": "route_table — 7 record types, each its own listing"
+          "verified_note": "route_table — 7 record types, each its own listing",
+          "verdict": "shown"
         },
         {
           "screen": "Contacts / Deals / Leads / Client Interviews — Add",
@@ -455,7 +494,8 @@
           "route": "/sales-crm/{tenant}/contacts/add · /deals/add · /leads/add · /client-interviews/add",
           "verified": "VERIFIED",
           "verified_note": "Screen confirmed in the application.",
-          "flag": "These four Add forms select an employee in order to ASSIGN a record to them. That is the reverse of the rule above, which covers records the person CREATED. The two are separate rules and each needs its own decision."
+          "flag": "These four Add forms select an employee in order to ASSIGN a record to them. That is the reverse of the rule above, which covers records the person CREATED. The two are separate rules and each needs its own decision.",
+          "verdict": "open"
         },
         {
           "screen": "Invoice Config — Operational Config",
@@ -468,7 +508,8 @@
           "route": "/sales-crm/{tenant}/invoice-management/invoice-config/operational-config/edit",
           "verified": "VERIFIED",
           "verified_note": "Screen confirmed in the application.",
-          "flag": "This screen selects an employee from the shared employee list. Whether a hidden profile can be selected here is still to be decided."
+          "flag": "This screen selects an employee from the shared employee list. Whether a hidden profile can be selected here is still to be decided.",
+          "verdict": "open"
         },
         {
           "screen": "Dashboard — counts and charts",
@@ -481,7 +522,8 @@
           "route": "/dashboard",
           "verified": "VERIFIED",
           "verified_note": "Screen confirmed in the application.",
-          "flag": "This screen shows counts and charts, not a list of people. There is no row to hide: a hidden profile is counted in every total and every chart segment unless the underlying figures exclude them. Whether they should is still to be decided."
+          "flag": "This screen shows counts and charts, not a list of people. There is no row to hide: a hidden profile is counted in every total and every chart segment unless the underlying figures exclude them. Whether they should is still to be decided.",
+          "verdict": "open"
         }
       ]
     },
@@ -499,7 +541,8 @@
           "source": "REQ-PM-1",
           "route": "/project-management/{t}/projects/:id/resources/:key",
           "verified": "VERIFIED",
-          "verified_note": "route_table"
+          "verified_note": "route_table",
+          "verdict": "open"
         },
         {
           "screen": "Daily Allocation & Resource Planner",
@@ -512,7 +555,8 @@
           "source": "REQ-PM-2",
           "route": "/project-management/{t}/daily-allocation",
           "verified": "VERIFIED",
-          "verified_note": "route_table — these are TWO separate screens: /daily-allocation and /resource-planner"
+          "verified_note": "route_table — these are TWO separate screens: /daily-allocation and /resource-planner",
+          "verdict": "shown"
         },
         {
           "screen": "Dashboard — counts and charts",
@@ -525,7 +569,8 @@
           "route": "/dashboard",
           "verified": "VERIFIED",
           "verified_note": "Screen confirmed in the application.",
-          "flag": "This screen shows counts and charts, not a list of people. There is no row to hide: a hidden profile is counted in every total and every chart segment unless the underlying figures exclude them. Whether they should is still to be decided."
+          "flag": "This screen shows counts and charts, not a list of people. There is no row to hide: a hidden profile is counted in every total and every chart segment unless the underlying figures exclude them. Whether they should is still to be decided.",
+          "verdict": "open"
         }
       ]
     }
