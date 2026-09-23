@@ -1,164 +1,120 @@
 /* HIDDEN PROFILE — VISIBILITY MAP
- * Prototype-only screen: developer reference for hidden-profile visibility.
- * Tabbed by portal so you only see one portal's rules at a time.
+ *
+ * Prototype-only screen. Answers one question per screen: does a hidden profile
+ * appear there, and who can see them?
+ *
+ * Grouped by the ANSWER, not by portal. The section heading is the answer, so a
+ * non-technical reader gets it without reading a cell. Portal is a label under
+ * the screen name, because people think "the org chart", not "the People portal".
+ *
+ * A row is "Not decided yet" only when there is no answer at all. A row that has
+ * an answer plus an open question stays in its real group and keeps its note -
+ * burying the answer would lose it.
  */
-import { useSearchParams } from 'react-router-dom'
 import { useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import brief from '../fixtures/impact-brief.json'
 
-/* ── Data setup ── */
+const BLANK = (v) => !v || v === '—' || v === 'NOT STATED'
 
-
-const BADGE = 'rounded-full border inline-flex items-center font-medium py-0.5 px-2.5 2xl:text-xs text-xxs whitespace-nowrap'
-
+const GROUPS = [
+  { id: 'nobody', title: 'Nobody sees them', sub: 'The person does not appear here at all.',
+    dot: 'bg-error-500', ring: 'border-error-200 bg-error-50 text-error-700',
+    test: (r) => !BLANK(r.sees) && /^nobody/i.test(r.sees) },
+  { id: 'some', title: 'Only some people see them', sub: 'The person appears, but only for the people named.',
+    dot: 'bg-warning-500', ring: 'border-warning-200 bg-warning-50 text-warning-700',
+    test: (r) => !BLANK(r.sees) && !/^nobody/i.test(r.sees) && !/^everyone/i.test(r.sees) },
+  { id: 'everyone', title: 'Everyone sees them', sub: 'Anyone who can already open the screen sees the person.',
+    dot: 'bg-success-500', ring: 'border-success-200 bg-success-50 text-success-700',
+    test: (r) => !BLANK(r.sees) && /^everyone/i.test(r.sees) },
+  { id: 'open', title: 'Not decided yet', sub: 'Nobody has answered what happens on these screens.',
+    dot: 'bg-gray-400', ring: 'border-gray-300 bg-gray-100 text-gray-600',
+    test: (r) => BLANK(r.sees) },
+]
 
 export default function ImpactBrief() {
-  const [params] = useSearchParams()
-  const fromUrl = brief.portals.findIndex((p) => p.name === params.get('portal'))
-  const [activePortal, setActivePortal] = useState(fromUrl >= 0 ? fromUrl : 0)
-  const [expandedRow, setExpandedRow] = useState(null)
+  const [params, setParams] = useSearchParams()
+  const portalFilter = params.get('portal')
+  const [openRow, setOpenRow] = useState(null)
 
-
-  const portal = brief.portals[activePortal]
+  const all = brief.portals.flatMap((p) => p.rows.map((r) => ({ ...r, portal: p.name })))
+  const rows = portalFilter ? all.filter((r) => r.portal === portalFilter) : all
+  const groups = GROUPS.map((g) => ({ ...g, rows: rows.filter(g.test) })).filter((g) => g.rows.length)
 
   return (
     <div className="2xl:h-[calc(100vh-98px)] 2xl-to-xl:h-[calc(100vh-86px)] h-[calc(100vh-86px)] overflow-y-auto customScrollbar bg-gray-100">
-      <div className="2xl:p-6 2xl-to-xl:p-4 p-4">
+      <div className="2xl:p-6 2xl-to-xl:p-4 p-4 max-w-[1100px]">
 
-        {/* ━━ HEADER CARD ━━ */}
-        <div className="bg-white rounded-lg border border-gray-200 mb-4">
-          {/* Title */}
-          <div className="flex items-center justify-between gap-4 flex-wrap 2xl:px-5 px-4 2xl:pt-5 pt-4 2xl:pb-4 pb-3">
-            <h1 className="font-semibold text-gray-900 2xl:text-lg text-base">Visibility Map</h1>
-          </div>
-
-          {/* Portal tabs */}
-          <div className="flex items-center gap-1 border-t border-gray-200 2xl:px-5 px-4">
-            {brief.portals.map((p, i) => {
-              const isActive = i === activePortal
-              const portalOpen = p.rows.filter((r) => r.status === 'OPEN' || r.status === 'AMBIGUOUS').length
-              return (
-                <button
-                  key={p.name} type="button"
-                  onClick={() => { setActivePortal(i); setExpandedRow(null) }}
-                  className={`relative 2xl:px-4 px-3 2xl:py-2.5 py-2 2xl:text-sm text-xs font-medium transition-colors ${isActive
-                      ? 'text-indigo-700 border-b-2 border-indigo-600'
-                      : 'text-gray-500 hover:text-gray-700'
-                    }`}
-                >
-                  <span className="flex items-center gap-2">
-                    {p.name}
-                    <span className={`2xl:text-xxs text-xxs rounded-full px-1.5 py-px ${isActive ? 'bg-indigo-100 text-indigo-700' : 'bg-gray-100 text-gray-500'}`}>
-                      {p.rows.length}
-                    </span>
-                    {portalOpen > 0 && (
-                      <span className="w-1.5 h-1.5 rounded-full bg-error-500" title={`${portalOpen} unresolved`} />
-                    )}
-                  </span>
-                </button>
-              )
-            })}
-          </div>
+        <div className="mb-5">
+          <h1 className="font-semibold text-gray-900 2xl:text-xl text-lg">Where does a hidden profile appear?</h1>
+          <p className="mt-1 text-gray-600 2xl:text-sm text-xs">
+            Every screen that shows an employee, and who can see a hidden one there.
+          </p>
+          {portalFilter && (
+            <button
+              type="button"
+              onClick={() => { params.delete('portal'); setParams(params) }}
+              className="mt-3 inline-flex items-center gap-x-2 rounded-2xl border border-indigo-200 bg-indigo-50 text-indigo-700 py-1 px-3 2xl:text-xs text-xxs font-medium"
+            >
+              Showing {portalFilter} only
+              <span className="icon-x-close text-sm" />
+            </button>
+          )}
         </div>
 
-        {/* ━━ ACTIVE PORTAL CONTENT ━━ */}
-        <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
-          {/* Table */}
-          <table className="w-full">
-            <thead>
-              <tr className="border-b border-gray-200">
-                {['Screen', 'Visible to', 'Hidden from', 'UI treatment', ''].map((h, i) => (
-                  <th key={h || i} className={`text-left 2xl:text-xs text-xxs font-medium text-gray-400 uppercase tracking-wider ${i === 0 ? '2xl:pl-5 pl-4' : 'pl-3'} pr-3 2xl:py-2.5 py-2 ${i === 4 ? 'w-10' : ''}`}>
-                    {h}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {portal.rows.map((row, idx) => {
-                const isExpanded = expandedRow === idx
-                const hasNote = !!row.flag
+        {groups.map((g) => (
+          <div key={g.id} className="mb-5">
+            <div className="flex items-center gap-x-3 mb-2">
+              <span className={`w-2.5 h-2.5 rounded-full ${g.dot}`} />
+              <h2 className="font-semibold text-gray-900 2xl:text-base text-sm">{g.title}</h2>
+              <span className={`rounded-2xl border font-medium py-0.5 px-2 2xl:text-xs text-xxs ${g.ring}`}>
+                {g.rows.length}
+              </span>
+            </div>
+            <p className="text-gray-500 2xl:text-sm text-xs mb-2.5 ml-[22px]">{g.sub}</p>
+
+            <div className="bg-white border border-gray-200 rounded-lg overflow-hidden ml-[22px]">
+              {g.rows.map((r, i) => {
+                const key = r.portal + r.screen
+                const isOpen = openRow === key
                 return (
-                  <TableRow
-                    key={row.screen} row={row} idx={idx}
-                    isExpanded={isExpanded} hasNote={hasNote}
-                    onToggle={() => setExpandedRow(isExpanded ? null : idx)}
-                  />
+                  <div key={key} className={i ? 'border-t border-gray-100' : ''}>
+                    <div
+                      className={`2xl:px-5 px-4 2xl:py-3.5 py-3 flex items-start justify-between gap-x-6 ${r.flag ? 'cursor-pointer hover:bg-gray-50' : ''}`}
+                      onClick={r.flag ? () => setOpenRow(isOpen ? null : key) : undefined}
+                    >
+                      <div className="min-w-0">
+                        <p className="font-medium text-gray-900 2xl:text-sm text-xs">{r.screen}</p>
+                        <p className="text-gray-400 2xl:text-xs text-xxs mt-0.5">{r.portal}</p>
+                      </div>
+                      <div className="min-w-0 2xl:w-[55%] w-[52%] shrink-0">
+                        {!BLANK(r.sees) && (
+                          <p className="text-gray-700 2xl:text-sm text-xs">{r.sees}</p>
+                        )}
+                        {!BLANK(r.treatment) && (
+                          <p className="text-gray-500 2xl:text-xs text-xxs mt-0.5">{r.treatment}</p>
+                        )}
+                        {r.flag && (
+                          <p className="text-indigo-600 2xl:text-xs text-xxs mt-1 font-medium">
+                            {isOpen ? 'Hide detail' : 'Read more'}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                    {isOpen && r.flag && (
+                      <div className="2xl:px-5 px-4 pb-3.5 -mt-1">
+                        <div className="rounded-lg border border-warning-200 bg-warning-50 text-warning-900 2xl:px-4 px-3 2xl:py-2.5 py-2 2xl:text-xs text-xxs leading-relaxed">
+                          {r.flag}
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 )
               })}
-            </tbody>
-          </table>
-        </div>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   )
 }
-
-
-/* ── Table row with optional expandable note ── */
-function TableRow({ row, idx, isExpanded, hasNote, onToggle }) {
-  return (
-    <>
-      <tr className={`border-b border-gray-100 last:border-0 hover:bg-gray-50/50 transition-colors ${isExpanded ? 'bg-gray-50/50' : ''}`}>
-        {/* Screen name */}
-        <td className="2xl:pl-5 pl-4 pr-3 2xl:py-3 py-2.5">
-          <p className="2xl:text-sm text-xs font-medium text-gray-900 leading-snug">{row.screen}</p>
-          {row.source && <p className="2xl:text-xxs text-xxs text-gray-400 mt-0.5">{row.source}</p>}
-        </td>
-
-        {/* Visible to */}
-        <td className="px-3 2xl:py-3 py-2.5 2xl:text-sm text-xs text-gray-700">
-          {row.sees === '—' || row.sees === 'NOT STATED'
-            ? <span className="text-gray-300 italic">{row.sees}</span>
-            : row.sees}
-        </td>
-
-        {/* Hidden from */}
-        <td className="px-3 2xl:py-3 py-2.5 2xl:text-sm text-xs text-gray-500">
-          {row.not === '—' || row.not === 'NOT STATED'
-            ? <span className="text-gray-300 italic">{row.not}</span>
-            : row.not}
-        </td>
-
-        {/* Treatment */}
-        <td className="px-3 2xl:py-3 py-2.5 2xl:text-sm text-xs text-gray-600">
-          {row.treatment === '—' || row.treatment === 'NOT STATED'
-            ? <span className="text-gray-300 italic">{row.treatment}</span>
-            : row.treatment}
-        </td>
-
-        {/* Expand button */}
-        <td className="px-2 2xl:py-3 py-2.5 text-center">
-          {hasNote ? (
-            <button type="button" onClick={onToggle}
-              className="text-gray-400 hover:text-gray-600 p-1 rounded transition-colors hover:bg-gray-100" title="Show developer notes">
-              <svg className={`w-4 h-4 transition-transform duration-150 ${isExpanded ? 'rotate-180' : ''}`}
-                fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
-          ) : (
-            <span className="w-4 h-4 inline-block" />
-          )}
-        </td>
-      </tr>
-
-      {/* Expandable note row */}
-      {isExpanded && hasNote && (
-        <tr className="bg-gray-50/30">
-          <td colSpan={5} className="2xl:pl-5 pl-4 pr-4 pb-3 pt-1">
-            <div className={`rounded-lg 2xl:px-4 px-3 2xl:py-2.5 py-2 2xl:text-xs text-xxs leading-relaxed border ${row.status === 'OPEN' || row.status === 'AMBIGUOUS'
-                ? 'bg-amber-50 border-amber-200 text-amber-900'
-                : 'bg-blue-50 border-blue-200 text-blue-900'
-              }`}>
-              {row.flag}
-            </div>
-          </td>
-        </tr>
-      )}
-    </>
-  )
-}
-
-
-/* ── Mini stat in header ── */
