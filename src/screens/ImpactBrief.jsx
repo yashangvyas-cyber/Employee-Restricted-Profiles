@@ -110,7 +110,7 @@ function TableRow({ row, idx, isExpanded, hasNote, onToggle }) {
         {/* Screen name */}
         <td className="2xl:pl-5 pl-4 pr-3 2xl:py-3 py-2.5">
           <p className="2xl:text-sm text-xs font-medium text-gray-900 leading-snug">{row.screen}</p>
-          <p className="2xl:text-xxs text-xxs text-gray-400 mt-0.5">{row.source}</p>
+          {row.source && <p className="2xl:text-xxs text-xxs text-gray-400 mt-0.5">{row.source}</p>}
         </td>
 
         {/* Visible to */}

@@ -3,6 +3,8 @@
    an enabled card (hover border) and a disabled one (cursor-not-allowed). */
 
 export default function StatCard({ label, value, action = 'view', disabled, onClick, change }) {
+  /* action="none" renders no corner icon. The card is still clickable - an eye
+     on a card that means "hidden" reads as the opposite of what it does. */
   const shell = disabled
     ? '2xl:py-5 2xl-to-xl:p-4 p-4 transition-colors focus:outline-none focus-visible:outline-none h-full bg-white rounded-xl border cursor-not-allowed'
     : '2xl:py-5 2xl-to-xl:p-4 p-4 focus:outline-none focus-visible:outline-none h-full bg-white rounded-xl border transition-colors cursor-pointer hover:border-indigo-200 hover:bg-indigo-50/60'
@@ -22,7 +24,7 @@ export default function StatCard({ label, value, action = 'view', disabled, onCl
         <h3 className="text-gray-600 2xl:text-sm 2xl-to-xl:text-xs text-xs font-medium">{label}</h3>
         <div className="flex justify-between items-center mt-4">
           <div className="font-semibold 2xl:text-4xl 2xl-to-xl:text-2xl text-2xl text-gray-900 truncate">{value}</div>
-          <div><span className={icon} /></div>
+          {action !== 'none' && <div><span className={icon} /></div>}
         </div>
       </div>
     </div>

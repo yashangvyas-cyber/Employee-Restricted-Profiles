@@ -147,6 +147,7 @@ export default function EmployeeListing() {
         <StatCard
           change="NEW"
           label="Hidden"
+          action="none"
           value={counts?.total_hidden ?? '-'}
           onClick={() => writeChips([{ label: 'Hidden', field_name: 'is_hidden', operator: 'Is', value: 'true' }])}
         />
