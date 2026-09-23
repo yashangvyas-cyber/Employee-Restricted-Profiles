@@ -84,7 +84,9 @@ export default function Header() {
             <div className="flex">
               <img src="/collabcrm/assets/logo.svg" alt="people" className="h-5" />
               <span className="ml-2 text-gray-500 2xl:text-base 2xl-to-xl:text-sm text-sm font-normal leading-tight capitalize w-full">
-                people
+                {/* the portal name beside the logo changes with the portal -
+                    'payroll' is the label in modules/payroll/dom/*.html */}
+                {activePortal.toLowerCase()}
               </span>
             </div>
             <div className="border-[#FF0000] bg-[#FF0000] text-white font-extrabold 2xl:py-2 2xl-to-xl:py-1 py-1 2xl:h-10 2xl-to-xl:h-8 h-8 px-4 rounded-lg 2xl:text-base 2xl-to-xl:text-sm text-sm flex items-center justify-center">

@@ -18,7 +18,7 @@
  */
 import { Link, useLocation } from 'react-router-dom'
 import { useState } from 'react'
-import { peoplePath } from '../lib/tenant'
+import { peoplePath, TENANT } from '../lib/tenant'
 import { DEFAULT_FILTER_QUERY } from '../api/endpoints'
 
 /* The real "Employee List" href carries this default filter - which is why the
@@ -28,16 +28,60 @@ const EMPLOYEE_LIST_HREF =
 
 const IMPACT_HREF = peoplePath('/hidden-profile-map')
 
+/* PAYROLL's own main sidebar. Labels, order and icon names COPIED from
+   modules/payroll/dom/employees_compensation.html. Switching portal has to
+   change the whole shell - header label AND sidebar - not just the route.
+   Only Run Payroll is built in this prototype; the rest carry `built:false`
+   and do not navigate, rather than faking a screen. */
+const PAYROLL_NAV = [
+  { label: 'Dashboard',              icon: 'icon-grid-01' },
+  { label: 'Employees Compensation', icon: 'icon-users-02' },
+  { label: 'Tax Declarations',       icon: 'icon-file-05' },
+  { label: 'Run Payroll',            icon: 'icon-play-circle', to: `/payroll/${TENANT}/run-payroll/PR-2026-08/edit` },
+  { label: 'Expense & Reimbursement', icon: 'icon-invoice' },
+  { label: 'Loans & Advances',       icon: 'icon-bank' },
+  { label: 'Configuration',          icon: 'icon-settings-02' },
+]
+
+const ITEM = 'text-white hover:bg-indigo-600 relative z-2 flex items-center gap-x-3 rounded-md 2xl:p-3 2xl-to-xl:p-2 p-2 text-sm leading-6 font-semibold whitespace-nowrap'
+const ITEM_ICON = 'text-indigo-200 group-hover:text-white h-6 w-6 shrink-0 whitespace-nowrap flex items-center justify-center text-base 2xl-to-xl:text-base 2xl:text-xl'
+
 export default function Sidebar() {
   const [open, setOpen] = useState(false)
   const { pathname } = useLocation()
   const onEmployees = pathname.includes('/employee')
   const onImpact = pathname.includes('/hidden-profile-map')
+  const onPayroll = pathname.startsWith('/payroll/')
 
   return (
     <div className="">
-      <div className="bg-indigo-700 w-[220px] duration-300 relative 2xl:min-h-[calc(100vh-60px)] 2xl-to-xl:min-h-[calc(100vh-52px)] min-h-[calc(100vh-52px)]">
+      {/* the sidebar WIDTH is per-portal in the real app: People and Recruitment
+          are w-[220px], Payroll is w-[270px] (its labels are longer). Copied from
+          employee_listing.html and employees_compensation.html. */}
+      <div className={`bg-indigo-700 ${onPayroll ? 'w-[270px]' : 'w-[220px]'} duration-300 relative 2xl:min-h-[calc(100vh-60px)] 2xl-to-xl:min-h-[calc(100vh-52px)] min-h-[calc(100vh-52px)]`}>
         <nav className="py-5 px-2 overflow-y-auto overflow-x-hidden sidebar-container 2xl:h-[calc(100vh-116px)] 2xl-to-xl:h-[calc(100vh-108px)] h-[calc(100vh-108px)]">
+          {onPayroll ? (
+            <ul className="space-y-3 sidebar-container">
+              {PAYROLL_NAV.map((n) => {
+                const active = !!n.to && pathname.startsWith(n.to.split('?')[0].replace(/\/PR-[^/]+\/edit$/, ''))
+                const inner = (
+                  <>
+                    <span className={`${ITEM_ICON} ${n.icon}`} />
+                    <p>{n.label}</p>
+                  </>
+                )
+                return (
+                  <li key={n.label} title={n.built === false ? undefined : n.label} className="relative group">
+                    {n.to ? (
+                      <Link to={n.to} className={ITEM + ' cursor-pointer' + (active ? ' bg-indigo-800' : '')}>{inner}</Link>
+                    ) : (
+                      <div className={ITEM + ' cursor-default opacity-60'} title="Not built in this prototype">{inner}</div>
+                    )}
+                  </li>
+                )
+              })}
+            </ul>
+          ) : (
           <ul className="space-y-3 sidebar-container">
             <li
               title="Employees"
@@ -70,6 +114,7 @@ export default function Sidebar() {
               </Link>
             </li>
           </ul>
+          )}
         </nav>
 
         {/* sub-sidebar flyout — markup copied from employee_subsidebar_flyout.html */}
