@@ -75,74 +75,80 @@
           "rule": "V2",
           "sees": "HR, and anyone else given access",
           "not": "Every other role",
-          "treatment": "Row absent",
+          "treatment": "",
           "status": "DECIDED",
           "source": "REQ-PEOPLE-2",
           "route": "/people/{t}/separation",
           "verified": "VERIFIED",
-          "verified_note": "sub-sidebar flyout — nav label is 'Exit Management', but the ROUTE is /separation"
+          "verified_note": "sub-sidebar flyout — nav label is 'Exit Management', but the ROUTE is /separation",
+          "group": "everyone"
         },
         {
           "screen": "Profile Update Requests",
           "rule": "V2",
           "sees": "HR, and anyone else given access",
           "not": "Everyone else",
-          "treatment": "Row absent",
+          "treatment": "",
           "status": "DECIDED",
           "source": "REQ-PEOPLE-3a",
           "route": "/people/{t}/profile-update-requests",
           "verified": "VERIFIED",
-          "verified_note": "sub-sidebar flyout"
+          "verified_note": "sub-sidebar flyout",
+          "group": "everyone"
         },
         {
           "screen": "Employment Changes",
           "rule": "V2",
           "sees": "HR, and anyone else given access",
           "not": "Everyone else",
-          "treatment": "Row absent",
+          "treatment": "",
           "status": "DECIDED",
           "source": "REQ-PEOPLE-3b",
           "route": "/people/{t}/employment-changes",
           "verified": "VERIFIED",
-          "verified_note": "sub-sidebar flyout"
+          "verified_note": "sub-sidebar flyout",
+          "group": "everyone"
         },
         {
           "screen": "PIP",
           "rule": "V2",
           "sees": "HR, and anyone else given access",
           "not": "Everyone else",
-          "treatment": "Row absent",
+          "treatment": "",
           "status": "DECIDED",
           "source": "REQ-PEOPLE-3c",
           "route": "/people/{t}/pip-management",
           "verified": "VERIFIED",
           "verified_note": "sub-sidebar flyout — the app calls it 'PIP Management'",
-          "app_label": "PIP Management"
+          "app_label": "PIP Management",
+          "group": "everyone"
         },
         {
           "screen": "Probation Management",
           "rule": "V2",
           "sees": "HR, and anyone else given access",
           "not": "Everyone else",
-          "treatment": "Row absent",
+          "treatment": "",
           "status": "DECIDED",
           "source": "REQ-PEOPLE-3d",
           "route": "/people/{t}/probation-management/active-probation",
           "verified": "VERIFIED",
-          "verified_note": "sub-sidebar flyout — note the route lands on the 'active-probation' tab"
+          "verified_note": "sub-sidebar flyout — note the route lands on the 'active-probation' tab",
+          "group": "everyone"
         },
         {
           "screen": "My Team",
           "rule": "V2",
           "sees": "Reporting manager only",
           "not": "—",
-          "treatment": "Card/row absent",
+          "treatment": "",
           "status": "DECIDED",
           "flag": "This rule names the reporting manager alone, without HR or Admin. Confirm whether that is deliberate, or whether the global rule — RM, HR and Admin can always see a hidden profile — applies here too.",
           "source": "REQ-PEOPLE-4",
           "route": "/people/{t}/my-team/employee-listing",
           "verified": "VERIFIED",
-          "verified_note": "route_table — My Team has TWO screens: /my-team/employee-listing and /my-team/job-interviews"
+          "verified_note": "route_table — My Team has TWO screens: /my-team/employee-listing and /my-team/job-interviews",
+          "group": "everyone"
         },
         {
           "screen": "Leave Calendar",

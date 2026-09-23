@@ -54,7 +54,13 @@ export default function ImpactBrief() {
 
   const all = brief.portals.flatMap((p) => p.rows.map((r) => ({ ...r, portal: p.name })))
   const rows = portalFilter ? all.filter((r) => r.portal === portalFilter) : all
-  const groups = GROUPS.map((g) => ({ ...g, rows: rows.filter(g.test) })).filter((g) => g.rows.length)
+  /* A row's group is the answer to "is the hidden person treated differently
+     from anyone else on this screen?" - not "who can see them". A screen only
+     HR can open hides the person from nobody, so it belongs in "everyone".
+     `group` on the row wins; otherwise it is derived from the audience. */
+  const groups = GROUPS
+    .map((g) => ({ ...g, rows: rows.filter((r) => (r.group ? r.group === g.id : g.test(r))) }))
+    .filter((g) => g.rows.length)
 
   return (
     <div className="2xl:h-[calc(100vh-98px)] 2xl-to-xl:h-[calc(100vh-86px)] h-[calc(100vh-86px)] overflow-y-auto customScrollbar bg-gray-100">
