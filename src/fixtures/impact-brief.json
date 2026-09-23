@@ -220,6 +220,19 @@
           "route": "/people/{t}/shift-management",
           "verified": "VERIFIED",
           "verified_note": "route_table — 4 screens: /shift-management, /shift-assignments, /shift-calendar, /shift-settings"
+        },
+        {
+          "screen": "Dashboard — counts and charts",
+          "rule": "??",
+          "sees": "",
+          "not": "",
+          "treatment": "",
+          "status": "OPEN",
+          "source": "FOUND BY CRAWL — not in your list",
+          "route": "/dashboard",
+          "verified": "VERIFIED",
+          "verified_note": "evidence: modules/<portal>/api/dashboard.html",
+          "flag": "Shows COUNTS, not rows. There is no row to hide - the hidden person sits silently inside every number and chart segment. The Reports crawl proved this category exists and that no rule in your list covers it. Same question here: do these counts include a hidden profile?"
         }
       ]
     },
@@ -301,6 +314,19 @@
           "verified": "VERIFIED",
           "verified_note": "route_table — the app calls it 'Expense Management'",
           "app_label": "Expense Management"
+        },
+        {
+          "screen": "Dashboard — counts and charts",
+          "rule": "??",
+          "sees": "",
+          "not": "",
+          "treatment": "",
+          "status": "OPEN",
+          "source": "FOUND BY CRAWL — not in your list",
+          "route": "/dashboard",
+          "verified": "VERIFIED",
+          "verified_note": "evidence: modules/<portal>/api/dashboard.html",
+          "flag": "Shows COUNTS, not rows. There is no row to hide - the hidden person sits silently inside every number and chart segment. The Reports crawl proved this category exists and that no rule in your list covers it. Same question here: do these counts include a hidden profile?"
         }
       ]
     },
@@ -333,6 +359,58 @@
           "route": "—",
           "verified": "NOT VERIFIED",
           "verified_note": "NOT VERIFIED — no external-panel screen found in the route table or any capture. Needs a crawl or a pointer from you."
+        },
+        {
+          "screen": "Jobs — Add / Edit",
+          "rule": "??",
+          "sees": "",
+          "not": "",
+          "treatment": "",
+          "status": "OPEN",
+          "source": "FOUND BY CRAWL — not in your list",
+          "route": "/recruitment/{tenant}/jobs/add · /jobs/:id/edit",
+          "verified": "VERIFIED",
+          "verified_note": "evidence: modules/<portal>/api/jobs_add.json, job_edit_*.json",
+          "flag": "Carries an employee picker fed by /v1/common/employees. A hidden profile is selectable here unless the endpoint excludes them. Your list covers the Interview Panel but not this."
+        },
+        {
+          "screen": "Candidates — Add / Edit",
+          "rule": "??",
+          "sees": "",
+          "not": "",
+          "treatment": "",
+          "status": "OPEN",
+          "source": "FOUND BY CRAWL — not in your list",
+          "route": "/recruitment/{tenant}/candidates/add · /candidates/:id/edit",
+          "verified": "VERIFIED",
+          "verified_note": "evidence: modules/<portal>/api/candidates_add.json, candidate_edit_*.json",
+          "flag": "Employee picker off the shared endpoint. Not covered by either Recruitment row in your list."
+        },
+        {
+          "screen": "Job Applications — Add",
+          "rule": "??",
+          "sees": "",
+          "not": "",
+          "treatment": "",
+          "status": "OPEN",
+          "source": "FOUND BY CRAWL — not in your list",
+          "route": "/recruitment/{tenant}/job-applications/add",
+          "verified": "VERIFIED",
+          "verified_note": "evidence: modules/<portal>/api/job_applications_add.json",
+          "flag": "Employee picker off the shared endpoint. Not covered."
+        },
+        {
+          "screen": "Dashboard — counts and charts",
+          "rule": "??",
+          "sees": "",
+          "not": "",
+          "treatment": "",
+          "status": "OPEN",
+          "source": "FOUND BY CRAWL — not in your list",
+          "route": "/dashboard",
+          "verified": "VERIFIED",
+          "verified_note": "evidence: modules/<portal>/api/dashboard.html",
+          "flag": "Shows COUNTS, not rows. There is no row to hide - the hidden person sits silently inside every number and chart segment. The Reports crawl proved this category exists and that no rule in your list covers it. Same question here: do these counts include a hidden profile?"
         }
       ]
     },
@@ -365,6 +443,45 @@
           "route": "/sales-crm/{t}/contacts · /companies · /leads · /deals · /invoice-management/invoices",
           "verified": "VERIFIED",
           "verified_note": "route_table — 7 record types, each its own listing"
+        },
+        {
+          "screen": "Contacts / Deals / Leads / Client Interviews — Add",
+          "rule": "??",
+          "sees": "",
+          "not": "",
+          "treatment": "",
+          "status": "OPEN",
+          "source": "FOUND BY CRAWL — not in your list",
+          "route": "/sales-crm/{tenant}/contacts/add · /deals/add · /leads/add · /client-interviews/add",
+          "verified": "VERIFIED",
+          "verified_note": "evidence: modules/<portal>/api/contacts_add.json, deals_add.json, leads_add.json, client_interviews_add.json",
+          "flag": "All four ADD forms carry an employee picker — that is ASSIGNING a person to a record, which is the opposite direction from your existing row about records CREATED BY the person. Both need an answer and they are not the same rule."
+        },
+        {
+          "screen": "Invoice Config — Operational Config",
+          "rule": "??",
+          "sees": "",
+          "not": "",
+          "treatment": "",
+          "status": "OPEN",
+          "source": "FOUND BY CRAWL — not in your list",
+          "route": "/sales-crm/{tenant}/invoice-management/invoice-config/operational-config/edit",
+          "verified": "VERIFIED",
+          "verified_note": "evidence: modules/<portal>/api/invoice_management_invoice_config_operational_config_edit.json",
+          "flag": "Employee picker off the shared endpoint. Not covered."
+        },
+        {
+          "screen": "Dashboard — counts and charts",
+          "rule": "??",
+          "sees": "",
+          "not": "",
+          "treatment": "",
+          "status": "OPEN",
+          "source": "FOUND BY CRAWL — not in your list",
+          "route": "/dashboard",
+          "verified": "VERIFIED",
+          "verified_note": "evidence: modules/<portal>/api/dashboard.html",
+          "flag": "Shows COUNTS, not rows. There is no row to hide - the hidden person sits silently inside every number and chart segment. The Reports crawl proved this category exists and that no rule in your list covers it. Same question here: do these counts include a hidden profile?"
         }
       ]
     },
@@ -397,6 +514,19 @@
           "route": "/project-management/{t}/daily-allocation",
           "verified": "VERIFIED",
           "verified_note": "route_table — these are TWO separate screens: /daily-allocation and /resource-planner"
+        },
+        {
+          "screen": "Dashboard — counts and charts",
+          "rule": "??",
+          "sees": "",
+          "not": "",
+          "treatment": "",
+          "status": "OPEN",
+          "source": "FOUND BY CRAWL — not in your list",
+          "route": "/dashboard",
+          "verified": "VERIFIED",
+          "verified_note": "evidence: modules/<portal>/api/dashboard.html",
+          "flag": "Shows COUNTS, not rows. There is no row to hide - the hidden person sits silently inside every number and chart segment. The Reports crawl proved this category exists and that no rule in your list covers it. Same question here: do these counts include a hidden profile?"
         }
       ]
     }
