@@ -67,13 +67,15 @@ export default function PayrollSalaryRegister() {
               </span>
             </div>
             {hiddenCount > 0 && (
+              /* icon + count only. The wording lives in the tooltip so the badge
+                 stays the width of a number next to the record count. */
               <div
                 data-change="NEW"
-                className="rounded-2xl border flex w-max font-medium items-center border-warning-200 bg-warning-50 text-warning-700 2xl:!text-xs 2xl-to-xl:!text-xxs !text-xxs py-0.5 px-2 text-xs gap-x-1.5"
-                title="Hidden profiles are paid like anyone else. They are excluded from headcount reports, not from payroll."
+                className="rounded-2xl border flex w-max font-medium items-center border-warning-200 bg-warning-50 text-warning-700 2xl:!text-xs 2xl-to-xl:!text-xxs !text-xxs py-0.5 px-2 text-xs gap-x-1"
+                title={`Includes ${hiddenCount} hidden ${hiddenCount === 1 ? 'profile' : 'profiles'}. Hidden profiles are paid like anyone else \u2014 they are excluded from headcount reports, not from payroll.`}
               >
                 <IncognitoIcon className="size-3.5" />
-                <span>Includes {hiddenCount} hidden {hiddenCount === 1 ? 'profile' : 'profiles'}</span>
+                <span>{hiddenCount}</span>
               </div>
             )}
           </div>
