@@ -17,6 +17,21 @@ import brief from '../fixtures/impact-brief.json'
 
 const BLANK = (v) => !v || v === '—' || v === 'NOT STATED'
 
+/* Portal icons COPIED from the All Apps panel in
+   modules/people/dom/employee_listing.html, so the label beside a screen name
+   is the same glyph the portal carries everywhere else in the product.
+   Global is not a portal and has no icon there - icon-globe-01 is chosen. */
+const PORTAL_ICON = {
+  'Global': 'icon-globe-01',
+  'People': 'icon-users-02',
+  'Payroll': 'icon-currency-rupee',
+  'Recruitment': 'icon-jobs',
+  'CRM & Invoice': 'icon-deals',
+  'Project Management': 'icon-layers-three-02',
+  'Reports': 'icon-bar-chart-square-01',
+  'Administration': 'icon-administration',
+}
+
 const GROUPS = [
   { id: 'nobody', title: 'Nobody sees them', sub: 'The person does not appear here at all.',
     dot: 'bg-error-500', ring: 'border-error-200 bg-error-50 text-error-700',
@@ -85,7 +100,10 @@ export default function ImpactBrief() {
                     >
                       <div className="min-w-0">
                         <p className="font-medium text-gray-900 2xl:text-sm text-xs">{r.screen}</p>
-                        <p className="text-gray-400 2xl:text-xs text-xxs mt-0.5">{r.portal}</p>
+                        <p className="text-gray-400 2xl:text-xs text-xxs mt-0.5 flex items-center gap-x-1.5">
+                          <span className={`${PORTAL_ICON[r.portal] ?? 'icon-globe-01'} 2xl:text-sm text-xs`} />
+                          {r.portal}
+                        </p>
                       </div>
                       <div className="min-w-0 2xl:w-[55%] w-[52%] shrink-0">
                         {!BLANK(r.sees) && (
